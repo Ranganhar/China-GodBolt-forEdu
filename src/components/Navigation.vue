@@ -31,7 +31,13 @@ const options_2 = ['History', 'Open New Tab']
 		class="mx-auto h-14 max-w-8xl flex items-center justify-between p-4 nav"
 	>
 		<div class="flex items-center justify-center space-x-2">
-			<a href="#" class="w-30 h-full">logo</a>
+			<a href="#" class="w-30 h-14 block flex">
+				<div
+					class="image-render-auto bg-cover bg-center bg-no-repeat logo h-14 w-19 ml--5 "
+				></div>
+				<span class="text-size-7 text-orange-600 mt-1.5" >慧编</span>
+
+			</a>
 			<Dropdown ref="target"
 				><template #up><div>新建</div></template>
 				<template #down>
@@ -70,18 +76,18 @@ const options_2 = ['History', 'Open New Tab']
 								to="/"
 								target="_blank"
 							>
-								<sapn
+								<span
 									class="i-icon-park-twotone:add-one h-5 w-5 justify-center align-middle mr-2"
 									style="display: inline-block"
-								></sapn
+								></span
 								>{{ option }}</router-link
 							>
 						</div>
 						<div v-else class="w-full h-full px-4 py-2">
-							<sapn
+							<span
 								class="i-fluent-emoji-high-contrast:calendar h-5 w-5 justify-center align-middle mr-2"
 								style="display: inline-block"
-							></sapn
+							></span
 							>{{ option }}
 						</div>
 					</span></template
@@ -202,5 +208,8 @@ const options_2 = ['History', 'Open New Tab']
 <style scoped>
 .nav {
 	background-color: #f8f9fa;
+}
+.logo {
+	background-image: url('../assets/img/inter.png');
 }
 </style>

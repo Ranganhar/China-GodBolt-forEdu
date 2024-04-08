@@ -3,53 +3,38 @@ import { useElementBounding, useDraggable } from '@vueuse/core'
 import { kMaxLength } from 'buffer'
 
 const editbox = ref(null)
-const gooder = ref(null)
+const gooder=ref(null)
 
-// 重命名
-const rename = () => {
-	ElMessageBox.prompt('Please enter new pane name', 'Rename pane', {
-		confirmButtonText: 'Save',
-		cancelButtonText: 'Cancel',
-		// inputPattern:
-		// 	/[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/,
-		// inputErrorMessage: 'Invalid name',
-	})
-		.then(({ value }) => {
-			ElMessage({
-				type: 'success',
-				message: `New name is:${value}`,
-			})
-		})
-		.catch(() => {
-			ElMessage({
-				type: 'info',
-				message: 'Rename canceled',
-			})
-		})
-}
-
-//字体大小选项
-const sizeoptions = [
-	8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-	28, 29, 30,
-]
-let fontsize = ref(16)
-const changeFontsize = (sizeoption: any) => {
-	fontsize.value = sizeoption
+//最大化
+const max = (block: any) => {
+	blockicon.value = !blockicon.value
+	if (!blockicon.value) {
+		if (sizecontrol.value) {
+			sizecontrol.value.style.pointerEvents = 'none'
+			sizecontrol.value.style.opacity = '0'
+		}
+		block.classList.value += ' !w-screen !absolute !z-333'
+	} else {
+		block.classList.value = block.classList.value.replace(
+			' !w-screen !absolute !z-333',
+			'',
+		)
+		if (sizecontrol.value) {
+			sizecontrol.value.style.pointerEvents = 'auto'
+			sizecontrol.value.style.opacity = '1'
+		}
+	}
 }
 
 //添加框选项
 const addoptions = ['Compiler', 'Excution Only', 'Source Editor']
-
-// 关闭输入框
-const close = () => {}
-
-//最大化
-let blocksize = ref(true)
-let blockicon = ref(true)
-const max = () => {
-	blocksize.value = !blocksize.value
-	blockicon.value = !blockicon.value
+const differenticons = (addoption: any) => {
+	return {
+		'i-material-symbols:settings-suggest-outline-rounded':
+			addoption === 'Compiler',
+		'i-heroicons:cpu-chip-20-solid': addoption === 'Excution Only',
+		'i-ic:baseline-edit-calendar': addoption === 'Source Editor',
+	}
 }
 
 //拖拽改变大小
@@ -66,20 +51,133 @@ let {
 	y: dragy,
 	style,
 } = useDraggable(sizecontrol, {
-	initialValue: { x: 658, y: -1000 },
+	initialValue: { x: boundingright, y: -1000 },
 })
-
 const onMouseUp = () => {
-	// console.log(dragx.value, boundingx.value)
 	let newWidth = dragx.value - boundingx.value
 
-	editbox.value.style.width = newWidth + 'px'
-	gooder.value.style.width =
-		window.innerWidth - newWidth - sizecontrol.value.style.width + 'px'
+	if (editbox.value) {
+		editbox.value.style.width = newWidth + 'px'
+		console.log(boundingx.value, dragx.value)
+	}
+	if (gooder.value) {
+		gooder.value.style.width =
+			window.innerWidth - newWidth - sizecontrol.value.style.width + 'px'
+	}
 	dragy.value = -1000
 	dragx.value = boundingwidth
 	//这里就得报这个错才能正常运行,后续检查原因
 }
+
+//最大化
+let blockicon = ref(true)
+
+//loading效果
+const loadingsvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#888888" d="M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.706 6.706 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95C10.46 2.64 18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0"/></svg>`
+const loading = ref(false)
+const loadingicon = ref(null)
+const refresh = () => {
+	loading.value = true
+	setTimeout(() => {
+		loading.value = false
+	}, 2000)
+}
+
+//初始代码
+const compileroption = ref(null)
+const codeleft = `int test(int a[], int b[], int c)
+{
+    float d = 2.3;
+    int e = 2.4;
+    if(c > 10)
+    {
+        e =  c + b[0];
+    }
+    else
+    {
+        e = -e;
+        d = e + a[1];
+    }
+    return e;
+}`
+const coderight = `define dso_local i32 @test(int*, int*, int)(i32* %0, i32* %1, i32 %2) #0 {
+  %4 = alloca i32*, align 8
+  %5 = alloca i32*, align 8
+  %6 = alloca i32, align 4
+  %7 = alloca float, align 4
+  %8 = alloca i32, align 4
+  store i32* %0, i32** %4, align 8
+  store i32* %1, i32** %5, align 8
+  store i32 %2, i32* %6, align 4
+  store float 0x4002666660000000, float* %7, align 4
+  store i32 2, i32* %8, align 4
+  %9 = load i32, i32* %6, align 4
+  %10 = icmp sgt i32 %9, 10
+  br i1 %10, label %11, label %17
+
+11:
+  %12 = load i32, i32* %6, align 4
+  %13 = load i32*, i32** %5, align 8
+  %14 = getelementptr inbounds i32, i32* %13, i64 0
+  %15 = load i32, i32* %14, align 4
+  %16 = add nsw i32 %12, %15
+  store i32 %16, i32* %8, align 4
+  br label %26
+
+17:
+  %18 = load i32, i32* %8, align 4
+  %19 = sub nsw i32 0, %18
+  store i32 %19, i32* %8, align 4
+  %20 = load i32, i32* %8, align 4
+  %21 = load i32*, i32** %4, align 8
+  %22 = getelementptr inbounds i32, i32* %21, i64 1
+  %23 = load i32, i32* %22, align 4
+  %24 = add nsw i32 %20, %23
+  %25 = sitofp i32 %24 to float
+  store float %25, float* %7, align 4
+  br label %26
+
+26:
+  %27 = load i32, i32* %8, align 4
+  ret i32 %27
+}
+
+attributes #0 = { noinline nounwind optnone uwtable mustprogress "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "unsafe-fp-math"="false" "use-soft-float"="false" }`
+const value = ref('')
+const options = [
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+	{
+		value: 'x86-64 clang 12.0.0',
+		label: 'x86-64 clang 12.0.0',
+	},
+]
 </script>
 
 <template>
@@ -87,8 +185,7 @@ const onMouseUp = () => {
 		<div
 			style="background-color: #fffffe"
 			ref="editbox"
-			class="h-full overflow-hidden mr-1.6 min-w-10"
-			:class="blocksize ? 'w-49.75%' : 'w-screen absolute'"
+			class="h-full overflow-hidden mr-1.6 w-49.75%"
 		>
 			<!-- 最顶一层 -->
 			<div
@@ -110,7 +207,7 @@ const onMouseUp = () => {
 				</div>
 				<div>
 					<span
-						@click="max"
+						@click="max(editbox)"
 						:class="
 							blockicon ? 'i-mdi:fullscreen ' : 'i-ic:sharp-fullscreen-exit '
 						"
@@ -122,6 +219,7 @@ const onMouseUp = () => {
 					></span>
 				</div>
 			</div>
+			<!-- 第二层 -->
 			<div class="bg-gray-100 optionchoose h-11 w-full flex justify-between">
 				<!-- 各种按钮区域 -->
 				<div class="flex">
@@ -145,7 +243,9 @@ const onMouseUp = () => {
 							</svg>
 						</template>
 						<template #down>
-							<div class="overflow-y-scroll overflow-x-hidden h-111">
+							<div
+								class="absolute w-11 overflow-y-scroll overflow-x-hidden h-111 bg-light-100 shadow-lg divide-y divide-gray-100"
+							>
 								<span
 									v-for="sizeoption of sizeoptions"
 									:key="sizeoption"
@@ -163,9 +263,10 @@ const onMouseUp = () => {
 							</div>
 						</template></Optionchoose
 					>
+
 					<button
 						ref="target"
-						class="rounded-md w-12 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+						class="rounded-md w-9 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 						dark="bg-transparent hover:bg-gray-500"
 					>
 						<span class="i-bxs:save h-5 w-5 text-black inline-block mt-1.7">
@@ -191,15 +292,20 @@ const onMouseUp = () => {
 							</svg>
 						</template>
 						<template #down>
-							<div class="overflow-y-scroll overflow-x-hidden h-111">
+							<div
+								class="overflow-hidden h-33.5 w-40 p-2 rounded-md bg-light-100 shadow-lg divide-y divide-gray-100"
+							>
 								<span
-									v-for="option of addoptions"
-									:key="option"
-									class="bg-gray-100 text-center block cursor-pointer text-lg border-b-2 text-gray-500 hover:text-gray-90 hover:bg-gray-300"
+									v-for="addoption of addoptions"
+									:key="addoption"
+									class="block h-10 pt-2.4 cursor-pointer rounded-lg text-sm text-gray-500 hover:text-gray-90 hover:bg-gray-100"
 									dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
-									@click="changeFontsize(sizeoption)"
 								>
-									{{ option }}
+									<span
+										:class="differenticons(addoption)"
+										class="h-5 w-5 justify-center align-middle ml-1 mb-0.6 inline-block"
+									></span>
+									{{ addoption }}
 								</span>
 							</div>
 						</template></Optionchoose
@@ -579,11 +685,10 @@ const onMouseUp = () => {
 					></span>
 				</div>
 			</div>
-			dfgdfsgsdgfsdfasdfsdafsdfsdfsdafsd
+			<monacoEditor :initvalue="codeleft"> </monacoEditor>
 		</div>
-
-		<!-- 有hover效果的长条 -->
-		<div
+			<!-- 有hover效果的长条 -->
+			<div
 			class="w-1.6 h-1000% myresize overflow-hidden absolute z-30 bg-transparent"
 			ref="sizecontrol"
 			:style="style"
@@ -593,15 +698,14 @@ const onMouseUp = () => {
 		<div
 			style="background-color: #fffffe"
 			ref="gooder"
-			class="h-full bg-sky-500 overflow-hidden"
-			:class="blocksize ? 'w-49.75%' : 'w-screen absolute'"
+			class="h-full bg-sky-500 overflow-hidden w-49.75%"
 		>
 			<div
 				class="nav_row cursor-default bg-gray-200 w-full h-6 flex justify-between overflow-hidden"
 			>
 				<div
 					style="background-color: #e1e1e1"
-					class="nav_drag cursor-pointer bg-green-300 w-65 align-middle text-gray-600 pl-1"
+					class="nav_drag cursor-pointer bg-green-300 w-65 align-middle text-gray-600 pl-3"
 				>
 					x86-64 clang 12.0.0 (Editor #1)
 					<span
@@ -615,7 +719,7 @@ const onMouseUp = () => {
 				</div>
 				<div>
 					<span
-						@click="max"
+						@click="max(gooder)"
 						:class="
 							blockicon ? 'i-mdi:fullscreen ' : 'i-ic:sharp-fullscreen-exit '
 						"
@@ -627,7 +731,52 @@ const onMouseUp = () => {
 					></span>
 				</div>
 			</div>
-			dfgdfsgsdgfsdfasdfsdafsdfsdfsdafsd
+
+			<!-- 第一层 -->
+			<div class="bg-gray-100 optionchoose h-10 w-full flex">
+				<!-- 语言选择 -->
+				<div
+					name="languageoption"
+					class="rounded-lg bg-light-100 h-full w-42  border-1 cursor-pointer bord text-size-4 text-color-#343a40"
+				>
+					<el-select
+						v-model="value"
+						filterable
+						placeholder="x86-64 clang 12.0.0"
+						size="large"
+						class="!w-65"
+					>
+						<el-option
+							v-for="item in options"
+							:key="item.value"
+							:label="item.label"
+							:value="item.value"
+						/>
+					</el-select>
+				</div>
+
+				<!-- 加载符号 -->
+				<div
+					v-loading="loading"
+					:element-loading-svg="loadingsvg"
+					@click="refresh"
+					element-loading-svg-view-box="-10, -10, 50, 50"
+					class=" rounded-lg ml-23 !p-2 bg-light-100 h-full w-10 border-1 cursor-pointer"
+				>
+					<div :class="loading ? '' : 'correct'"
+					class="bg-contain bg-no-repeat h-6 w-6"></div>
+				</div>
+
+				<!-- 编译参数 -->
+				<el-input
+      v-model="compileroption"
+      class="!w-full"
+      size="large"
+      placeholder="Compiler options"
+    />
+			</div>
+
+			<monacoEditor :initvalue="coderight"></monacoEditor>
 		</div>
 	</div>
 </template>
@@ -645,5 +794,8 @@ const onMouseUp = () => {
 }
 .logo.vue:hover {
 	filter: drop-shadow(0 0 2em #42b883aa);
+}
+.correct {
+	background-image: url(../assets/img/correct.svg);
 }
 </style>

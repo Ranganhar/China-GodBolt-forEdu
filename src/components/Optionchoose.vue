@@ -32,7 +32,7 @@ function dropdownHandler() {
 				v-if="visiable"
 				v-on-click-outside.click="dropdownHandler"
 				dark="bg-gray-500"
-				class="absolute start-1 z-10 mt-2 w-11  bg-light-100 shadow-lg divide-y divide-gray-100"
+				class="rounded-md absolute start-0 z-10 mt-2 w-11  bg-light-100 shadow-lg divide-y divide-gray-100"
 			>
 				<div>
 					<slot name="down"></slot>

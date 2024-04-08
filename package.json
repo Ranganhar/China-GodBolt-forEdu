@@ -34,6 +34,7 @@
     "@iconify-json/ep": "^1.1.15",
     "@iconify-json/fluent": "^1.1.50",
     "@iconify-json/fluent-emoji-high-contrast": "^1.1.15",
+    "@iconify-json/heroicons": "^1.1.20",
     "@iconify-json/ic": "^1.1.17",
     "@iconify-json/icon-park-twotone": "^1.1.14",
     "@iconify-json/material-symbols": "^1.1.75",
@@ -73,6 +74,7 @@
     "local-pkg": "^0.5.0",
     "markdown-it-prism": "^2.3.0",
     "mockjs": "^1.1.0",
+    "monaco-editor-webpack-plugin": "^7.1.0",
     "nprogress": "^0.2.0",
     "perfect-debounce": "^1.0.0",
     "pinia": "^2.1.7",
@@ -141,6 +143,7 @@
     "iOS >= 8"
   ],
   "dependencies": {
-    "element-plus": "^2.6.1"
+    "element-plus": "^2.6.1",
+    "monaco-editor": "^0.47.0"
   }
 }
