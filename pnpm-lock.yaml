@@ -8,6 +8,9 @@ dependencies:
   element-plus:
     specifier: ^2.6.1
     version: 2.6.1(vue@3.4.21)
+  golden-layout:
+    specifier: ^2.6.0
+    version: 2.6.0
   monaco-editor:
     specifier: ^0.47.0
     version: 0.47.0
@@ -4557,6 +4560,10 @@ packages:
     transitivePeerDependencies:
       - vue
     dev: true
+
+  /golden-layout@2.6.0:
+    resolution: {integrity: sha512-sIVQCiRWOymHbVD1Aw/T9/ijbPYAVGBlgGYd1N9MRKfcyBNSpjr87Vg9nSHm+RCT8ELrvK8IJYJV0QRJuVUkCQ==}
+    dev: false
 
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}

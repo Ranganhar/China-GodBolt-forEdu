@@ -12,15 +12,30 @@ export default {
 			type: String,
 			default: '',
 		},
+		fontsize: {
+			type: Number,
+			default: '',
+		},
 	},
 
 	data() {
 		return {
 			monacoEditor: null,
+			real_fontsize: this.fontsize,
 		}
 	},
 	mounted() {
+		this.real_fontsize = this.fontsize
 		this.init()
+	},
+	watch: {
+		fontsize() {
+			this.real_fontsize = this.fontsize
+			console.log(this.real_fontsize)
+			if (this.monacoEditor) {
+				this.monacoEditor.updateOptions({ fontSize: this.real_fontsize })
+			}
+		},
 	},
 	methods: {
 		init() {
@@ -28,9 +43,9 @@ export default {
 			this.monacoEditor = monaco.editor.create(this.$refs.main, {
 				theme: 'vs-light', // 主题
 				value: this.initvalue, // 默认显示的值
-				language: 'typescript',
+				language: 'cpp',
 				automaticLayout: true, // 自适应布局
-				fontSize: 14, // 字体大小
+				fontSize: this.real_fontsize, // 字体大小
 				acceptSuggestionOnCommitCharacter: true, // 接受关于提交字符的建议
 				acceptSuggestionOnEnter: 'on', // 接受输入建议 "on" | "off" | "smart"
 				accessibilityPageSize: 10, // 辅助功能页面大小 Number 说明：控制编辑器中可由屏幕阅读器读出的行数。警告：这对大于默认值的数字具有性能含义。
