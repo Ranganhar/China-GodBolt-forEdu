@@ -2,9 +2,6 @@
 import { useElementBounding, useDraggable } from '@vueuse/core'
 import { kMaxLength } from 'buffer'
 
-
-
-
 //初始代码
 
 const codeleft = `int test(int a[], int b[], int c)
@@ -35,7 +32,7 @@ const onClickInitLayoutMinRow = () => {
 }
 
 const onClickAddGLComponent1 = () => {
-	return GLayoutRoot.value.addGLComponent('counter', 'Title 1st')
+	return GLayoutRoot.value.addGLComponent('Execution', 'Executor')
 }
 
 const onClickAddGLComponent2 = () => {
@@ -62,6 +59,9 @@ const onClickLoadLayout = () => {
 }
 onMounted(onClickInitLayoutMinRow)
 onMounted(onClickLoadLayout)
+onMounted(() => {
+	window.addEventListener('beforeunload', onClickSaveLayout)
+})
 </script>
 
 <template>
@@ -100,7 +100,6 @@ onMounted(onClickLoadLayout)
 .logo.vue:hover {
 	filter: drop-shadow(0 0 2em #42b883aa);
 }
-
 </style>
 <style src="golden-layout/dist/css/goldenlayout-base.css"></style>
 <style src="golden-layout/dist/css/themes/goldenlayout-light-theme.css"></style>

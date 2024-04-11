@@ -14,8 +14,17 @@ dependencies:
   monaco-editor:
     specifier: ^0.47.0
     version: 0.47.0
+  monaco-vim:
+    specifier: ^0.4.1
+    version: 0.4.1(monaco-editor@0.47.0)
 
 devDependencies:
+  '@iconify-json/arcticons':
+    specifier: ^1.1.100
+    version: 1.1.100
+  '@iconify-json/bx':
+    specifier: ^1.1.10
+    version: 1.1.10
   '@iconify-json/bxs':
     specifier: ^1.1.10
     version: 1.1.10
@@ -28,15 +37,30 @@ devDependencies:
   '@iconify-json/fluent-emoji-high-contrast':
     specifier: ^1.1.15
     version: 1.1.15
+  '@iconify-json/game-icons':
+    specifier: ^1.1.9
+    version: 1.1.9
+  '@iconify-json/gravity-ui':
+    specifier: ^1.1.2
+    version: 1.1.2
   '@iconify-json/heroicons':
     specifier: ^1.1.20
     version: 1.1.20
   '@iconify-json/ic':
     specifier: ^1.1.17
     version: 1.1.17
+  '@iconify-json/icon-park-solid':
+    specifier: ^1.1.14
+    version: 1.1.14
   '@iconify-json/icon-park-twotone':
     specifier: ^1.1.14
     version: 1.1.14
+  '@iconify-json/iconamoon':
+    specifier: ^1.1.4
+    version: 1.1.4
+  '@iconify-json/majesticons':
+    specifier: ^1.1.11
+    version: 1.1.11
   '@iconify-json/material-symbols':
     specifier: ^1.1.75
     version: 1.1.75
@@ -49,6 +73,9 @@ devDependencies:
   '@iconify-json/ri':
     specifier: ^1.1.20
     version: 1.1.20
+  '@iconify-json/tabler':
+    specifier: ^1.1.109
+    version: 1.1.109
   '@iconify-json/vscode-icons':
     specifier: ^1.1.33
     version: 1.1.33
@@ -945,6 +972,18 @@ packages:
     resolution: {integrity: sha512-6EwiSjwWYP7pTckG6I5eyFANjPhmPjUX9JRLUSfNPC7FX7zK9gyZAfUEaECL6ALTpGX5AjnBq3C9XmVWPitNpw==}
     dev: true
 
+  /@iconify-json/arcticons@1.1.100:
+    resolution: {integrity: sha512-IO1u4p0BI1d1UDtVYBq8PBr/pJrkwinSpJPgt8JDMfhW057ZgJADzv7Wwj7CSgGJdVbcs0SFGzXR9YfNapk6iA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/bx@1.1.10:
+    resolution: {integrity: sha512-4JzMDYhs/hkU9mO8nNMNKZwHn706oQaD46URyUuD4fP/XAWGf01vg6wKITmQseEHsHDrtKAXjwcumfnTUDi3OQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/bxs@1.1.10:
     resolution: {integrity: sha512-USVukTRq5PDT3KVVePYzHgYBtO9PYi4oNFuBpMf/Q1BFHAiwyP8zVewgXR1a6w/XMDIiQ3gVuTX7upkXv7cjgw==}
     dependencies:
@@ -969,6 +1008,18 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
+  /@iconify-json/game-icons@1.1.9:
+    resolution: {integrity: sha512-DipxbRFPK+KgDekVGx5if3mlxzKvTNM74yF5y9LIU8FPNShND9JnaDGCz5cfyaGVQxj7BITztO5v042hRFsahg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/gravity-ui@1.1.2:
+    resolution: {integrity: sha512-1xDGuR/pxZJqQNxx7lA3a1gRxus9UwLgdBJpLHP/FNdLER1iwIPA5X5jNMYUp7Z34y6OkwHrb2ULz/bybTewuA==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/heroicons@1.1.20:
     resolution: {integrity: sha512-puNt1al/rDw8Rb5x8sfk20UA8AQjMskLMh63nSUBj+8I0lQ7LtX+0Qn8wow2xTXTEsynJ9xXLD8Aat53e0qi8A==}
     dependencies:
@@ -981,8 +1032,26 @@ packages:
       '@iconify/types': 2.0.0
     dev: true
 
+  /@iconify-json/icon-park-solid@1.1.14:
+    resolution: {integrity: sha512-oXV3KoGjd6vyOArhhumrCAuvG9+1G4+FHQEy76WbnU6lDoir8jnkGyDxmMTfmz831eHCUXC/pqnS1Gr0TfEPUg==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
   /@iconify-json/icon-park-twotone@1.1.14:
     resolution: {integrity: sha512-Mj5zGm4QQXkispeT02+Sf0ECCF5/zsRMkzfsURXJoySorgA58v+I1e+uwB01CrjxB3ae5t/+yir9V0/DKHisaQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/iconamoon@1.1.4:
+    resolution: {integrity: sha512-ciU8YeoMqWWMRurM7c7PqodEyvd/dGAV5zeLC5+IwqTfcPVI71RUDrhOsE656FjxADcyKh2ZkN64gVqFAZOVng==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/majesticons@1.1.11:
+    resolution: {integrity: sha512-8iSktgGbIInt/4y3tvZ/Dyzvzeze/2cc//ZtHMx5zPuHSiENE/nORGZAlO7yGf29oC2oECwl5a7YYqCPChiYiA==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -1007,6 +1076,12 @@ packages:
 
   /@iconify-json/ri@1.1.20:
     resolution: {integrity: sha512-yScIGjLFBCJKWKskQTWRjNI2Awoq+VRDkRxEsCQvSfdz41n+xkRtFG2K6J1OVI90ClRHfjFC8VJ2+WzxxyFjTQ==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/tabler@1.1.109:
+    resolution: {integrity: sha512-74RaBQZQ0761iFTrgmuSH1fovfx0fBKn+txRbRNbRzfh8XWtlAHqKUc3CzvzATMLnVsSRJDxjG3qY4oWH/+opw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true
@@ -5781,6 +5856,14 @@ packages:
 
   /monaco-editor@0.47.0:
     resolution: {integrity: sha512-VabVvHvQ9QmMwXu4du008ZDuyLnHs9j7ThVFsiJoXSOQk18+LF89N4ADzPbFenm0W4V2bGHnFBztIRQTgBfxzw==}
+
+  /monaco-vim@0.4.1(monaco-editor@0.47.0):
+    resolution: {integrity: sha512-+cy0TE9xarjLIgUexqxIEbat3K1l7WbiFSLZKAO2kYl1qFRvkeWn4ro/C4c6dK0i9+WQKUC4Dhu/nyCbZfA37w==}
+    peerDependencies:
+      monaco-editor: '*'
+    dependencies:
+      monaco-editor: 0.47.0
+    dev: false
 
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}

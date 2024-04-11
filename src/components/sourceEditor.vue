@@ -3,14 +3,13 @@ const editbox = ref(null)
 
 let fontsize = ref(16)
 
-const addoptions = ['Compiler', 'Excution Only', 'Source Editor']
+const addoptions = ['Compiler', 'Excution', 'Source Editor']
 const sizeoptions = [
 	8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
 	28, 29, 30,
 ]
 const changeFontsize = (sizeoption: any) => {
 	fontsize.value = sizeoption
-	console.log(fontsize.value)
 }
 const codeleft = `int test(int a[], int b[], int c)
 {
@@ -36,7 +35,12 @@ const differenticons = (addoption: any) => {
 	}
 }
 
-
+const monaco = ref(null)
+const vimicon = ref(false)
+const vimtoggle = () => {
+	monaco.value.toggle()
+	vimicon.value = !vimicon.value
+}
 </script>
 
 <template>
@@ -138,6 +142,8 @@ const differenticons = (addoption: any) => {
 					ref="target"
 					class="rounded-md w-12 h-11 cursor-pointer border-0 bg-color-#f8f9fa p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
 					dark="bg-transparent hover:bg-gray-500"
+					:class="vimicon ? 'bg-gray-200' : ''"
+					@click="vimtoggle"
 				>
 					<svg
 						xmlns="http://www.w3.org/2000/svg"
@@ -509,7 +515,8 @@ const differenticons = (addoption: any) => {
 				></span>
 			</div>
 		</div>
-		<monacoEditor :initvalue="codeleft" :fontsize="fontsize"> </monacoEditor>
+		<monacoEditor :initvalue="codeleft" :fontsize="fontsize" ref="monaco">
+		</monacoEditor>
 	</div>
 </template>
 
