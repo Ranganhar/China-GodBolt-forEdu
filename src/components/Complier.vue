@@ -16,7 +16,7 @@ watch(
 	() => loadingcontrol.value,
 	() => {
 		real_loading.value = loadingcontrol.value
-		console.log(loadingcontrol.value)
+		// console.log(loadingcontrol.value)
 	},
 )
 
@@ -95,6 +95,22 @@ attributes #0 = { noinline nounwind optnone uwtable mustprogress "disable-tail-c
 
 //默认编译参数
 const compileroption = ref('')
+const loading = useLoading()
+watchDebounced(
+	compileroption,
+	() => {
+		loading.refresh()
+	},
+	{ debounce: 500, maxWait: 5000 },
+)
+const version = ref('')
+watchDebounced(
+	version,
+	() => {
+		loading.refresh()
+	},
+	{ debounce: 500, maxWait: 5000 },
+)
 </script>
 <template>
 	<div
@@ -110,7 +126,7 @@ const compileroption = ref('')
 				class="rounded-lg bg-light-100 h-full w-42 border-1 cursor-pointer bord text-size-4 text-color-#343a40"
 			>
 				<el-select
-					v-model="value"
+					v-model="version"
 					filterable
 					placeholder="x86-64 clang 12.0.0"
 					size="large"
@@ -261,7 +277,10 @@ const compileroption = ref('')
 			:initvalue="coderight"
 			:fontsize="fontsize"
 			:permit="true"
+			v-if="!real_loading"
 		></monacoEditor>
+		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5" >Compiling...</h1>
+		<el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />
 	</div>
 </template>
 

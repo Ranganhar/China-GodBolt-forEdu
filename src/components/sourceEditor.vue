@@ -11,7 +11,7 @@ const sizeoptions = [
 const changeFontsize = (sizeoption: any) => {
 	fontsize.value = sizeoption
 }
-const codeleft = `int test(int a[], int b[], int c)
+let codeleft = `int test(int a[], int b[], int c)
 {
     float d = 2.3;
     int e = 2.4;
@@ -30,7 +30,7 @@ const differenticons = (addoption: any) => {
 	return {
 		'i-material-symbols:settings-suggest-outline-rounded':
 			addoption === 'Compiler',
-		'i-heroicons:cpu-chip-20-solid': addoption === 'Excution Only',
+		'i-heroicons:cpu-chip-20-solid': addoption === 'Excution',
 		'i-ic:baseline-edit-calendar': addoption === 'Source Editor',
 	}
 }
@@ -41,12 +41,57 @@ const vimtoggle = () => {
 	monaco.value.toggle()
 	vimicon.value = !vimicon.value
 }
+
+let cppinsights = ref(null)
+let qucikbench = ref(null)
+let text = ref('')
+let { base64: textBase64 } = useBase64(text)
+const changevalue = (newValue) => {
+	text.value = newValue
+	localStorage.setItem('code', newValue)
+}
+
+// 访问 textBase64 的实际值
+let modifiedBase64Str
+watch(
+	textBase64,
+	(newVal, oldVal) => {
+		let substring = newVal.substring(23)
+		cppinsights.value = `https://cppinsights.io/lnk?code=${substring}&std=cpp2a&rev=1.0`
+		// 1. 解码 Base64 字符串
+		let base64Str2 =
+			'eyJ0ZXh0IjoiLy8gaW50IHRlc3QoaW50IGFbXSwgaW50IGJbXSwgaW50IGMpXG4vLyB7XG4vLyAgICAgZmxvYXQgZCA9IDIuMztcbi8vICAgICBpbnQgZSA9IDI7XG4vLyAgICAgaWYoYyA+IDEwKVxuLy8gICAgIHtcbi8vICAgICAgICAgZSA9ICBjICsgYlswXTtcbi8vICAgICB9XG4vLyAgICAgZWxzZVxuLy8gICAgIHtcbi8vICAgICAgICAgZSA9IC1lO1xuLy8gICAgICAgICBkID0gZSArIGFbMV07XG4vLyAgICAgfVxuLy8gICAgIHJldHVybiBlO1xuLy8gfVxuI2luY2x1ZGUgXCJzdGRpby5oXCJcbmludCBtYWluKClcbntcbiAgICBpbnQgYT0wO1xuICAgIFxuICAgXG4gICAgc2NhbmYoXCIlZFwiLCZhKTtcbiAgICBwcmludGYoXCJ0aGlzIGlzICVkXCIsIGEgKTtcbiAgICByZXR1cm4gMDtcbn0iLCJjb21waWxlciI6ImNsYW5nLTEyLjAifQ=='
+		let decodedStr2 = atob(base64Str2)
+
+		// 2. 解析 JSON 字符串
+		let obj = JSON.parse(decodedStr2)
+
+		// 3. 替换代码部分
+		obj.text = text.value // 这是你新的代码
+
+		// 4. 序列化为 JSON 字符串
+		let modifiedStr = JSON.stringify(obj)
+
+		// 5. 编码为 Base64 字符串
+		modifiedBase64Str = btoa(modifiedStr)
+		qucikbench.value = `https://quick-bench.com/#${modifiedBase64Str}`
+	},
+	{ immediate: true },
+)
+let final_initvalue = ref('')
+onMounted(() => {
+	// console.log(codeleft)
+})
+onBeforeMount(() => {
+	final_initvalue.value = localStorage.getItem('code') || codeleft
+
+	localStorage.setItem('code', final_initvalue.value)
+})
 </script>
 
 <template>
 	<div style="background-color: #fffffe" ref="editbox" class="w-full h-full">
 		<!-- 最顶一层 -->
-
 		<!-- 第二层 -->
 		<div class="bg-gray-100 optionchoose h-11 w-full flex justify-between">
 			<!-- 各种按钮区域 -->
@@ -426,9 +471,10 @@ const vimtoggle = () => {
 					</svg>
 				</button>
 				<a
-					href="https://cppinsights.io/"
+					:href="cppinsights"
 					target="_blank"
 					class="inline-block h-full w-12"
+					@click="linkcppinsights"
 					><button
 						ref="target"
 						class="rounded-md w-12 h-11 cursor-pointer border-0 bg-color-#f8f9fa p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
@@ -452,10 +498,7 @@ const vimtoggle = () => {
 							</svg>
 						</svg></button
 				></a>
-				<a
-					href="https://quick-bench.com/"
-					target="_blank"
-					class="inline-block h-full w-12"
+				<a :href="qucikbench" target="_blank" class="inline-block h-full w-12"
 					><button
 						ref="target"
 						class="rounded-md w-12 h-11 cursor-pointer border-0 bg-color-#f8f9fa p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
@@ -515,7 +558,12 @@ const vimtoggle = () => {
 				></span>
 			</div>
 		</div>
-		<monacoEditor :initvalue="codeleft" :fontsize="fontsize" ref="monaco">
+		<monacoEditor
+			:initvalue="final_initvalue"
+			:fontsize="fontsize"
+			ref="monaco"
+			@change="changevalue"
+		>
 		</monacoEditor>
 	</div>
 </template>

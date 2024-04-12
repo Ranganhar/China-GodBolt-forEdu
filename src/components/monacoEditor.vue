@@ -9,6 +9,8 @@
 <script setup lang="ts">
 import * as monaco from 'monaco-editor'
 import { initVimMode } from 'monaco-vim'
+import { defineEmits } from 'vue'
+const emit = defineEmits(['change'])
 // 定义 props
 const props = defineProps({
 	initvalue: {
@@ -31,9 +33,11 @@ const loading = useLoading()
 let real_fontsize = ref(props.fontsize)
 let real_initvalue = ref(props.initvalue)
 let monacoEditor: monaco.editor.IStandaloneCodeEditor
+
 let vimMode: any
 const init = () => {
 	// 使用 - 创建 monacoEditor 对象
+	// console.log('real_initvalue', real_initvalue.value)
 	monacoEditor = monaco.editor.create(main.value, {
 		theme: 'vs-light', // 主题
 		value: real_initvalue.value, // 默认显示的值
@@ -84,11 +88,19 @@ const init = () => {
 	let debounceTimeout
 	const debounceDelay = 500 // 延迟500毫秒
 
+	let newValue = monacoEditor.getValue()
+	emit('change', newValue)
+
+	// console.log('Content changed (debounced):', monacoEditor.getValue())
 	// 监视内容更改
+
 	monacoEditor.onDidChangeModelContent(() => {
 		clearTimeout(debounceTimeout)
 		debounceTimeout = setTimeout(() => {
-			console.log('Content changed (debounced):', monacoEditor.getValue())
+			// console.log('Content changed (debounced):', monacoEditor.getValue())
+			newValue = monacoEditor.getValue()
+
+			emit('change', newValue)
 			loading.refresh()
 		}, debounceDelay)
 	})
@@ -114,6 +126,11 @@ watch(
 
 onMounted(() => {
 	init()
+})
+onBeforeUnmount(() => {
+	if (monacoEditor.value) {
+		monacoEditor.value.dispose()
+	}
 })
 defineExpose({ toggle })
 </script>

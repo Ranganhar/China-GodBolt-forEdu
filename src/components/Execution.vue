@@ -101,7 +101,7 @@ const compileroption = ref('')
 				</template></Optionchoose
 			>
 
-			<button
+			<!-- <button
 				ref="target"
 				class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 				dark="bg-transparent hover:bg-gray-500"
@@ -111,12 +111,12 @@ const compileroption = ref('')
 					class="i-majesticons:settings-cog h-6 w-6 text-black inline-block mt-1 bg-black"
 				>
 				</span>
-			</button>
+			</button> -->
 			<button
 				ref="target"
 				class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 				dark="bg-transparent hover:bg-gray-500"
-				title="Optimization"
+				title="std input"
 			>
 				<span
 					class="i-iconamoon:enter-bold h-6 w-6 text-black inline-block mt-1 bg-black"
@@ -127,7 +127,7 @@ const compileroption = ref('')
 				ref="target"
 				class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-400 p-2 text-gray-600"
 				dark="bg-gray-700 text-gray-100"
-				title="AST"
+				title="std output"
 			>
 				<span
 					class="i-iconamoon:exit-bold h-6 w-6 text-black inline-block mt-1"
@@ -148,6 +148,7 @@ const compileroption = ref('')
 					placeholder="x86-64 clang 12.0.0"
 					size="large"
 					class="!w-65"
+					placement="bottom"
 				>
 					<el-option
 						v-for="item in options"
