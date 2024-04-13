@@ -1,11 +1,15 @@
 #include "ConstantProp.hpp"
 #include <set>
 
-void ConstantProp::Pass()
+void ConstantProp::RunOnFunction()
 {
     for(BasicBlock* block : *_func)
         RunOnBlock(block);
-    int num = _func->GetBasicBlock().size();
+}
+void ConstantProp::PrintPass()
+{
+    std::cout << "--------constprop--------" << std::endl;
+    Singleton<Module>().Test();
 }
 void ConstantProp::RunOnBlock(BasicBlock* block)
 {
@@ -20,7 +24,13 @@ void ConstantProp::RunOnBlock(BasicBlock* block)
                 wait_del.push_back(inst);
         }
         else if(dynamic_cast<UndefValue*>(C))
-            inst->RAUW(C);
+        {
+            if(!inst->GetUserlist().is_empty())
+            {
+                inst->RAUW(C);
+                wait_del.push_back(inst);
+            }
+        }
     }
     for(auto inst : wait_del)
     {

@@ -2,6 +2,7 @@
 #include "../lib/BaseCFG.hpp"
 #include "../lib/CFG.hpp"
 #include "gir.hpp"
+#include "my_stl.hpp"
 #include <variant>
 class MachineUnit;
 class MachineFunction;
@@ -26,6 +27,9 @@ class MachineInst : public User {
     Operand GetRd();
     Operand GetRs1();
     Operand GetRs2();
+    void SetRd(Operand rd);
+    void SetRs1(Operand rs1);
+    void SetRs2(Operand rs2);
     void print();
 };
 
@@ -64,6 +68,7 @@ class MachineFunction {
     void set_alloca_and_num();
     void set_stacksize();
 
+    Function* get_function();
     MachineUnit* get_machineunit();
     void addMachineBasicBlock(MachineBasicBlock* mblock);
     std::vector<MachineBasicBlock*> getMachineBasicBlocks();
@@ -85,6 +90,7 @@ class MachineUnit {
     std::vector<MachineFunction*> mfuncs;
     public:
     MachineUnit(Module* unit);
+    Module* get_module();
     void addMachineFunction(MachineFunction* mfuncs);
     std::vector<MachineFunction*> getMachineFunctions();
 };

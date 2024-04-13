@@ -30,16 +30,18 @@ class list_node
     derived_list_node* prev;
     derived_list_node* next;
     derived_mylist* fat;
-
     void SetParent(derived_mylist* _fat){fat=_fat;}
     public:
+    virtual ~list_node(){
+        if(fat!=nullptr)EraseFromParent();
+    }
     list_node(){
         this->prev=nullptr;
         this->next=nullptr;
-    };
+    }
     virtual void EraseFromParent(){
-        if(fat->head==dynamic_cast<derived_list_node*>(this))fat->head=this->next;
-        if(fat->tail==dynamic_cast<derived_list_node*>(this))fat->tail=this->prev;
+        if(this->prev==nullptr)fat->head=this->next;
+        if(this->next==nullptr)fat->tail=this->prev;
         if(this->prev!=nullptr)this->prev->next=this->next;
         if(this->next!=nullptr)this->next->prev=this->prev;
     }
@@ -57,6 +59,9 @@ class mylist
     derived_list_node* head;
     derived_list_node* tail;
     public:
+    virtual ~mylist(){
+        clear();
+    }
     class iterator
     {
         derived_list_node* ptr;
@@ -80,6 +85,7 @@ class mylist
                 data->prev=ptr->prev;
                 data->next=ptr;
                 ptr->prev=data;
+                data->prev->next=data;
             }
             return iterator(data);
         }
@@ -92,8 +98,12 @@ class mylist
                 data->next=ptr->next;
                 data->prev=ptr;
                 ptr->next=data;
+                data->next->prev=data;
             }
             return iterator(data);
+        }
+        //指定迭代器后插入bb的所有inst
+        void splice(derived_list_node* data){
         }
         bool operator==(const iterator& other){return ptr==other.ptr;}
         bool operator!=(const iterator& other){return ptr!=other.ptr;}
@@ -128,6 +138,11 @@ class mylist
             this->head->prev=data;
             data->next=this->head;
             this->head=data;
+        }
+    }
+    virtual void clear(){
+        while(this->head!=nullptr){
+            delete head;
         }
     }
     derived_list_node* front(){return this->head;}

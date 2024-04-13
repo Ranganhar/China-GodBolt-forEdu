@@ -31,11 +31,12 @@ class Variable
     void attach(Operand);
     std::string get_name();
     Type* GetType();
+    Operand& GetInitializer();
     void print();
 };
 
-class UndefValue:public User{
-  UndefValue(Type* Ty):User(Ty){name="undef";}
+class UndefValue:public ConstantData{
+  UndefValue(Type* Ty):ConstantData(Ty){name="undef";}
 public:
   static UndefValue* get(Type *Ty);
   void print();
@@ -127,6 +128,7 @@ class BinaryInst:public User
     void print()final;
     std::string GetOperation();
     Operation getopration();
+    static BinaryInst* CreateInst(Operand _A,Operation __op,Operand _B,User* place=nullptr);
 };
 class GetElementPtrInst:public User
 {
@@ -157,21 +159,25 @@ public:
   void updateIncoming(Value* Income,BasicBlock* BB);//phi i32 [ 0, %7 ], [ %9, %8 ]
   std::vector<Value*>& GetAllPhiVal();
   Value* ReturnValIn(BasicBlock* bb);
-  bool modifyIncome(Value* origin);
-  bool modifyBlock(Value* val,BasicBlock* NewBlock);
+  void Phiprop(Value* origin,Value* newval);
 public:
   std::map<int,std::pair<Value*,BasicBlock*>> PhiRecord; //记录不同输入流的value和block
   std::vector<Value*> Incomings;
-  void Del_Incomes(int CurrentNum, std::map<int, std::pair<Value*, BasicBlock*>> _PhiRecord);
+  void Del_Incomes(int CurrentNum);
+  bool IsSame(PhiInst* phi);
   std::vector<BasicBlock*> Blocks;
   int oprandNum;
+  bool IsGetIncomings=false;
 };
 class BasicBlock:public Value,public mylist<BasicBlock,User>,public list_node<Function,BasicBlock>
 {
     Function& master;
     public:
+    virtual ~BasicBlock()=default;
+    void Delete();
     BasicBlock(Function& __master);
     void print();
+    int GetSuccNum();
     Operand push_alloca(std::string,Type*);
     Operand GenerateSITFP(Operand _A);
     Operand GenerateFPTSI(Operand _B);
@@ -193,6 +199,8 @@ class BasicBlock:public Value,public mylist<BasicBlock,User>,public list_node<Fu
     std::vector<BasicBlock*> GetSuccBlock();
     void AddSuccBlock(BasicBlock* block){this->Succ_Block.push_back(block);}
     bool EndWithBranch();
+    void RemovePredBB(BasicBlock* pred);
+    virtual void clear()override;
     int num=0;
     bool visited=false;
 };
@@ -214,13 +222,14 @@ class Function:public Value,public mylist<Function,BasicBlock>
     public:
     Function(InnerDataType _tp,std::string _id);
     void print();
+    void init_bbs(){ bbs.clear();}
     void add_block(BasicBlock*);
     void push_param(Variable*);
     void push_alloca(Variable*);
     void push_bb(BasicBlock* bb);
     std::vector<ParamPtr>& GetParams();
     std::vector<BasicBlock*>& GetBasicBlock(){return bbs;}
-    void InsertBlock(BasicBlock* pred,BasicBlock* succ,BasicBlock* insert);//TODO
+    void InsertBlock(BasicBlock* pred,BasicBlock* succ,BasicBlock* insert);
     void init_visited_block();
 };
 class Module:public SymbolTable
@@ -236,7 +245,7 @@ class Module:public SymbolTable
     void GenerateGlobalVariable(Variable* ptr);
     Operand GenerateMemcpyHandle(Type*,Operand);
     std::vector<FunctionPtr>& GetFuncTion();
-    Function* getMainFunc();
+    std::vector<GlobalVariblePtr>& GetGlobalVariable();
     void Test();
     void EraseFunction(Function* func);
     bool isMIRSSALevel();

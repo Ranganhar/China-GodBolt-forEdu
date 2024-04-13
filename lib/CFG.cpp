@@ -1,9 +1,13 @@
 #include "CFG.hpp"
+#include <algorithm>
 #include <string>
 #include <memory>
 #include <iostream>
+#include "BaseCFG.hpp"
 #include "MagicEnum.hpp"
 #include <map>
+#include <utility>
+#include <vector>
 
 Initializer::Initializer(Type* _tp):Value(_tp){}
 
@@ -283,6 +287,18 @@ BinaryInst::Operation BinaryInst::getopration(){
     return op;
 }
 
+BinaryInst* BinaryInst::CreateInst(Operand _A,Operation __op,Operand _B,User* place){
+    
+    BinaryInst* bin=new BinaryInst(_A,__op,_B);
+    if(place!=nullptr){
+    BasicBlock* instbb=place->GetParent();
+      for(auto iter=instbb->begin();iter!=instbb->end();++iter)
+        if(*iter==place)
+          iter.insert_before(bin);
+    }
+    return bin;
+}
+
 void BinaryInst::print(){
     Value::print();
     std::cout<<" = ";
@@ -381,7 +397,7 @@ std::string Variable::get_name(){
 }
 
 Type* Variable::GetType(){return tp;}
-
+Operand& Variable::GetInitializer(){return attached_initializer;}
 void Variable::print(){
     std::cout<<"@.g."<<get_name()<<" = global ";
     GetType()->print();
@@ -434,7 +450,7 @@ void ZextInst::print(){
     Value::print();
     std::cout<<" = zext i1 ";
     uselist[0]->GetValue()->print();
-    std::cout<<" to i32";
+    std::cout<<" to i32\n";
 }
 
 BasicBlock::BasicBlock(Function& __master):Value(VoidType::NewVoidTypeGet()),master(__master){};
@@ -627,6 +643,29 @@ void Function::InsertAlloca(AllocaInst* ptr){
     front()->push_back(ptr);
 }
 
+void Function::InsertBlock(BasicBlock* pred,BasicBlock* succ,BasicBlock* insert){
+    if(auto condition=pred->back()){
+        if(auto cond=dynamic_cast<CondInst*>(condition)){
+            for(int i=1;i<=2;i++){
+                if(cond->Getuselist()[i]->GetValue()==succ){
+                    cond->RSUW(i,insert);
+                    insert->GenerateUnCondInst(succ);
+                    break;
+                }
+            }
+            assert("Not connected on CFG");
+            return;
+        }
+        else if(auto uncond=dynamic_cast<UnCondInst*>(condition)){
+            assert(cond->Getuselist()[0]->GetValue()==succ&&"Not connected on CFG");            
+            uncond->RSUW(0,insert);
+            insert->GenerateUnCondInst(succ);
+            return;
+        }
+    }
+    assert("Null BasicBlock Or Invalid Branch Inst");
+}
+
 BuildInFunction::BuildInFunction(Type* tp,std::string _id):Value(tp){
     name=_id;
     if(name=="starttime"||name=="stoptime")name="_sysy_"+name;
@@ -668,6 +707,39 @@ bool BasicBlock::EndWithBranch(){
     else if(auto data=dynamic_cast<CondInst*>(back()))return 1;
     else if(auto data=dynamic_cast<RetInst*>(back()))return 1;
     else return 0;
+}
+
+void BasicBlock::RemovePredBB(BasicBlock* pred){
+    //不能自己删除自己
+    if(pred==this) return;
+    for(auto iter=pred->begin();iter!=pred->end();++iter){
+        auto inst=*iter;
+        if(auto phi=dynamic_cast<PhiInst*>(pred->front())){
+            auto tmp=std::find_if(phi->PhiRecord.begin(),phi->PhiRecord.end(),
+            [pred](const std::pair<int,std::pair<Value*,BasicBlock*>>& ele){
+                return ele.second.second==pred;
+            });
+            if(tmp!=phi->PhiRecord.end())
+                phi->Del_Incomes(tmp->first);
+            if(phi->oprandNum==1){
+                //如果删除后还剩一个operand,检查是否是循环
+                BasicBlock* b=phi->PhiRecord.begin()->second.second;
+                if(b==this){
+                    phi->RAUW(UndefValue::get(phi->GetType()));
+                    phi->ClearRelation();
+                    phi->EraseFromParent();
+                    delete phi;
+                }else{
+                    Value* repl=(*(phi->PhiRecord.begin())).second.first;
+                    phi->RAUW(repl);
+                    phi->ClearRelation();
+                    phi->EraseFromParent();
+                    delete phi;
+                }
+            }
+        }else
+          return;
+    }
 }
 void BasicBlock::GenerateCondInst(Operand condi,BasicBlock* is_true,BasicBlock* is_false){
     auto inst=new CondInst(condi,is_true,is_false);
@@ -773,6 +845,12 @@ Operand BasicBlock::GenerateCallInst(std::string id,std::vector<Operand> args,in
         assert(0);
     }
 }
+
+void BasicBlock::Delete(){
+    assert(GetUserlist().is_empty()&&"It should not be used when human delete");
+    this->~BasicBlock();
+}
+
 void BasicBlock::GenerateAlloca(Variable* var){
     master.push_alloca(var);
 }
@@ -790,6 +868,21 @@ Operand BasicBlock::push_alloca(std::string name,Type* _tp){
     auto tmp=new AllocaInst(name,_tp);
     push_front(tmp);
     return tmp->GetDef();
+}
+
+int BasicBlock::GetSuccNum(){
+  if(dynamic_cast<CondInst*>(this->back()))
+    return 2;
+  else if(dynamic_cast<UnCondInst*>(this->back()))
+    return 1;
+  else 
+    return 0;
+}
+
+void BasicBlock::clear(){
+    for(auto inst:*this)
+        assert(inst->GetUserListSize()==0&&"Check No User Fail");
+    mylist<BasicBlock,User>::clear();
 }
 
 PhiInst* PhiInst::NewPhiNode(User *BeforeInst, BasicBlock *currentBB){
@@ -811,7 +904,7 @@ void PhiInst::updateIncoming(Value* Income,BasicBlock* BB){
 /// @brief 找到当前phi函数bb块所对应的数据流
 Value* PhiInst::ReturnValIn(BasicBlock* bb){
     auto it=std::find_if(PhiRecord.begin(),PhiRecord.end(),
-    [bb](std::pair<const int,std::pair<Value*,BasicBlock*>>& ele){
+    [bb](const std::pair<const int,std::pair<Value*,BasicBlock*>>& ele){
         return ele.second.second==bb;
     });
     if(it==PhiRecord.end())
@@ -819,38 +912,65 @@ Value* PhiInst::ReturnValIn(BasicBlock* bb){
     return it->second.first;
 }
 
-// bool PhiInst::modifyBlock(Value* val,BasicBlock* NewBlock){
-//     auto iter=std::find_if(PhiRecord.begin(),PhiRecord.end(),
-//     [val](std::pair<int,std::pair<Value*,BasicBlock*>>& ele){
-//         return ele.second.first==val;
-//     });
-// }
-// bool PhiInst::modifyIncome(Value* origin){
-//     auto iter=std::find_if(PhiRecord.begin(),PhiRecord.end(),
-//     [origin](std::pair<int,std::pair<Value*,BasicBlock*>>& ele){
-//         return ele.second.first==origin;
-//     });
-//     if(iter==PhiRecord.end())
-//       return false;
-//     int num=iter->first;
-//     PhiRecord.erase(iter);
-//     PhiRecord[num]=std::make_pair(origin,nullptr);///@warning 需要修改
-//     return true;
-// }
-
 std::vector<Value*>& PhiInst::GetAllPhiVal(){
+    Incomings.clear();
+    Blocks.clear();
     for(const auto &[_1,value]:PhiRecord){
         Incomings.push_back(value.first);
         Blocks.push_back(value.second);
     }
+    IsGetIncomings=true;
     return Incomings;
 }
 
-void PhiInst::Del_Incomes(int CurrentNum, std::map<int, std::pair<Value*, BasicBlock*>> _PhiRecord)
-{   if(_PhiRecord.find(CurrentNum) != _PhiRecord.end())
-        _PhiRecord.erase(CurrentNum);
+//将原来的origin值替换为newval
+void PhiInst::Phiprop(Value* origin,Value* newval){
+    auto iter=std::find_if(PhiRecord.begin(),PhiRecord.end(),
+    [=](const std::pair<int,std::pair<Value*,BasicBlock*>>& ele){
+        return ele.second.first==origin;
+    });
+    if(iter==PhiRecord.end())
+      assert(0);
+    BasicBlock* block=iter->second.second;
+    int Num=iter->first;
+    PhiRecord[Num]=std::make_pair(newval,block);
+    if(IsGetIncomings==true)
+      Incomings[Num]=newval;
+}
+
+void PhiInst::Del_Incomes(int CurrentNum)
+{   if(PhiRecord.find(CurrentNum) != PhiRecord.end()){
+        auto iter=std::find_if(uselist.begin(),uselist.end(),
+        [=](const std::unique_ptr<Use>& ele){
+            return ele->GetValue()==PhiRecord[CurrentNum].first;
+        });
+        (*iter)->RemoveFromUserList((*iter)->GetUser());
+        PhiRecord.erase(CurrentNum);
+        //维护PhiRecord的关系
+        std::vector<std::pair<int,std::pair<Value*,BasicBlock*>>> Defend;
+        for(auto& [_1,v]:PhiRecord)
+          if(_1>CurrentNum)
+            Defend.push_back(std::make_pair(_1,v));
+        for(const auto& item:Defend)
+          PhiRecord.erase(item.first);
+        for(const auto& item:Defend)
+          PhiRecord.insert(std::make_pair(item.first-1,item.second));
+        oprandNum--;
+    }
     else
         std::cerr << "No such PhiRecord" << std::endl;
+}
+
+bool PhiInst::IsSame(PhiInst* phi){
+    if(this->oprandNum!=phi->oprandNum)
+      return false;
+    for(auto& [_1,v]:PhiRecord){
+        Value* val=v.first;
+        BasicBlock* bb=v.second;
+        if(phi->ReturnValIn(bb)==nullptr||phi->ReturnValIn(bb)!=val)
+          return false;
+    }
+    return true;
 }
 
 void Function::push_alloca(Variable* ptr){
@@ -903,16 +1023,17 @@ void Module::GenerateGlobalVariable(Variable* ptr){
     globalvaribleptr.push_back(GlobalVariblePtr(ptr));
 }
 
-Function* Module::getMainFunc()
-{
-    Function* func = this->ls.back().get();
-    if(func)
-        return func;
-    else
-        return nullptr;
-}
 void Module::EraseFunction(Function* func)
 {
+    for(BasicBlock* block : *func)
+    {
+        for(auto inst_ = block->rbegin(); inst_ != block->rend(); --inst_)
+        {   
+            User* inst = *inst_;
+            inst->ClearRelation();
+            inst->EraseFromParent();
+        }
+    }
     for(auto iter = ls.begin(); iter != ls.end(); iter++)
     {
         if(iter->get() == func)
@@ -925,6 +1046,10 @@ void Module::EraseFunction(Function* func)
 
 std::vector<std::unique_ptr<Function>> &Module::GetFuncTion() {
     return ls;
+}
+
+std::vector<std::unique_ptr<Variable>> &Module::GetGlobalVariable() {
+    return globalvaribleptr;
 }
 
 Operand Module::GenerateMemcpyHandle(Type* _tp,Operand oper){
@@ -948,7 +1073,7 @@ void UndefValue::print(){
 
 void PhiInst::print() {
   dynamic_cast<Value*>(this)->print();
-  std::cout << " = Phi ";
+  std::cout << " = phi ";
   this->GetType()->print();
   std::cout << " ";
   for (int i = 0; i < oprandNum; i++) {

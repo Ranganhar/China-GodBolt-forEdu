@@ -27,12 +27,17 @@ void PRE::CalculatePredBB(BasicBlock *bb) {
     }
 }
 
+void PRE::CleanMemory() {
+  for (auto tmp : gen_exp)
+    delete tmp;
+}
+
 void PRE::init_pass() {
   BuildSets();
 
   Insert();
 
-  Eliminate();
+  CleanMemory();
 }
 
 //论文的第一步：构建AnticOut/AnticIn/AvailIn/AvailOut
@@ -145,30 +150,14 @@ void PRE::Insert() {
   }
 }
 
-//论文第三步，插入phi函数后进行eliminate
-void PRE::Eliminate() {
-  // first --> second
-  std::vector<std::pair<Value *, Value *>> rel;
-  for (auto bb : Dfs)
-    for (auto iter = bb->begin(); iter != bb->end(); ++iter) {
-      User *inst = *iter;
-      if (dynamic_cast<BinaryInst *>(inst) ||
-          dynamic_cast<GetElementPtrInst *>(inst)) {
-        // 如果存在当前bb的Availout有Leader但是当前值不在的
-        if (AvailOut[bb].IsAlreadyInsert(VN->LookupOrAdd(inst)) &&
-            !AvailOut[bb].contents.count(inst)) {
-          auto lead = Find_Leader(AvailOut[bb], inst);
-          rel.push_back(std::make_pair(lead, inst));
-        }
-      }
-    }
-  for (auto tmp : rel) {
-    tmp.second->RAUW(tmp.first);
-    if (auto u = dynamic_cast<User *>(tmp.second)) {
-      u->ClearRelation();
-      u->EraseFromParent();
-    }
-  }
+void PRE::RunOnFunction() {
+  BasicBlock *Entry = m_func->front();
+  auto entrynode = &(m_dom->GetNode(Entry->num));
+  m_func->init_visited_block();
+  DfsDT(0);
+  m_func->init_visited_block();
+  PostOrderCFG(m_func->front());
+  init_pass();
 }
 
 RetStats PRE::IdentyPartilRedundancy(
@@ -197,7 +186,8 @@ RetStats PRE::IdentyPartilRedundancy(
         }
       }
       //存在至少一条路径可用并且不是所有路径可用时，识别为部分冗余
-      if (!AllPathSame && SomePathSame) {
+      if (!AllPathSame && SomePathSame &&
+          !GeneratedPhis[cur].IsAlreadyInsert(VN->LookupOrAdd(val))) {
         FixPartialRedundancy(cur, predAvail, insert_set);
         return Changed;
       }
@@ -211,6 +201,7 @@ void PRE::FixPartialRedundancy(
     BasicBlock *cur, std::map<BasicBlock *, Value *> &predAvail,
     std::map<BasicBlock *, ValueNumberedSet> &insert_set) {
   Type *ty = nullptr;
+  User *ready2Relp = nullptr;
   for (auto p : m_dom->GetNode(cur->num).rev) {
     BasicBlock *pred = m_dom->GetNode(p).thisBlock;
     Value *v = predAvail[pred];
@@ -218,7 +209,7 @@ void PRE::FixPartialRedundancy(
       //因为后续需要创建一条新的指令，此时需要查看inst的各个操作数是否出现过
       User *inst = dynamic_cast<User *>(v);
       Value *op_1 = nullptr, *op_2 = nullptr;
-
+      ready2Relp = inst;
       if (dynamic_cast<BinaryInst *>(GetOperand(inst, 0)) ||
           dynamic_cast<GetElementPtrInst *>(GetOperand(inst, 0)))
         op_1 = Find_Leader(AvailOut[pred], GetOperand(inst, 0));
@@ -241,7 +232,7 @@ void PRE::FixPartialRedundancy(
           else
             args.push_back(arg);
         }
-      Value *newval = nullptr;
+      User *newval = nullptr;
       if (auto bin = dynamic_cast<BinaryInst *>(inst))
         newval = new BinaryInst(op_1, bin->getopration(), op_2);
       else if (auto gep = dynamic_cast<GetElementPtrInst *>(inst))
@@ -249,11 +240,18 @@ void PRE::FixPartialRedundancy(
       else
         assert(0);
 
-      // TODO 插入指令
+      auto tmp = pred->begin();
+      for (auto iter = pred->begin();; ++iter) {
+        if (iter == pred->end())
+          break;
+        tmp = iter;
+      }
+      tmp.insert_before(newval);
       VN->Add(newval);
-      if (ty == nullptr)
-        // ty = dynamic_cast<HasSubType *>(newval->GetType())->GetSubType();
+      if (ty == nullptr && dynamic_cast<BinaryInst *>(newval))
         ty = dynamic_cast<Type *>(newval->GetType());
+      else if (ty == nullptr && dynamic_cast<GetElementPtrInst *>(newval))
+        ty = dynamic_cast<HasSubType *>(newval->GetType())->GetSubType();
       // replace val in leader set
       ValueNumberedSet &newi = insert_set[pred];
       ValueNumberedSet &oldi = AvailOut[pred];
@@ -276,11 +274,26 @@ void PRE::FixPartialRedundancy(
       predAvail[pred] = newval;
     }
   }
+
   //在此处创建phiNode
   PhiInst *phi = PhiInst::NewPhiNode(cur->front(), cur, ty);
   for (auto p : m_dom->GetNode(cur->num).rev) {
     BasicBlock *pred = m_dom->GetNode(p).thisBlock;
-    phi->updateIncoming(predAvail[pred], pred);
+    if(ready2Relp!=predAvail[pred])
+      phi->updateIncoming(predAvail[pred], pred);
+  }
+  if(phi->oprandNum==1){
+    Value* v=(*(phi->PhiRecord.begin())).second.first;
+    ready2Relp->RAUW(v);
+    ready2Relp->ClearRelation();
+    ready2Relp->EraseFromParent();
+    phi->ClearRelation();
+    phi->EraseFromParent();
+  }
+  else {
+    ready2Relp->RAUW(phi);
+    ready2Relp->ClearRelation();
+    ready2Relp->EraseFromParent();
   }
   VN->Add(phi);
   AvailOut[cur].insert_val(phi);
@@ -557,16 +570,17 @@ Value *PRE::phi_translate(BasicBlock *pred, BasicBlock *succ, Value *val) {
       BinaryInst *newbin = new BinaryInst(op_1, bin->getopration(), op_2);
 
       int hash = VN->LookupOrAdd(newbin);
-      // TODO 为什么这里是AvailOut?
+
       if (!AvailOut[pred].IsAlreadyInsert(hash)) {
         gen_exp.push_back(newbin);
         return newbin;
       } else {
         VN->erase(newbin);
+        newbin->ClearRelation();
         delete newbin;
         for (auto x = AvailOut[pred].contents.begin();
              x != AvailOut[pred].contents.end(); x++)
-          if (hash = VN->LookupOrAdd(*x))
+          if (hash == VN->LookupOrAdd(*x))
             return *x;
       }
     }
@@ -597,7 +611,7 @@ Value *PRE::phi_translate(BasicBlock *pred, BasicBlock *succ, Value *val) {
         delete newgep;
         for (auto x = AvailOut[pred].contents.begin();
              x != AvailOut[pred].contents.end(); x++)
-          if (hash = VN->LookupOrAdd(*x))
+          if (hash == VN->LookupOrAdd(*x))
             return *x;
       }
     }

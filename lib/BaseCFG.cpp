@@ -38,6 +38,11 @@ Value::Value(Type *_tp) : tp(_tp) {
   name += std::to_string(Singleton<Module>().IR_number("."));
 }
 
+Value::~Value(){
+  while(!userlist.is_empty())
+    delete userlist.Front()->fat;
+}
+
 void Value::add_user(Use *__data) { userlist.push_front(__data); }
 void Value::SetName(std::string newname) { this->name = newname; }
 std::string Value::GetName() { return name; }
@@ -66,11 +71,36 @@ void Value::RAUW(Value* val){
     list.GetSize()=0;
     Use*& Head=list.Front();
     while(Head){
+        if(auto phi=dynamic_cast<PhiInst*>(Head->fat))
+          phi->Phiprop(Head->usee,val);
+        //@note避免未定义行为，此处只允许特殊情况的BB使用RAUW
+        // if(dynamic_cast<BasicBlock*>(val)&&dynamic_cast<BasicBlock*>(this)){
+        //   // BasicBlock* _1=dynamic_cast<BasicBlock*>(val);
+        //   BasicBlock* _2=dynamic_cast<BasicBlock*>(this);
+        //   Value* targ=_2->back()->Getuselist()[0]->GetValue();
+        //   Head->usee=targ;
+        //   Use* t=Head->nxt;
+        //   targ->userlist.push_front(Head);
+        //   Head=t;
+        //   continue;
+        // }
         Head->usee=val;
         Use* tmp=Head->nxt;
         val->userlist.push_front(Head);
         Head=tmp;
     }
+    //使用传入val替换this block-->即解决后继block中phi的问题
+    // if(dynamic_cast<BasicBlock*>(val) && dynamic_cast<BasicBlock*>(this))
+    //   for(int des dynamic_cast<BasicBlock*>(this))
+    //     for(auto iter=succ->begin();iter!=succ->end();++iter){
+    //       if(auto phi=dynamic_cast<PhiInst*>(*iter))
+    //         for(auto&[_1,x]:phi->PhiRecord){
+    //           if(x.second==dynamic_cast<BasicBlock*>(this))
+    //             x.second=dynamic_cast<BasicBlock*>(val);
+    //         }
+    //       else
+    //         break;   
+    //     }
 }
 
 bool Value::isUndefVal()
@@ -79,6 +109,14 @@ bool Value::isUndefVal()
         return true;
     else
         return false;
+}
+
+bool Value::isGlobVal(){
+  if(dynamic_cast<User*>(this))
+    return false;
+  if(dynamic_cast<ConstantData*>(this))
+    return false;
+  return true;
 }
 
 bool Value::isConstZero()
@@ -136,7 +174,10 @@ bool User::HasSideEffect()
   }
   if(dynamic_cast<CallInst*>(this))
   {
+    // if(this->GetTypeEnum() == IR_Value_VOID && !this->HasSideEffect())
+    //   return false;
     Function* func = dynamic_cast<Function*>(this->Getuselist()[0]->GetValue());
+    if(func){
     auto& params = func->GetParams();
     for(auto& param : params)
     {
@@ -154,11 +195,9 @@ bool User::HasSideEffect()
         {
           if((*iter)->HasSideEffect())
             return true;
-          else
-            return false;
         }
       }
-    }
+    }}
   }
   if(dynamic_cast<GetElementPtrInst*>(this))
   {
@@ -174,9 +213,19 @@ bool User::HasSideEffect()
   }
   if(this->GetUserlist().is_empty())
     return false;
+  return false;
 }
 
 Value *User::GetDef() { return dynamic_cast<Value *>(this); }
+
+// change uselist[num] to val while manage use-def relation
+void User::RSUW(int num,Operand val){
+  auto& uselist=Getuselist();
+  assert(0<=num&&num<uselist.size()&&"Invalid Location!");
+  uselist[num]->RemoveFromUserList(this);
+  uselist[num]->usee=val;
+  val->add_user(uselist[num].get());
+}
 
 ConstantData::ConstantData(Type *_tp) : Value(_tp) {}
 
@@ -206,12 +255,12 @@ ConstIRFloat::ConstIRFloat(float _val)
 float ConstIRFloat::GetVal() { return val; }
 
 ConstIRBoolean *ConstIRBoolean::GetNewConstant(bool _val) {
-  static ConstIRBoolean *true_const = new ConstIRBoolean(true);
-  static ConstIRBoolean *false_const = new ConstIRBoolean(false);
+  static ConstIRBoolean true_const(true);
+  static ConstIRBoolean false_const(false);
   if (_val)
-    return true_const;
+    return &true_const;
   else
-    return false_const;
+    return &false_const;
 }
 
 bool ConstIRBoolean::GetVal() { return val; }
