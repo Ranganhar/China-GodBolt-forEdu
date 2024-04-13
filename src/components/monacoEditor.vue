@@ -113,6 +113,7 @@ const toggle = () => {
 		vimMode.dispose()
 	}
 	status.value = !status.value
+
 	monacoEditor.focus()
 }
 watch(
@@ -132,6 +133,15 @@ onBeforeUnmount(() => {
 		monacoEditor.value.dispose()
 	}
 })
+
+//insert模式
+
+onKeyStroke(['i', 'I'], () => {
+	if (!status.value) {
+		console.log('I key pressed')
+	}
+})
+
 defineExpose({ toggle })
 </script>
 

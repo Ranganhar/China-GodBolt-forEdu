@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { useElementBounding, useDraggable } from '@vueuse/core'
 import { kMaxLength } from 'buffer'
 
 //初始代码
@@ -28,20 +27,37 @@ const GLayoutRoot = ref<null | HTMLElement>(null)
 
 const onClickInitLayoutMinRow = () => {
 	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.loadGLLayout(prefinedLayouts.aminiRow)
+	GLayoutRoot.value.loadGLLayout(prefinedLayouts.miniRow)
 }
 
-const onClickAddGLComponent1 = () => {
+const onClickAddComplier = () => {
+	return GLayoutRoot.value.addGLComponent('Complier', 'Compiler')
+}
+const onClickAddExecution = () => {
 	return GLayoutRoot.value.addGLComponent('Execution', 'Executor')
 }
 
-const onClickAddGLComponent2 = () => {
-	return GLayoutRoot.value.addGLComponent('sourceEditor', "I'm wide")
+const onClickAddSourceEditor = () => {
+	return GLayoutRoot.value.addGLComponent('SourceEditor', 'SourceEditor')
 }
-
-const onClickAddGLComponent3 = () => {
+const onClickAddOptimization = () => {
+	return GLayoutRoot.value.addGLComponent('Optimization', 'Optimization Viewer')
+}
+const onClickAddAbstractTree = () => {
 	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.addGLComponent('sourceEditor', "I'm high")
+	GLayoutRoot.value.addGLComponent('AbstractTree', 'AST Viewer')
+}
+const onClickAddLLVMIR = () => {
+	if (!GLayoutRoot.value) return
+	GLayoutRoot.value.addGLComponent('LLVMIR', 'LLVM IR Viewer')
+}
+const onClickAddPipeline = () => {
+	if (!GLayoutRoot.value) return
+	GLayoutRoot.value.addGLComponent('Pipeline', 'Opt Pipeline Viewer')
+}
+const onClickAddCFG = () => {
+	if (!GLayoutRoot.value) return
+	GLayoutRoot.value.addGLComponent('CFGraph', 'CFG Viewer')
 }
 
 const onClickSaveLayout = () => {
@@ -62,22 +78,34 @@ onMounted(onClickLoadLayout)
 onMounted(() => {
 	window.addEventListener('beforeunload', onClickSaveLayout)
 })
+
+provide('AddComplier', onClickAddComplier)
+provide('AddExecution', onClickAddExecution)
+provide('AddSourceEditor', onClickAddSourceEditor)
+provide('AddOptimization', onClickAddOptimization)
+provide('AddAbstractTree', onClickAddAbstractTree)
+provide('AddLLVMIR', onClickAddLLVMIR)
+provide('AddPipeline', onClickAddPipeline)
+provide('AddCFG', onClickAddCFG)
 </script>
 
 <template>
 	<div class="max-h-153 display_row w-screen overflow-hidden relative">
-		<div id="nav" style="height: 90px">
-			<h1 style="margin: 0">Golden Layout Demo</h1>
-			<button @click="onClickInitLayoutMinRow">Init Layout MinRow</button>
-			<div style="width: 20px; display: inline-block"></div>
+		<button
+			@click="onClickInitLayoutMinRow"
+			class="translate-x-253 z-999 absolute top--4"
+		>
+			aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+		</button>
+		<!-- <div style="width: 20px; display: inline-block"></div>
 			<button @click="onClickAddGLComponent1">Add Simple Component</button>
 			<button @click="onClickAddGLComponent2">Add Widest Component</button>
 			<button @click="onClickAddGLComponent3">Add Highest Component</button>
 			<div style="width: 20px; display: inline-block"></div>
 			<button @click="onClickSaveLayout">Save Layout</button>
 			<div style="width: 20px; display: inline-block"></div>
-			<button @click="onClickLoadLayout">Load Layout</button>
-		</div>
+			<button @click="onClickLoadLayout">Load Layout</button> -->
+
 		<glayout
 			ref="GLayoutRoot"
 			glc-path="./"

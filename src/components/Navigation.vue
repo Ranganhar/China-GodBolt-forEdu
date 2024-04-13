@@ -21,7 +21,15 @@ const routes = getRoutes()
 
 const $route = useRoute()
 const { availableLocales, locale } = useI18n()
-const options = ['Source Editor', 'Diff View']
+// const addSourceEditor = inject('AddSourceEditor')
+const options = ref({
+	'Source Editor': () => {
+		addSourceEditor()
+	},
+	'Diff View': () => {
+		console.log('Diff View')
+	},
+})
 const options_2 = ['History', 'Open New Tab']
 </script>
 
@@ -33,19 +41,19 @@ const options_2 = ['History', 'Open New Tab']
 		<div class="flex items-center justify-center space-x-2">
 			<a href="#" class="w-30 h-14 block flex">
 				<div
-					class="image-render-auto bg-cover bg-center bg-no-repeat logo h-14 w-19 ml--5 "
+					class="image-render-auto bg-cover bg-center bg-no-repeat logo h-14 w-19 ml--5"
 				></div>
-				<span class="text-size-7 text-orange-600 mt-1.5" >慧编</span>
-
+				<span class="text-size-7 text-blue-400 mt-1.5">慧编</span>
 			</a>
 			<Dropdown ref="target"
-				><template #up><div>新建</div></template>
+				><template #up><div>Add</div></template>
 				<template #down>
 					<span
-						v-for="option of options"
+						v-for="(method, option) of options"
 						:key="option"
 						class="block cursor-pointer rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-90 hover:bg-gray-100"
 						dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
+						@click="method"
 					>
 						<span
 							:class="
@@ -61,7 +69,7 @@ const options_2 = ['History', 'Open New Tab']
 				></Dropdown
 			>
 			<Dropdown
-				><template #up><div>更多</div></template>
+				><template #up><div>More</div></template>
 				<template #down
 					><span
 						v-for="option of options_2"

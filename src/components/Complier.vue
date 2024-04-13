@@ -111,6 +111,13 @@ watchDebounced(
 	},
 	{ debounce: 500, maxWait: 5000 },
 )
+
+const addExecution = inject('AddExecution')
+const addOptimization = inject('AddOptimization')
+const addAST = inject('AddAbstractTree')
+const addLLVMIR = inject('AddLLVMIR')
+const addOptPipeline = inject('AddPipeline')
+const addCFG = inject('AddCFG')
 </script>
 <template>
 	<div
@@ -211,6 +218,7 @@ watchDebounced(
 					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 					dark="bg-transparent hover:bg-gray-500"
 					title="Optimization"
+					@click="addExecution"
 				>
 					<span
 						class="i-heroicons:cpu-chip-20-solid h-6 w-6 text-black inline-block mt-1 bg-black"
@@ -222,6 +230,7 @@ watchDebounced(
 					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 					dark="bg-transparent hover:bg-gray-500"
 					title="Optimization"
+					@click="addOptimization"
 				>
 					<span
 						class="i-icon-park-solid:optimize h-6 w-6 text-black inline-block mt-1 bg-black"
@@ -233,6 +242,7 @@ watchDebounced(
 					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 					dark="bg-transparent hover:bg-gray-500"
 					title="AST"
+					@click="addAST"
 				>
 					<span class="i-bx:bxs-leaf h-6 w-6 text-black inline-block mt-1">
 					</span>
@@ -242,6 +252,7 @@ watchDebounced(
 					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 					dark="bg-transparent hover:bg-gray-500"
 					title="LLVM IR"
+					@click="addLLVMIR"
 				>
 					<span
 						class="i-game-icons:dragon-head h-6 w-6 text-black inline-block mt-1"
@@ -254,6 +265,7 @@ watchDebounced(
 					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 					dark="bg-transparent hover:bg-gray-500"
 					title="Opt Pipeline"
+					@click="addOptPipeline"
 				>
 					<span
 						class="i-gravity-ui:pipeline h-6 w-6 text-black inline-block mt-1"
@@ -265,6 +277,7 @@ watchDebounced(
 					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 					dark="bg-transparent hover:bg-gray-500"
 					title="Control Flow Graph"
+					@click="addCFG"
 				>
 					<span
 						class="i-tabler:arrows-exchange-2 h-6 w-6 text-black inline-block mt-1"
@@ -279,7 +292,9 @@ watchDebounced(
 			:permit="true"
 			v-if="!real_loading"
 		></monacoEditor>
-		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5" >Compiling...</h1>
+		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
+			Compiling...
+		</h1>
 		<el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />
 	</div>
 </template>

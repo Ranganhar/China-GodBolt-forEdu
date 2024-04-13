@@ -3,7 +3,17 @@ const editbox = ref(null)
 
 let fontsize = ref(16)
 
-const addoptions = ['Compiler', 'Excution', 'Source Editor']
+const addoptions = ref({
+	Compiler: () => {
+		addComplier()
+	},
+	Execution: () => {
+		addExecution()
+	},
+	'Source Editor': () => {
+		addSourceEditor()
+	},
+})
 const sizeoptions = [
 	8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
 	28, 29, 30,
@@ -30,7 +40,7 @@ const differenticons = (addoption: any) => {
 	return {
 		'i-material-symbols:settings-suggest-outline-rounded':
 			addoption === 'Compiler',
-		'i-heroicons:cpu-chip-20-solid': addoption === 'Excution',
+		'i-heroicons:cpu-chip-20-solid': addoption === 'Execution',
 		'i-ic:baseline-edit-calendar': addoption === 'Source Editor',
 	}
 }
@@ -39,6 +49,7 @@ const monaco = ref(null)
 const vimicon = ref(false)
 const vimtoggle = () => {
 	monaco.value.toggle()
+
 	vimicon.value = !vimicon.value
 }
 
@@ -86,6 +97,48 @@ onBeforeMount(() => {
 	final_initvalue.value = localStorage.getItem('code') || codeleft
 
 	localStorage.setItem('code', final_initvalue.value)
+})
+
+import Glayout from '@/components/Glayout.vue'
+
+import { prefinedLayouts } from '../composables/predefined-layouts'
+
+const GLayoutRoot = ref<null | HTMLElement>(null)
+
+const onClickInitLayoutMinRow = () => {
+	if (!GLayoutRoot.value) return
+	GLayoutRoot.value.loadGLLayout(prefinedLayouts.aminiRow)
+}
+
+const onClickAddExecution = () => {
+	console.log('Compiler')
+	return GLayoutRoot.value.addGLComponent('Execution', 'Executor')
+}
+
+// const onClickAddGLComponent2 = () => {
+// 	return GLayoutRoot.value.addGLComponent('OPtimization', "I'm wide")
+// }
+
+const addExecution = inject('AddExecution')
+const addComplier = inject('AddComplier')
+const addSourceEditor = inject('AddSourceEditor')
+const onClickSaveLayout = () => {
+	if (!GLayoutRoot.value) return
+	const config = GLayoutRoot.value.getLayoutConfig()
+	localStorage.setItem('gl_config', JSON.stringify(config))
+}
+
+const onClickLoadLayout = () => {
+	const str = localStorage.getItem('gl_config')
+	if (!str) return
+	if (!GLayoutRoot.value) return
+	const config = JSON.parse(str as string)
+	GLayoutRoot.value.loadGLLayout(config)
+}
+onMounted(onClickInitLayoutMinRow)
+onMounted(onClickLoadLayout)
+onMounted(() => {
+	window.addEventListener('beforeunload', onClickSaveLayout)
 })
 </script>
 
@@ -169,10 +222,11 @@ onBeforeMount(() => {
 							class="overflow-hidden h-33.5 w-40 p-2 rounded-md bg-light-100 shadow-lg divide-y divide-gray-100"
 						>
 							<span
-								v-for="addoption of addoptions"
+								v-for="(method, addoption) of addoptions"
 								:key="addoption"
 								class="block h-10 pt-2.4 cursor-pointer rounded-lg text-sm text-gray-500 hover:text-gray-90 hover:bg-gray-100"
 								dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
+								@click="method"
 							>
 								<span
 									:class="differenticons(addoption)"

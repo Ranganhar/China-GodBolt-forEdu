@@ -16,11 +16,9 @@ function dropdownHandler() {
 	<div class="relative">
 		<div class="overflow-hidden rounded-md">
 			<button
-
 				ref="target"
-				class="w-12 h-11 cursor-pointer border-0  p-2 bg-gray-100  hover:bg-gray-300 hover:text-gray-700"
+				class="w-12 h-11 cursor-pointer border-0 p-2 bg-gray-100 hover:bg-gray-300 hover:text-gray-700"
 				dark="bg-transparent hover:bg-gray-500"
-
 				@click.stop="visiable = !visiable"
 			>
 				<slot name="up"></slot>
@@ -30,9 +28,10 @@ function dropdownHandler() {
 		<Transition name="fade" mode="out-in">
 			<div
 				v-if="visiable"
+				@click.stop="visiable = !visiable"
 				v-on-click-outside.click="dropdownHandler"
 				dark="bg-gray-500"
-				class="rounded-md absolute start-0 z-10 mt-2 w-11  bg-light-100 shadow-lg divide-y divide-gray-100"
+				class="rounded-md absolute start-0 z-10 mt-2 w-11 bg-light-100 shadow-lg divide-y divide-gray-100"
 			>
 				<div>
 					<slot name="down"></slot>

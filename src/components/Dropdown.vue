@@ -22,7 +22,7 @@ function dropdownHandler() {
 		<div class="inline-flex items-center overflow-hidden rounded-md">
 			<button
 				ref="target"
-				class="flex w-19 h-full cursor-pointer border-0 bg-white p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
+				class="flex w-21 h-full cursor-pointer border-0 bg-white p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
 				dark="bg-transparent hover:bg-gray-500"
 				:class="
 					visiable

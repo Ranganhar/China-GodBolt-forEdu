@@ -33,6 +33,7 @@
     "@iconify-json/arcticons": "^1.1.100",
     "@iconify-json/bx": "^1.1.10",
     "@iconify-json/bxs": "^1.1.10",
+    "@iconify-json/carbon": "^1.1.31",
     "@iconify-json/ep": "^1.1.15",
     "@iconify-json/fluent": "^1.1.50",
     "@iconify-json/fluent-emoji-high-contrast": "^1.1.15",
@@ -53,6 +54,7 @@
     "@intlify/unplugin-vue-i18n": "^2.0.0",
     "@types/ityped": "^1.0.3",
     "@types/node": "^20.11.25",
+    "@types/splitpanes": "^2.2.6",
     "@typescript-eslint/parser": "^7.1.1",
     "@unocss/eslint-config": "^0.58.5",
     "@unocss/reset": "^0.58.5",
@@ -151,9 +153,12 @@
     "iOS >= 8"
   ],
   "dependencies": {
+    "@viz-js/viz": "^3.4.0",
     "element-plus": "^2.6.1",
     "golden-layout": "^2.6.0",
     "monaco-editor": "^0.47.0",
-    "monaco-vim": "^0.4.1"
+    "monaco-vim": "^0.4.1",
+    "panzoom": "^9.4.3",
+    "splitpanes": "^3.1.5"
   }
 }
