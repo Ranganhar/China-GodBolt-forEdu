@@ -332,3 +332,99 @@ attributes #4 = { nofree norecurse nounwind uwtable writeonly "correctly-rounded
 attributes #5 = { nofree nounwind }
 attributes #6 = { nounwind }
 attributes #7 = { cold }
+define i32 @main(){
+.1:
+  br label %.8 
+.8:
+  br label %.14 
+.14:
+  br label %.19 
+.18:
+  ret i32 3 
+.19:
+  br label %.23 
+.22:
+  ret i32 4 
+.23:
+  br label %.26 
+.26:
+  br label %.31 
+.29:
+  ret i32 6 
+.30:
+  br label %.36 
+.31:
+  br label %.30 
+.36:
+  br label %.39 
+.39:
+  br label %.46 
+.45:
+  ret i32 9 
+.46:
+  ret i32 10 
+}
+    .file  "--mem2reg"
+    .attribute arch, "rv64i2p1_m2p0_a2p1_f2p2_d2p2_c2p0_zicsr2p0"
+    .attribute unaligned_access, 0
+    .attribute stack_align, 16
+    .text
+    .align  1
+    .globl  main
+    .type  main, @function
+main:
+    addi sp, sp, -32
+    sd ra, 24(sp)
+    sd s0, 16(sp)
+    addi s0, sp, 32
+.LBB0_0:
+    j .LBB0_1
+.LBB0_1:
+    j .LBB0_2
+.LBB0_2:
+    j .LBB0_4
+.LBB0_3:
+    lw a0, 3
+    ld ra, 24(sp)
+    ld s0, 16(sp)
+    addi sp, sp, 32
+    ret
+.LBB0_4:
+    j .LBB0_6
+.LBB0_5:
+    lw a0, 4
+    ld ra, 24(sp)
+    ld s0, 16(sp)
+    addi sp, sp, 32
+    ret
+.LBB0_6:
+    j .LBB0_7
+.LBB0_7:
+    j .LBB0_10
+.LBB0_8:
+    lw a0, 6
+    ld ra, 24(sp)
+    ld s0, 16(sp)
+    addi sp, sp, 32
+    ret
+.LBB0_9:
+    j .LBB0_11
+.LBB0_10:
+    j .LBB0_9
+.LBB0_11:
+    j .LBB0_12
+.LBB0_12:
+    j .LBB0_14
+.LBB0_13:
+    lw a0, 9
+    ld ra, 24(sp)
+    ld s0, 16(sp)
+    addi sp, sp, 32
+    ret
+.LBB0_14:
+    lw a0, 10
+    ld ra, 24(sp)
+    ld s0, 16(sp)
+    addi sp, sp, 32
+    ret
+    .size main, -main

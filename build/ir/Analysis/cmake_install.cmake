@@ -1,4 +1,4 @@
-# Install script for directory: /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis
+# Install script for directory: /home/nanqin/JiShe/ir/Analysis
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -25,6 +25,11 @@ if(NOT CMAKE_INSTALL_COMPONENT)
   else()
     set(CMAKE_INSTALL_COMPONENT)
   endif()
+endif()
+
+# Install shared libraries without execute permission?
+if(NOT DEFINED CMAKE_INSTALL_SO_NO_EXE)
+  set(CMAKE_INSTALL_SO_NO_EXE "1")
 endif()
 
 # Is this installation the result of a crosscompile?

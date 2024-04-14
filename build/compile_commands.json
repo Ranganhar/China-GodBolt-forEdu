@@ -1,206 +1,162 @@
 [
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/yacc -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -Wno-unused-variable -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o CMakeFiles/SYSY-compiler.dir/main.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/main.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/main.cpp",
-  "output": "CMakeFiles/SYSY-compiler.dir/main.cpp.o"
+  "directory": "/home/nanqin/JiShe/build",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/yacc -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/backend -I/home/nanqin/JiShe/ir -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -Wno-unused-variable -g -o CMakeFiles/SYSY-compiler.dir/main.cpp.o -c /home/nanqin/JiShe/main.cpp",
+  "file": "/home/nanqin/JiShe/main.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o yacc/CMakeFiles/Yacc.dir/parser.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/yacc/parser.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/yacc/parser.cpp",
-  "output": "yacc/CMakeFiles/Yacc.dir/parser.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/yacc",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Yacc.dir/parser.cpp.o -c /home/nanqin/JiShe/yacc/parser.cpp",
+  "file": "/home/nanqin/JiShe/yacc/parser.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o yacc/CMakeFiles/Yacc.dir/scanner.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/yacc/scanner.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/yacc/scanner.cpp",
-  "output": "yacc/CMakeFiles/Yacc.dir/scanner.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/yacc",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Yacc.dir/scanner.cpp.o -c /home/nanqin/JiShe/yacc/scanner.cpp",
+  "file": "/home/nanqin/JiShe/yacc/scanner.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/Analysis/CMakeFiles/Analysis.dir/DealCriticalEdges.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis/DealCriticalEdges.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis/DealCriticalEdges.cpp",
-  "output": "ir/Analysis/CMakeFiles/Analysis.dir/DealCriticalEdges.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/Analysis",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/Analysis -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/opt -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Analysis.dir/DealCriticalEdges.cpp.o -c /home/nanqin/JiShe/ir/Analysis/DealCriticalEdges.cpp",
+  "file": "/home/nanqin/JiShe/ir/Analysis/DealCriticalEdges.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/Analysis/CMakeFiles/Analysis.dir/LivenessAnalysis.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis/LivenessAnalysis.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis/LivenessAnalysis.cpp",
-  "output": "ir/Analysis/CMakeFiles/Analysis.dir/LivenessAnalysis.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/ADCE.cpp.o -c /home/nanqin/JiShe/ir/opt/ADCE.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/ADCE.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/Analysis/CMakeFiles/Analysis.dir/LoopInfo.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis/LoopInfo.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis/LoopInfo.cpp",
-  "output": "ir/Analysis/CMakeFiles/Analysis.dir/LoopInfo.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/ConstantFold.cpp.o -c /home/nanqin/JiShe/ir/opt/ConstantFold.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/ConstantFold.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/ADCE.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/ADCE.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/ADCE.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/ADCE.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/ConstantProp.cpp.o -c /home/nanqin/JiShe/ir/opt/ConstantProp.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/ConstantProp.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/ConstantFold.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/ConstantFold.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/ConstantFold.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/ConstantFold.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/DCE.cpp.o -c /home/nanqin/JiShe/ir/opt/DCE.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/DCE.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/ConstantProp.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/ConstantProp.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/ConstantProp.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/ConstantProp.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/IDF.cpp.o -c /home/nanqin/JiShe/ir/opt/IDF.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/IDF.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/DCE.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/DCE.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/DCE.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/DCE.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/InstructionSimplify.cpp.o -c /home/nanqin/JiShe/ir/opt/InstructionSimplify.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/InstructionSimplify.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/IDF.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/IDF.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/IDF.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/IDF.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/LivenessAnalysis.cpp.o -c /home/nanqin/JiShe/ir/opt/LivenessAnalysis.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/LivenessAnalysis.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/Inline.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/Inline.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/Inline.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/Inline.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/LoopInfo.cpp.o -c /home/nanqin/JiShe/ir/opt/LoopInfo.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/LoopInfo.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/InstructionSimplify.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/InstructionSimplify.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/InstructionSimplify.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/InstructionSimplify.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/LoopRotate.cpp.o -c /home/nanqin/JiShe/ir/opt/LoopRotate.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/LoopRotate.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/LoopRotate.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/LoopRotate.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/LoopRotate.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/LoopRotate.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/Loop_Unroll.cpp.o -c /home/nanqin/JiShe/ir/opt/Loop_Unroll.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/Loop_Unroll.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/Loop_Unroll.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/Loop_Unroll.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/Loop_Unroll.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/Loop_Unroll.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/PromoteMemtoRegister.cpp.o -c /home/nanqin/JiShe/ir/opt/PromoteMemtoRegister.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/PromoteMemtoRegister.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/PhiElimination.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/PhiElimination.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/PhiElimination.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/PhiElimination.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/SSAPRE.cpp.o -c /home/nanqin/JiShe/ir/opt/SSAPRE.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/SSAPRE.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/PromoteMemtoRegister.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/PromoteMemtoRegister.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/PromoteMemtoRegister.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/PromoteMemtoRegister.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/StraightLineStrengthReduce.cpp.o -c /home/nanqin/JiShe/ir/opt/StraightLineStrengthReduce.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/StraightLineStrengthReduce.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/SSAPRE.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/SSAPRE.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/SSAPRE.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/SSAPRE.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/cfgSimplify.cpp.o -c /home/nanqin/JiShe/ir/opt/cfgSimplify.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/cfgSimplify.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/StraightLineStrengthReduce.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/StraightLineStrengthReduce.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/StraightLineStrengthReduce.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/StraightLineStrengthReduce.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/dominant.cpp.o -c /home/nanqin/JiShe/ir/opt/dominant.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/dominant.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/cfgSimplify.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/cfgSimplify.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/cfgSimplify.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/cfgSimplify.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/mem2reg.cpp.o -c /home/nanqin/JiShe/ir/opt/mem2reg.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/mem2reg.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/dominant.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/dominant.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/dominant.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/dominant.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/ir/opt",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/ir/opt -I/home/nanqin/JiShe/lib -I/home/nanqin/JiShe/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/opt.dir/passManager.cpp.o -c /home/nanqin/JiShe/ir/opt/passManager.cpp",
+  "file": "/home/nanqin/JiShe/ir/opt/passManager.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/mem2reg.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/mem2reg.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/mem2reg.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/mem2reg.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/lib",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Lib.dir/AST_NODE.cpp.o -c /home/nanqin/JiShe/lib/AST_NODE.cpp",
+  "file": "/home/nanqin/JiShe/lib/AST_NODE.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/Analysis -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o ir/opt/CMakeFiles/opt.dir/passManager.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/passManager.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/ir/opt/passManager.cpp",
-  "output": "ir/opt/CMakeFiles/opt.dir/passManager.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/lib",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Lib.dir/BaseCFG.cpp.o -c /home/nanqin/JiShe/lib/BaseCFG.cpp",
+  "file": "/home/nanqin/JiShe/lib/BaseCFG.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o lib/CMakeFiles/Lib.dir/AST_NODE.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/AST_NODE.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/AST_NODE.cpp",
-  "output": "lib/CMakeFiles/Lib.dir/AST_NODE.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/lib",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Lib.dir/CFG.cpp.o -c /home/nanqin/JiShe/lib/CFG.cpp",
+  "file": "/home/nanqin/JiShe/lib/CFG.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o lib/CMakeFiles/Lib.dir/BaseCFG.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/BaseCFG.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/BaseCFG.cpp",
-  "output": "lib/CMakeFiles/Lib.dir/BaseCFG.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/lib",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Lib.dir/Type.cpp.o -c /home/nanqin/JiShe/lib/Type.cpp",
+  "file": "/home/nanqin/JiShe/lib/Type.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o lib/CMakeFiles/Lib.dir/CFG.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/CFG.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/CFG.cpp",
-  "output": "lib/CMakeFiles/Lib.dir/CFG.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/lib",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Lib.dir/TypeTrans.cpp.o -c /home/nanqin/JiShe/lib/TypeTrans.cpp",
+  "file": "/home/nanqin/JiShe/lib/TypeTrans.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o lib/CMakeFiles/Lib.dir/Type.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/Type.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/Type.cpp",
-  "output": "lib/CMakeFiles/Lib.dir/Type.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/backend",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Backend.dir/AsmPrinter.cpp.o -c /home/nanqin/JiShe/backend/AsmPrinter.cpp",
+  "file": "/home/nanqin/JiShe/backend/AsmPrinter.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o lib/CMakeFiles/Lib.dir/TypeTrans.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/TypeTrans.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib/TypeTrans.cpp",
-  "output": "lib/CMakeFiles/Lib.dir/TypeTrans.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/backend",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Backend.dir/InstSelection.cpp.o -c /home/nanqin/JiShe/backend/InstSelection.cpp",
+  "file": "/home/nanqin/JiShe/backend/InstSelection.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o backend/CMakeFiles/Backend.dir/AsmPrinter.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/AsmPrinter.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/AsmPrinter.cpp",
-  "output": "backend/CMakeFiles/Backend.dir/AsmPrinter.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/backend",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Backend.dir/MachineCode.cpp.o -c /home/nanqin/JiShe/backend/MachineCode.cpp",
+  "file": "/home/nanqin/JiShe/backend/MachineCode.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o backend/CMakeFiles/Backend.dir/InstSelection.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/InstSelection.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/InstSelection.cpp",
-  "output": "backend/CMakeFiles/Backend.dir/InstSelection.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/backend",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Backend.dir/Mcode.cpp.o -c /home/nanqin/JiShe/backend/Mcode.cpp",
+  "file": "/home/nanqin/JiShe/backend/Mcode.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o backend/CMakeFiles/Backend.dir/MachineCode.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/MachineCode.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/MachineCode.cpp",
-  "output": "backend/CMakeFiles/Backend.dir/MachineCode.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/backend",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Backend.dir/gir.cpp.o -c /home/nanqin/JiShe/backend/gir.cpp",
+  "file": "/home/nanqin/JiShe/backend/gir.cpp"
 },
 {
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o backend/CMakeFiles/Backend.dir/Mcode.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/Mcode.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/Mcode.cpp",
-  "output": "backend/CMakeFiles/Backend.dir/Mcode.cpp.o"
-},
-{
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o backend/CMakeFiles/Backend.dir/gir.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/gir.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/gir.cpp",
-  "output": "backend/CMakeFiles/Backend.dir/gir.cpp.o"
-},
-{
-  "directory": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build",
-  "command": "/usr/bin/clang++ -DSYSY_ENABLE_MIDDLE_END -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/util -I/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -std=gnu++17 -arch arm64 -isysroot /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX14.4.sdk -o backend/CMakeFiles/Backend.dir/graph_draw.cpp.o -c /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/graph_draw.cpp",
-  "file": "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/backend/graph_draw.cpp",
-  "output": "backend/CMakeFiles/Backend.dir/graph_draw.cpp.o"
+  "directory": "/home/nanqin/JiShe/build/backend",
+  "command": "/usr/bin/g++ -DSYSY_ENABLE_MIDDLE_END -I/home/nanqin/JiShe/util -I/home/nanqin/JiShe/lib -DCMAKE_EXPORT_COMPILE_COMMANDS=1 -g -o CMakeFiles/Backend.dir/graph_draw.cpp.o -c /home/nanqin/JiShe/backend/graph_draw.cpp",
+  "file": "/home/nanqin/JiShe/backend/graph_draw.cpp"
 }
 ]
