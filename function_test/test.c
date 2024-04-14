@@ -1,34 +1,35 @@
-int main() {
-  const int a = 1;
-  const int b = 2;
-  const int c = 3;
-  const int d = 4;
-  const int e = 5;
-  const int f = 6;
-  if (a * b + c < 6 && d != 0) {
-    if (e || !a + 0) {
-      if (c == 2 && d + e > 2) return 3;
-      else {
-        if (f % c && e) return 4;
-        else {
-          if (d / b + a >= 2) {
-            if (e - f >= 0 || d > 4) return 6;
-            else {
-              if (c != f) {
-                if (b + e * d > 10) {
-                  if (!f) return 9;
-                  else return 10;
-                }
-                else return 8;
-              }
-              else return 7;
-            }
-          }
-          else return 5;
-        }
-      }
+const int V = 4;
+const int space = 32;
+const int LF = 10;
+
+void printSolution(int color[]) {
+}
+
+void printMessage() {
+}
+
+int isSafe(int graph[][V], int color[]) {
+}
+
+int graphColoring(int graph[][V], int m, int i, int color[]) {
+  if (i == V) {
+    if (isSafe(graph, color)) {
+      printSolution(color);
+      return 1;
     }
-    else return 2;
+    return 0;
   }
-  else return 1;
+  int j = 1;
+  while (j <= m) {
+    color[i] = j;
+    if (graphColoring(graph, m, i + 1, color))
+      return 1;
+    color[i] = 0;
+    j = j + 1;
+  }
+  return 0;
+}
+
+int main() {
+  return 0;
 }
