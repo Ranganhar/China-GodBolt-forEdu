@@ -9,8 +9,8 @@ export const useDataStore = defineStore('alldata', () => {
 	const compiler = ref('')
 	//后续支持
 	// const execution = ref('')
-	const optimization = ref('')
-	const LLVMIR = ref('')
+	// const optimization = ref('')
+	// const LLVMIR = ref('')
 	const AST = ref('')
 	const pipe = ref([])
 	const pipeline = ref([])
@@ -35,9 +35,9 @@ export const useDataStore = defineStore('alldata', () => {
 	)
 
 	watch([code, version, option], async () => {
-		console.log('code:', code.value)
-		console.log('version:', version.value)
-		console.log('option:', option.value)
+		// console.log('code:', code.value)
+		// console.log('version:', version.value)
+		// console.log('option:', option.value)
 		if (fetchInstance.isFinished) {
 			fetchOptions.body = JSON.stringify({
 				code: code.value,
@@ -48,8 +48,8 @@ export const useDataStore = defineStore('alldata', () => {
 			if (response.ok) {
 				const data = await response.json()
 				compiler.value = data.compiler
-				optimization.value = data.optimization
-				LLVMIR.value = data.LLVMIR
+				// optimization.value = data.optimization
+				// LLVMIR.value = data.LLVMIR
 				AST.value = data.AST
 				pipe.value = data.pipe
 				pipeline.value = data.pipeline
@@ -63,8 +63,8 @@ export const useDataStore = defineStore('alldata', () => {
 		version,
 		option,
 		compiler,
-		optimization,
-		LLVMIR,
+		// optimization,
+		// LLVMIR,
 		AST,
 		pipe,
 		pipeline,

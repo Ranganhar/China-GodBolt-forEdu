@@ -90,7 +90,7 @@ provide('AddCFG', onClickAddCFG)
 </script>
 
 <template>
-	<div class="max-h-153 display_row w-screen overflow-hidden relative">
+	<div class="h-screen display_row w-screen overflow-hidden relative">
 		<button
 			@click="onClickInitLayoutMinRow"
 			class="translate-x-253 z-999 absolute top--4"

@@ -3,6 +3,7 @@ import panzoom from 'panzoom'
 
 //网络请求
 import { useDataStore } from '@/stores/alldata'
+
 const DataStore = useDataStore()
 
 const complier = ref(null)
@@ -21,40 +22,60 @@ watch(
 
 const loading = useLoading()
 let pz: any
-let svg: any = []
-let name: any = []
-const svgzoom = ref(svg[0])
-let image = ref(null)
-const namedefault = ref(name[0])
+// let svg: any = []
+let name: any = [
+	{
+		value: 'test',
+		label: 'test',
+	},
+
+	{
+		value: 'test2',
+		label: 'test2',
+	},
+	{
+		value: 'test3',
+		label: 'test3',
+	},
+	{
+		value: 'test4',
+		label: 'test4',
+	},
+]
+// const svgzoom = ref(svg[0])
+
+const namedefault = ref(name[0].value)
+
 const resetPosition = () => {
 	if (pz) {
-		pz = panzoom(
-			svgzoom.value, // boundsPadding: 0.1,
-		)
+		// pz = panzoom(
+		// 	// svgzoom.value, // boundsPadding: 0.1,
+		// )
 	}
 }
 
+const imgsrc = ref('img/test3.svg')
+
+// const elem = document.getElementById('image')
+// const pa = panzoom(elem)
 watch(
 	() => namedefault,
 	() => {
-		let order = name.indexOf(namedefault)
-		if (order == -1) {
-			svgzoom.value = svg[order]
-		} else {
-			console.log('Character not found in array1')
-		}
+		imgsrc.value = `img/${namedefault.value}.svg`
 	},
 )
+
 watch(
 	() => DataStore.CFG,
 	() => {
-		for (let index = 0; index < DataStore.CFG.length; index++) {
-			name[index] = DataStore.CFG[index].name
-			svg[index] = DataStore.CFG[index].svg
-		}
-		if (pz) {
-			pz = panzoom(svgzoom.value)
-		}
+		const values = DataStore.CFG
+		name = name.map((item: any, index: number) => {
+			const newValue = values[index]
+			return {
+				value: newValue,
+				label: newValue,
+			}
+		})
 	},
 	{
 		immediate: true,
@@ -163,15 +184,14 @@ watch(
 			</button>
 		</div>
 
-		<div id="graph" class="w-full overflow-hidden h-full">
-			{{ svgzoom }}
-			<img
-				src="../assets/img/test3.svg"
-				alt="Description of SVG"
-				ref="image"
-				id="image"
-			/>
-		</div>
+		<!-- {{ svgzoom }} -->
+		<img
+			:src="imgsrc"
+			alt="Description of SVG"
+			id="image"
+			v-if="!real_loading"
+		/>
+
 		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
 			Compiling...
 		</h1>
