@@ -20,14 +20,14 @@ static struct option long_options[] = {
     {"constprop", no_argument, 0, 2}, {"dce", no_argument, 0, 3},
     {"adce", no_argument, 0, 4},     {"loopinfo",no_argument,0,5},
     {"help", no_argument, 0, 6},      {"simplifycfg",no_argument,0,7},
-    {"ece", no_argument, 0, 8},
+    {"ece", no_argument, 0, 8}, 
     {0, 0, 0, 0}};
 
 int main(int argc, char **argv) {
   std::string output_path = argv[1];
   output_path += ".ll";
-  copyFile("runtime.ll", output_path);
-  freopen(output_path.c_str(), "a", stdout);
+  //copyFile("runtime.ll", output_path);
+  //freopen(output_path.c_str(), "a", stdout);
   yyin = fopen(argv[1], "r");
   yy::parser parse;
   parse();
