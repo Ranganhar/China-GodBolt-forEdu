@@ -208,52 +208,20 @@ watchDebounced(
 				>
 				</span>
 			</button>
-		</div>
-		<!-- 第一层 -->
-		<div class="bg-gray-100 optionchoose h-10 w-full flex">
-			<!-- 语言选择 -->
-			<div
-				name="languageoption"
-				class="rounded-lg bg-light-100 h-full w-42 border-1 cursor-pointer bord text-size-4 text-color-#343a40"
-			>
-				<el-select
-					v-model="version"
-					filterable
-					placeholder="x86-64 clang 12.0.0"
-					size="large"
-					class="!w-65"
-					placement="bottom"
-				>
-					<el-option
-						v-for="item in options"
-						:key="item.value"
-						:label="item.label"
-						:value="item.value"
-					/>
-				</el-select>
-			</div>
-
-			<!-- 加载符号 -->
-			<div
+				<!-- 加载符号 -->
+				<div
 				v-loading="real_loading"
 				:element-loading-svg="loadingsvg"
 				element-loading-svg-view-box="-10, -10, 50, 50"
-				class="rounded-lg ml-23 !p-2 bg-light-100 h-full w-10 border-1 cursor-pointer"
+				class="rounded-lg ml-3 mb-0 !p-2 bg-light-100 h-full w-10 border-1 cursor-pointer"
 			>
 				<div
 					:class="real_loading ? '' : 'correct'"
 					class="bg-contain bg-no-repeat h-6 w-6"
 				></div>
 			</div>
-
-			<!-- 编译参数 -->
-			<el-input
-				v-model="compileroption"
-				class="!w-full"
-				size="large"
-				placeholder="Compiler options"
-			/>
 		</div>
+
 
 		<el-input
 			ref="stdin"

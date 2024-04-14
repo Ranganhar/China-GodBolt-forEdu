@@ -38,6 +38,10 @@ const coderight = `int test(int a[], int b[], int c)
 
 const loading = useLoading()
 const addCFG = inject('AddCFG')
+
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
 </script>
 <template>
 	<div
@@ -108,6 +112,7 @@ const addCFG = inject('AddCFG')
 			:initvalue="coderight"
 			:fontsize="fontsize"
 			:permit="true"
+			:compliercode="DataStore.compiler"
 			v-if="!real_loading"
 		></monacoEditor>
 		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">

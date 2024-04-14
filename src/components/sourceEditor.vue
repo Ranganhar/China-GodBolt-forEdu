@@ -60,6 +60,7 @@ let { base64: textBase64 } = useBase64(text)
 const changevalue = (newValue) => {
 	text.value = newValue
 	localStorage.setItem('code', newValue)
+	DataStore.code = newValue
 }
 
 // 访问 textBase64 的实际值
@@ -99,47 +100,13 @@ onBeforeMount(() => {
 	localStorage.setItem('code', final_initvalue.value)
 })
 
-import Glayout from '@/components/Glayout.vue'
-
-import { prefinedLayouts } from '../composables/predefined-layouts'
-
-const GLayoutRoot = ref<null | HTMLElement>(null)
-
-const onClickInitLayoutMinRow = () => {
-	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.loadGLLayout(prefinedLayouts.aminiRow)
-}
-
-const onClickAddExecution = () => {
-	console.log('Compiler')
-	return GLayoutRoot.value.addGLComponent('Execution', 'Executor')
-}
-
-// const onClickAddGLComponent2 = () => {
-// 	return GLayoutRoot.value.addGLComponent('OPtimization', "I'm wide")
-// }
-
 const addExecution = inject('AddExecution')
 const addComplier = inject('AddComplier')
 const addSourceEditor = inject('AddSourceEditor')
-const onClickSaveLayout = () => {
-	if (!GLayoutRoot.value) return
-	const config = GLayoutRoot.value.getLayoutConfig()
-	localStorage.setItem('gl_config', JSON.stringify(config))
-}
 
-const onClickLoadLayout = () => {
-	const str = localStorage.getItem('gl_config')
-	if (!str) return
-	if (!GLayoutRoot.value) return
-	const config = JSON.parse(str as string)
-	GLayoutRoot.value.loadGLLayout(config)
-}
-onMounted(onClickInitLayoutMinRow)
-onMounted(onClickLoadLayout)
-onMounted(() => {
-	window.addEventListener('beforeunload', onClickSaveLayout)
-})
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
 </script>
 
 <template>

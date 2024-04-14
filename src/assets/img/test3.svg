@@ -1,0 +1,118 @@
+
+<svg width="1048pt" height="764pt"
+ viewBox="0.00 0.00 1048.00 764.00" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 760)">
+<title>Dominator tree for &#39;printans&#39; function</title>
+<polygon fill="white" stroke="transparent" points="-4,4 -4,-760 1044,-760 1044,4 -4,4"/>
+<text text-anchor="middle" x="520" y="-7.8" font-family="Times,serif" font-size="14.00">Dominator tree for &#39;printans&#39; function</text>
+<!-- Node0x56362569e590 -->
+<g id="node1" class="node">
+<title>Node0x56362569e590</title>
+<polygon fill="none" stroke="black" points="554.5,-642.5 554.5,-755.5 820.5,-755.5 820.5,-642.5 554.5,-642.5"/>
+<text text-anchor="start" x="562.5" y="-740.3" font-family="Times,serif" font-size="14.00">%0:</text>
+<text text-anchor="start" x="562.5" y="-725.3" font-family="Times,serif" font-size="14.00"> %1 = alloca i32, align 4</text>
+<text text-anchor="start" x="562.5" y="-710.3" font-family="Times,serif" font-size="14.00"> %2 = load i32, i32* @sum, align 4</text>
+<text text-anchor="start" x="562.5" y="-695.3" font-family="Times,serif" font-size="14.00"> %3 = add nsw i32 %2, 1</text>
+<text text-anchor="start" x="562.5" y="-680.3" font-family="Times,serif" font-size="14.00"> store i32 %3, i32* @sum, align 4</text>
+<text text-anchor="start" x="562.5" y="-665.3" font-family="Times,serif" font-size="14.00"> store i32 1, i32* %1, align 4</text>
+<text text-anchor="start" x="562.5" y="-650.3" font-family="Times,serif" font-size="14.00"> br label %4</text>
+</g>
+<!-- Node0x5636256a2460 -->
+<g id="node2" class="node">
+<title>Node0x5636256a2460</title>
+<polygon fill="none" stroke="black" points="565,-506.5 565,-605.5 810,-605.5 810,-506.5 565,-506.5"/>
+<text text-anchor="start" x="573" y="-590.3" font-family="Times,serif" font-size="14.00">%4:</text>
+<text text-anchor="start" x="573" y="-559.3" font-family="Times,serif" font-size="14.00"> %5 = load i32, i32* %1, align 4</text>
+<text text-anchor="start" x="573" y="-544.3" font-family="Times,serif" font-size="14.00"> %6 = load i32, i32* @n, align 4</text>
+<text text-anchor="start" x="573" y="-529.3" font-family="Times,serif" font-size="14.00"> %7 = icmp sle i32 %5, %6</text>
+<text text-anchor="start" x="573" y="-514.3" font-family="Times,serif" font-size="14.00"> br i1 %7, label %8, label %24</text>
+</g>
+<!-- Node0x56362569e590&#45;&gt;Node0x5636256a2460 -->
+<g id="edge1" class="edge">
+<title>Node0x56362569e590&#45;&gt;Node0x5636256a2460</title>
+<path fill="none" stroke="black" d="M687.5,-642.27C687.5,-633.64 687.5,-624.7 687.5,-616"/>
+<polygon fill="black" stroke="black" points="691,-615.93 687.5,-605.93 684,-615.93 691,-615.93"/>
+</g>
+<!-- Node0x5636256a7870 -->
+<g id="node3" class="node">
+<title>Node0x5636256a7870</title>
+<polygon fill="none" stroke="black" points="240,-280.5 240,-469.5 799,-469.5 799,-280.5 240,-280.5"/>
+<text text-anchor="start" x="248" y="-454.3" font-family="Times,serif" font-size="14.00">%8:</text>
+<text text-anchor="start" x="248" y="-423.3" font-family="Times,serif" font-size="14.00"> %9 = load i32, i32* %1, align 4</text>
+<text text-anchor="start" x="248" y="-408.3" font-family="Times,serif" font-size="14.00"> %10 = sext i32 %9 to i64</text>
+<text text-anchor="start" x="248" y="-393.3" font-family="Times,serif" font-size="14.00"> %11 = getelementptr inbounds [50 x i32], [50 x i32]* @ans, i64 0, i64 %10</text>
+<text text-anchor="start" x="248" y="-378.3" font-family="Times,serif" font-size="14.00"> %12 = load i32, i32* %11, align 4</text>
+<text text-anchor="start" x="248" y="-363.3" font-family="Times,serif" font-size="14.00"> %13 = call i32 (i32, ...) bitcast (i32 (...)* @putint to i32 (i32,</text>
+<text text-anchor="start" x="248" y="-348.3" font-family="Times,serif" font-size="14.00">... ...)*)(i32 %12)</text>
+<text text-anchor="start" x="248" y="-333.3" font-family="Times,serif" font-size="14.00"> %14 = load i32, i32* %1, align 4</text>
+<text text-anchor="start" x="248" y="-318.3" font-family="Times,serif" font-size="14.00"> %15 = load i32, i32* @n, align 4</text>
+<text text-anchor="start" x="248" y="-303.3" font-family="Times,serif" font-size="14.00"> %16 = icmp eq i32 %14, %15</text>
+<text text-anchor="start" x="248" y="-288.3" font-family="Times,serif" font-size="14.00"> br i1 %16, label %17, label %19</text>
+</g>
+<!-- Node0x5636256a2460&#45;&gt;Node0x5636256a7870 -->
+<g id="edge2" class="edge">
+<title>Node0x5636256a2460&#45;&gt;Node0x5636256a7870</title>
+<path fill="none" stroke="black" d="M641.59,-506.09C632.99,-496.92 623.72,-487.04 614.26,-476.96"/>
+<polygon fill="black" stroke="black" points="616.74,-474.49 607.34,-469.6 611.64,-479.28 616.74,-474.49"/>
+</g>
+<!-- Node0x5636256a4160 -->
+<g id="node4" class="node">
+<title>Node0x5636256a4160</title>
+<polygon fill="none" stroke="black" points="817,-348 817,-402 894,-402 894,-348 817,-348"/>
+<text text-anchor="start" x="825" y="-386.8" font-family="Times,serif" font-size="14.00">%24:</text>
+<text text-anchor="start" x="825" y="-355.8" font-family="Times,serif" font-size="14.00"> ret void</text>
+</g>
+<!-- Node0x5636256a2460&#45;&gt;Node0x5636256a4160 -->
+<g id="edge3" class="edge">
+<title>Node0x5636256a2460&#45;&gt;Node0x5636256a4160</title>
+<path fill="none" stroke="black" d="M768.68,-506.44C783.03,-495.6 797.02,-483.32 808.5,-470 823.2,-452.93 834.66,-430.46 842.58,-411.77"/>
+<polygon fill="black" stroke="black" points="845.87,-412.97 846.39,-402.39 839.38,-410.33 845.87,-412.97"/>
+</g>
+<!-- Node0x5636256a10d0 -->
+<g id="node5" class="node">
+<title>Node0x5636256a10d0</title>
+<polygon fill="none" stroke="black" points="0,-159.5 0,-243.5 511,-243.5 511,-159.5 0,-159.5"/>
+<text text-anchor="start" x="8" y="-228.3" font-family="Times,serif" font-size="14.00">%17:</text>
+<text text-anchor="start" x="8" y="-197.3" font-family="Times,serif" font-size="14.00"> %18 = call i32 (i32, ...) bitcast (i32 (...)* @putch to i32 (i32, ...)*)(i32</text>
+<text text-anchor="start" x="8" y="-182.3" font-family="Times,serif" font-size="14.00">... 10)</text>
+<text text-anchor="start" x="8" y="-167.3" font-family="Times,serif" font-size="14.00"> br label %24</text>
+</g>
+<!-- Node0x5636256a7870&#45;&gt;Node0x5636256a10d0 -->
+<g id="edge4" class="edge">
+<title>Node0x5636256a7870&#45;&gt;Node0x5636256a10d0</title>
+<path fill="none" stroke="black" d="M375.53,-280.47C358.88,-269.66 342.5,-259.02 327.44,-249.23"/>
+<polygon fill="black" stroke="black" points="329.02,-246.09 318.73,-243.58 325.21,-251.96 329.02,-246.09"/>
+</g>
+<!-- Node0x5636256a7cb0 -->
+<g id="node6" class="node">
+<title>Node0x5636256a7cb0</title>
+<polygon fill="none" stroke="black" points="529,-159.5 529,-243.5 1040,-243.5 1040,-159.5 529,-159.5"/>
+<text text-anchor="start" x="537" y="-228.3" font-family="Times,serif" font-size="14.00">%19:</text>
+<text text-anchor="start" x="537" y="-197.3" font-family="Times,serif" font-size="14.00"> %20 = call i32 (i32, ...) bitcast (i32 (...)* @putch to i32 (i32, ...)*)(i32</text>
+<text text-anchor="start" x="537" y="-182.3" font-family="Times,serif" font-size="14.00">... 32)</text>
+<text text-anchor="start" x="537" y="-167.3" font-family="Times,serif" font-size="14.00"> br label %21</text>
+</g>
+<!-- Node0x5636256a7870&#45;&gt;Node0x5636256a7cb0 -->
+<g id="edge5" class="edge">
+<title>Node0x5636256a7870&#45;&gt;Node0x5636256a7cb0</title>
+<path fill="none" stroke="black" d="M664.02,-280.47C680.72,-269.66 697.17,-259.02 712.29,-249.23"/>
+<polygon fill="black" stroke="black" points="714.54,-251.95 721.03,-243.58 710.73,-246.07 714.54,-251.95"/>
+</g>
+<!-- Node0x5636256a2930 -->
+<g id="node7" class="node">
+<title>Node0x5636256a2930</title>
+<polygon fill="none" stroke="black" points="657.5,-23.5 657.5,-122.5 911.5,-122.5 911.5,-23.5 657.5,-23.5"/>
+<text text-anchor="start" x="665.5" y="-107.3" font-family="Times,serif" font-size="14.00">%21:</text>
+<text text-anchor="start" x="665.5" y="-76.3" font-family="Times,serif" font-size="14.00"> %22 = load i32, i32* %1, align 4</text>
+<text text-anchor="start" x="665.5" y="-61.3" font-family="Times,serif" font-size="14.00"> %23 = add nsw i32 %22, 1</text>
+<text text-anchor="start" x="665.5" y="-46.3" font-family="Times,serif" font-size="14.00"> store i32 %23, i32* %1, align 4</text>
+<text text-anchor="start" x="665.5" y="-31.3" font-family="Times,serif" font-size="14.00"> br label %4</text>
+</g>
+<!-- Node0x5636256a7cb0&#45;&gt;Node0x5636256a2930 -->
+<g id="edge6" class="edge">
+<title>Node0x5636256a7cb0&#45;&gt;Node0x5636256a2930</title>
+<path fill="none" stroke="black" d="M784.5,-159.43C784.5,-150.94 784.5,-141.84 784.5,-132.85"/>
+<polygon fill="black" stroke="black" points="788,-132.8 784.5,-122.8 781,-132.8 788,-132.8"/>
+</g>
+</g>
+</svg>

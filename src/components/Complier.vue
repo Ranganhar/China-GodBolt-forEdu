@@ -93,6 +93,13 @@ const coderight = `define dso_local i32 @test(int*, int*, int)(i32* %0, i32* %1,
 
 attributes #0 = { noinline nounwind optnone uwtable mustprogress "disable-tail-calls"="false" "frame-pointer"="all" "less-precise-fpmad"="false" "min-legal-vector-width"="0" "no-infs-fp-math"="false" "no-jump-tables"="false" "no-nans-fp-math"="false" "no-signed-zeros-fp-math"="false" "no-trapping-math"="true" "stack-protector-buffer-size"="8" "target-cpu"="x86-64" "target-features"="+cx8,+fxsr,+mmx,+sse,+sse2,+x87" "tune-cpu"="generic" "unsafe-fp-math"="false" "use-soft-float"="false" }`
 
+onBeforeMount(() => {
+	version.value = localStorage.getItem('version') || 'x86-64 clang 12.0.0'
+	compileroption.value = localStorage.getItem('option') || ''
+	localStorage.setItem('version', version.value)
+	localStorage.setItem('option', compileroption.value)
+})
+
 //默认编译参数
 const compileroption = ref('')
 const loading = useLoading()
@@ -100,6 +107,8 @@ watchDebounced(
 	compileroption,
 	() => {
 		loading.refresh()
+		DataStore.option = compileroption.value
+		localStorage.setItem('option', compileroption.value)
 	},
 	{ debounce: 500, maxWait: 5000 },
 )
@@ -108,6 +117,8 @@ watchDebounced(
 	version,
 	() => {
 		loading.refresh()
+		DataStore.version = version.value
+		localStorage.setItem('version', version.value)
 	},
 	{ debounce: 500, maxWait: 5000 },
 )
@@ -118,6 +129,10 @@ const addAST = inject('AddAbstractTree')
 const addLLVMIR = inject('AddLLVMIR')
 const addOptPipeline = inject('AddPipeline')
 const addCFG = inject('AddCFG')
+
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
 </script>
 <template>
 	<div
@@ -290,6 +305,7 @@ const addCFG = inject('AddCFG')
 			:initvalue="coderight"
 			:fontsize="fontsize"
 			:permit="true"
+			
 			v-if="!real_loading"
 		></monacoEditor>
 		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">

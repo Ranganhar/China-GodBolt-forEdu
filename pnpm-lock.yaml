@@ -88,6 +88,9 @@ devDependencies:
   '@iconify-json/tabler':
     specifier: ^1.1.109
     version: 1.1.109
+  '@iconify-json/teenyicons':
+    specifier: ^1.1.9
+    version: 1.1.9
   '@iconify-json/vscode-icons':
     specifier: ^1.1.33
     version: 1.1.33
@@ -1103,6 +1106,12 @@ packages:
 
   /@iconify-json/tabler@1.1.109:
     resolution: {integrity: sha512-74RaBQZQ0761iFTrgmuSH1fovfx0fBKn+txRbRNbRzfh8XWtlAHqKUc3CzvzATMLnVsSRJDxjG3qY4oWH/+opw==}
+    dependencies:
+      '@iconify/types': 2.0.0
+    dev: true
+
+  /@iconify-json/teenyicons@1.1.9:
+    resolution: {integrity: sha512-8QsYNkeaKkUQensRE2OyTpjBmUTcHerwwTdo82Lsxh0t1g0tZVfqjuoevF5KwDFCbfObK49gdfiuyzGcmuliVw==}
     dependencies:
       '@iconify/types': 2.0.0
     dev: true

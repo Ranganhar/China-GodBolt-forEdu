@@ -36,7 +36,20 @@ const coderight = `int test(int a[], int b[], int c)
     return e;
 }`
 
-const loading = useLoading()
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
+const choosepipeline = ref('')
+const handleSelect = (index: any) => {
+	choosepipeline.value = DataStore.pipeline[index]
+}
+watch(
+	() => DataStore.pipe,
+	() => {
+		menuItems.value = DataStore.pipe
+	},
+)
+const menuItems = ref(['Navigator Two', 'Navdsdigator', 'Navigator Four'])
 </script>
 <template>
 	<div
@@ -95,15 +108,14 @@ const loading = useLoading()
 		<splitpanes class="default-theme h-full w-full" :dbl-click-splitter="false">
 			<pane size="20" min-size="10" max-size="35">
 				<div class="ml-2">Passes:</div>
-				<el-menu class="h-full" @open="handleOpen" @close="handleClose">
-					<el-menu-item index="1" class="!ml--5 !h-10">
-						<p>Navigator Two</p>
-					</el-menu-item>
-					<el-menu-item index="2" class="!ml--5 !h-10">
-						<p class="!w-1">Navdsdigator</p>
-					</el-menu-item>
-					<el-menu-item index="3" class="!ml--5 !h-10">
-						<p>Navigator Four</p>
+				<el-menu class="h-full" @select="handleSelect">
+					<el-menu-item
+						v-for="(item, index) in menuItems"
+						:key="index"
+						:index="index.toString()"
+						class="!ml--5 !h-10"
+					>
+						<p>{{ item }}</p>
 					</el-menu-item>
 				</el-menu>
 			</pane>
@@ -112,6 +124,7 @@ const loading = useLoading()
 					:initvalue="coderight"
 					:fontsize="fontsize"
 					:permit="true"
+					:compliercode="choosepipeline"
 					v-if="!real_loading"
 				></monacoEditor>
 				<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">

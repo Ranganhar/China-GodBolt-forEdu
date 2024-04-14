@@ -25,6 +25,10 @@ const props = defineProps({
 		type: Boolean,
 		default: false,
 	},
+	compliercode: {
+		type: String,
+		default: '',
+	},
 })
 const main = ref(null)
 const vim = ref(null)
@@ -124,7 +128,14 @@ watch(
 		monacoEditor.updateOptions({ fontSize: real_fontsize.value })
 	},
 )
-
+let real_compliercode = ref(props.compliercode)
+watch(
+	() => props.compliercode,
+	() => {
+		real_compliercode.value = props.compliercode
+		monacoEditor.updateOptions({ value: real_compliercode.value })
+	},
+)
 onMounted(() => {
 	init()
 })

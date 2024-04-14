@@ -20,7 +20,6 @@ watch(
 	},
 )
 
-
 const coderight = `int test(int a[], int b[], int c)
 {
     float d = 2.3;
@@ -37,8 +36,9 @@ const coderight = `int test(int a[], int b[], int c)
     return e;
 }`
 
-
-const loading = useLoading()
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
 </script>
 <template>
 	<div
@@ -91,12 +91,25 @@ const loading = useLoading()
 						</div>
 					</template></Optionchoose
 				>
+				<button
+					ref="target"
+					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+					dark="bg-transparent hover:bg-gray-500"
+					title="Control Flow Graph"
+					@click="addCFG"
+				>
+					<span
+						class="i-tabler:arrows-exchange-2 h-6 w-6 text-black inline-block mt-1"
+					>
+					</span>
+				</button>
 			</div>
 		</div>
 		<monacoEditor
 			:initvalue="coderight"
 			:fontsize="fontsize"
 			:permit="true"
+			:compliercode="DataStore.AST"
 			v-if="!real_loading"
 		></monacoEditor>
 		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">

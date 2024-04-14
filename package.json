@@ -50,6 +50,7 @@
     "@iconify-json/octicon": "^1.1.52",
     "@iconify-json/ri": "^1.1.20",
     "@iconify-json/tabler": "^1.1.109",
+    "@iconify-json/teenyicons": "^1.1.9",
     "@iconify-json/vscode-icons": "^1.1.33",
     "@intlify/unplugin-vue-i18n": "^2.0.0",
     "@types/ityped": "^1.0.3",

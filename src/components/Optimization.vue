@@ -20,7 +20,6 @@ watch(
 	},
 )
 
-
 const coderight = `int test(int a[], int b[], int c)
 {
     float d = 2.3;
@@ -37,8 +36,11 @@ const coderight = `int test(int a[], int b[], int c)
     return e;
 }`
 
-
 const loading = useLoading()
+
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
 </script>
 <template>
 	<div
@@ -97,6 +99,7 @@ const loading = useLoading()
 			:initvalue="coderight"
 			:fontsize="fontsize"
 			:permit="true"
+			:compliercode="DataStore.optimization"
 			v-if="!real_loading"
 		></monacoEditor>
 		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
