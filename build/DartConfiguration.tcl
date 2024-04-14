@@ -4,31 +4,30 @@
 
 
 # Configuration directories and files
-SourceDirectory: /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler
-BuildDirectory: /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build
+SourceDirectory: /mnt/e/China-GodBolt-forEdu
+BuildDirectory: /mnt/e/China-GodBolt-forEdu/build
 
 # Where to place the cost data store
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: RainhungMBP
+Site: presidentLUO
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
-BuildName: Darwin-clang++
+BuildName: Linux-clang++
 
 # Subprojects
 LabelsForSubprojects: 
 
 # Submission information
 SubmitURL: http://
-SubmitInactivityTimeout: 
 
 # Dashboard start time
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "/opt/homebrew/Cellar/cmake/3.27.7/bin/cmake" "/Volumes/U/Personal/gpt5.0-compiler/miniC-compiler"
-MakeCommand: /opt/homebrew/Cellar/cmake/3.27.7/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
+ConfigureCommand: "/usr/bin/cmake" "/mnt/e/China-GodBolt-forEdu"
+MakeCommand: /usr/bin/cmake --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
 # version control
@@ -45,7 +44,7 @@ SVNOptions:
 SVNUpdateOptions: 
 
 # Git options
-GITCommand: /opt/local/bin/git
+GITCommand: /usr/bin/git
 GITInitSubmodules: 
 GITUpdateOptions: 
 GITUpdateCustom: 
@@ -58,13 +57,13 @@ P4UpdateOptions:
 P4UpdateCustom: 
 
 # Generic update command
-UpdateCommand: /opt/local/bin/git
+UpdateCommand: /usr/bin/git
 UpdateOptions: 
 UpdateType: git
 
 # Compiler info
 Compiler: /usr/bin/clang++
-CompilerVersion: 15.0.0.15000309
+CompilerVersion: 14.0.0
 
 # Dynamic analysis (MemCheck)
 PurifyCommand: 
@@ -76,7 +75,7 @@ CudaSanitizerCommand:
 CudaSanitizerCommandOptions: 
 MemoryCheckType: 
 MemoryCheckSanitizerOptions: 
-MemoryCheckCommand: MEMORYCHECK_COMMAND-NOTFOUND
+MemoryCheckCommand: /usr/local/bin/valgrind
 MemoryCheckCommandOptions: 
 MemoryCheckSuppressionFile: 
 

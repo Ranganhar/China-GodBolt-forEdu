@@ -1,6 +1,6 @@
 # CMake generated Testfile for 
-# Source directory: /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/yacc
-# Build directory: /Volumes/U/Personal/gpt5.0-compiler/miniC-compiler/build/yacc
+# Source directory: /mnt/e/China-GodBolt-forEdu/yacc
+# Build directory: /mnt/e/China-GodBolt-forEdu/build/yacc
 # 
 # This file includes the relevant testing commands required for 
 # testing this directory and lists subdirectories to be tested as well.
