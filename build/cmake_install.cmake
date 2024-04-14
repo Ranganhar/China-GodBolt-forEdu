@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 # Install script for directory: /mnt/e/China-GodBolt-forEdu
+=======
+# Install script for directory: /home/nanqin/JiShe
+>>>>>>> 5dbf763df43bf33a3e740a6b76795f01f7599213
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,10 +48,17 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for each subdirectory.
+<<<<<<< HEAD
   include("/mnt/e/China-GodBolt-forEdu/build/yacc/cmake_install.cmake")
   include("/mnt/e/China-GodBolt-forEdu/build/ir/cmake_install.cmake")
   include("/mnt/e/China-GodBolt-forEdu/build/lib/cmake_install.cmake")
   include("/mnt/e/China-GodBolt-forEdu/build/backend/cmake_install.cmake")
+=======
+  include("/home/nanqin/JiShe/build/yacc/cmake_install.cmake")
+  include("/home/nanqin/JiShe/build/ir/cmake_install.cmake")
+  include("/home/nanqin/JiShe/build/lib/cmake_install.cmake")
+  include("/home/nanqin/JiShe/build/backend/cmake_install.cmake")
+>>>>>>> 5dbf763df43bf33a3e740a6b76795f01f7599213
 
 endif()
 
@@ -59,5 +70,9 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
+<<<<<<< HEAD
 file(WRITE "/mnt/e/China-GodBolt-forEdu/build/${CMAKE_INSTALL_MANIFEST}"
+=======
+file(WRITE "/home/nanqin/JiShe/build/${CMAKE_INSTALL_MANIFEST}"
+>>>>>>> 5dbf763df43bf33a3e740a6b76795f01f7599213
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

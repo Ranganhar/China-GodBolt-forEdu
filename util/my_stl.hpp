@@ -1,5 +1,5 @@
 #pragma once
-#include "CFG.hpp"
+#include "../lib/CFG.hpp"
 ///@brief 自定义宏，更加方便，需要什么自己加
 
 #define SDOM(x) node[x].sdom        //获取x对应结点的sdom

@@ -139,7 +139,7 @@ void functionSegment::PrintFuncSegment() {
             machineinst->print();
         }
     }
-    machinefunction->print_func_end();
+    //machinefunction->print_func_end();
     if(size == -1)
         std::cout << "    .size " << name << ", " << "-" << name << std::endl;
 }

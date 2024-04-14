@@ -70,8 +70,8 @@ void MachineInst::print() {
     else if (opcode == "xori") {
         std::cout << "    xori " << rd->GetName() << ", " << rs1->GetName() << ", " << rs2->GetName() << std::endl; 
     }
-    else if (opcode == "white")
-        std::cout << "Error: No Such Instruction." << std::endl;
+    // else if (opcode == "white")
+    //     std::cout << "Error: No Such Instruction." << std::endl;
     else {
         //binary
         std::cout << "    " << opcode << " ";
