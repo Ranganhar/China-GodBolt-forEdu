@@ -53,7 +53,6 @@ const menuItems = ref(['Navigator Two', 'Navdsdigator', 'Navigator Four'])
 
 onMounted(() => {
   menuItems.value = DataStore.pipe
-  console.log(menuItems.value)
   handleSelect(0)
 })
 </script>

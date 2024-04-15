@@ -38,12 +38,12 @@ const loadingsvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="3
 
 const options = [
   {
-    value: 'x86-64 clang 12.0.0',
-    label: 'x86-64 clang 12.0.0',
+    value: 'x86-64 clang 14.0.0',
+    label: 'x86-64 clang 14.0.0',
   },
   {
-    value: 'x86-64 clang 12.0.0',
-    label: 'x86-64 clang 12.0.0',
+    value: 'x86-64 clang 12.0.1',
+    label: 'x86-64 clang 12.0.1',
   },
   {
     value: 'x86-64 clang 12.0.0',
@@ -51,12 +51,12 @@ const options = [
   },
 
   {
-    value: 'x86-64 clang 12.1.0',
-    label: 'x86-64 clang 12.1.0',
+    value: 'x86-64 clang 10.0.0',
+    label: 'x86-64 clang 10.0.0',
   },
   {
-    value: 'x86-64 clang 12.0.9',
-    label: 'x86-64 clang 12.0.9',
+    value: 'x86-64 clang 3.9.0',
+    label: 'x86-64 clang 3.9.0',
   },
 ]
 const coderight = `define dso_local i32 @test(int*, int*, int)(i32* %0, i32* %1, i32 %2) #0 {
