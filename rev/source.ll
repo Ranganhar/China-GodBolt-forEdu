@@ -7,13 +7,13 @@ define i32 @insertsort(i32* %.4){
   %.3 = alloca i32*
   store i32* %.4, i32** %.3
   store i32 1, i32* %.6
-  br label %.9wc7 
-.9wc7:
+  br label %.9wc6 
+.9wc6:
   %.13 = load i32, i32* %.6
   %.14 = load i32, i32* @.g.n
   %.15 = icmp slt i32 %.13, %.14
-  br i1 %.15, label %.10wloop.7.20, label %.11wn20
-.10wloop.7.20:
+  br i1 %.15, label %.10wloop.6.19, label %.11wn19
+.10wloop.6.19:
   %.18 = load i32, i32* %.6
   %.19 = load i32*, i32** %.3
   %.20 = getelementptr inbounds i32, i32* %.19, i32 %.18
@@ -22,14 +22,14 @@ define i32 @insertsort(i32* %.4){
   %.24 = load i32, i32* %.6
   %.25 = sub i32 %.24, 1
   store i32 %.25, i32* %.23
-  br label %.27wc13 
-.11wn20:
+  br label %.27wc12 
+.11wn19:
   ret i32 0 
-.27wc13:
+.27wc12:
   %.31 = load i32, i32* %.23
   %.34 = icmp sgt i32 %.31, -1
-  br i1 %.34, label %.35, label %.29wn17
-.28wloop.13.17:
+  br i1 %.34, label %.35, label %.29wn16
+.28wloop.12.16:
   %.44 = load i32, i32* %.23
   %.45 = load i32*, i32** %.3
   %.46 = getelementptr inbounds i32, i32* %.45, i32 %.44
@@ -42,8 +42,8 @@ define i32 @insertsort(i32* %.4){
   %.53 = load i32, i32* %.23
   %.54 = sub i32 %.53, 1
   store i32 %.54, i32* %.23
-  br label %.27wc13 
-.29wn17:
+  br label %.27wc12 
+.29wn16:
   %.57 = load i32, i32* %.17
   %.58 = load i32, i32* %.23
   %.59 = add i32 %.58, 1
@@ -53,7 +53,7 @@ define i32 @insertsort(i32* %.4){
   %.63 = load i32, i32* %.6
   %.64 = add i32 %.63, 1
   store i32 %.64, i32* %.6
-  br label %.9wc7 
+  br label %.9wc6 
 .35:
   %.37 = load i32, i32* %.17
   %.38 = load i32, i32* %.23
@@ -61,7 +61,7 @@ define i32 @insertsort(i32* %.4){
   %.40 = getelementptr inbounds i32, i32* %.39, i32 %.38
   %.41 = load i32, i32* %.40
   %.42 = icmp slt i32 %.37, %.41
-  br i1 %.42, label %.28wloop.13.17, label %.29wn17
+  br i1 %.42, label %.28wloop.12.16, label %.29wn16
 }
 define i32 @main(){
 .69:

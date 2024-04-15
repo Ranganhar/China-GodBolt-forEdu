@@ -1,5 +1,4 @@
 int n;
-
 int insertsort(int a[])
 {
     int i;
@@ -20,6 +19,7 @@ int insertsort(int a[])
     }
     return 0;
 }
+
 int main(){
     n = 10;
     int a[10];
