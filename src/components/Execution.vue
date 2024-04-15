@@ -2,18 +2,18 @@
 const complier = ref(null)
 let fontsize = ref(16)
 const sizeoptions = [
-	8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-	28, 29, 30,
+  8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+  28, 29, 30,
 ]
 const changeFontsize = (sizeoption: any) => {
-	fontsize.value = sizeoption
+  fontsize.value = sizeoption
 }
 const textsize = ref('text-size-4')
 watch(
-	() => fontsize.value,
-	() => {
-		textsize.value = `text-size-${fontsize.value / 4}`
-	},
+  () => fontsize.value,
+  () => {
+    textsize.value = `text-size-${fontsize.value / 4}`
+  },
 )
 //loading效果
 let real_loading = ref(false)
@@ -33,27 +33,27 @@ const loadingicon = ref(null)
 
 const value = ref('')
 const options = [
-	{
-		value: 'x86-64 clang 12.0.0',
-		label: 'x86-64 clang 12.0.0',
-	},
-	{
-		value: 'x86-64 clang 12.0.0',
-		label: 'x86-64 clang 12.0.0',
-	},
-	{
-		value: 'x86-64 clang 12.0.0',
-		label: 'x86-64 clang 12.0.0',
-	},
+  {
+    value: 'x86-64 clang 12.0.0',
+    label: 'x86-64 clang 12.0.0',
+  },
+  {
+    value: 'x86-64 clang 12.0.0',
+    label: 'x86-64 clang 12.0.0',
+  },
+  {
+    value: 'x86-64 clang 12.0.0',
+    label: 'x86-64 clang 12.0.0',
+  },
 
-	{
-		value: 'x86-64 clang 12.1.0',
-		label: 'x86-64 clang 12.1.0',
-	},
-	{
-		value: 'x86-64 clang 12.0.9',
-		label: 'x86-64 clang 12.0.9',
-	},
+  {
+    value: 'x86-64 clang 12.1.0',
+    label: 'x86-64 clang 12.1.0',
+  },
+  {
+    value: 'x86-64 clang 12.0.9',
+    label: 'x86-64 clang 12.0.9',
+  },
 ]
 
 //默认编译参数
@@ -62,114 +62,114 @@ const stdincontrol = ref(false)
 const stdin = ref('')
 const textarea = ref('')
 const stdintoggle = async () => {
-	stdincontrol.value = !stdincontrol.value
-	await nextTick()
-	stdincontrol.value ? stdin.value.focus() : ''
+  stdincontrol.value = !stdincontrol.value
+  await nextTick()
+  stdincontrol.value ? stdin.value.focus() : ''
 }
 
 //单向绑定
 const loading = useLoading()
 watch(
-	() => loading.loadingcontrol,
-	() => {
-		real_loading.value = true
-		setTimeout(() => {
-			real_loading.value = false
-			//fake stdout
-			stdoutvalue.value = textarea.value
-		}, 1000)
-	},
+  () => loading.loadingcontrol,
+  () => {
+    real_loading.value = true
+    setTimeout(() => {
+      real_loading.value = false
+      //fake stdout
+      stdoutvalue.value = textarea.value
+    }, 1000)
+  },
 )
 const stdoutvalue = ref('')
 
 watchDebounced(
-	textarea,
-	() => {
-		// loading.refresh()
-		real_loading.value = true
-		setTimeout(() => {
-			real_loading.value = false
-			//fake stdout
-			stdoutvalue.value = textarea.value
-		}, 1000)
-	},
-	{ debounce: 500, maxWait: 5000 },
+  textarea,
+  () => {
+    // loading.refresh()
+    real_loading.value = true
+    setTimeout(() => {
+      real_loading.value = false
+      //fake stdout
+      stdoutvalue.value = textarea.value
+    }, 1000)
+  },
+  { debounce: 500, maxWait: 5000 },
 )
 watchDebounced(
-	compileroption,
-	() => {
-		// loading.refresh()
-		real_loading.value = true
-		setTimeout(() => {
-			real_loading.value = false
-		}, 1000)
-	},
-	{ debounce: 500, maxWait: 5000 },
+  compileroption,
+  () => {
+    // loading.refresh()
+    real_loading.value = true
+    setTimeout(() => {
+      real_loading.value = false
+    }, 1000)
+  },
+  { debounce: 500, maxWait: 5000 },
 )
 const version = ref('')
 watchDebounced(
-	version,
-	() => {
-		real_loading.value = true
-		setTimeout(() => {
-			real_loading.value = false
-		}, 1000)
-	},
-	{ debounce: 500, maxWait: 5000 },
+  version,
+  () => {
+    real_loading.value = true
+    setTimeout(() => {
+      real_loading.value = false
+    }, 1000)
+  },
+  { debounce: 500, maxWait: 5000 },
 )
 
 
 </script>
 <template>
-	<div
-		style="background-color: #fffffe"
-		ref="complier"
-		class="h-full bg-sky-500 overflow-hidden w-full"
-	>
-		<!-- 各种按钮区域 -->
-		<div class="flex bg-gray-100">
-			<Optionchoose>
-				<template #up>
-					<div
-						class="i-ri:font-family text-black w-5 h-5 inline-block ml--5 mt-1.7"
-					></div>
+  <div
+    style="background-color: #fffffe"
+    ref="complier"
+    class="h-full bg-sky-500 overflow-hidden w-full pt-1"
+  >
+    <!-- 各种按钮区域 -->
+    <div class="flex bg-gray-100">
+      <Optionchoose>
+        <template #up>
+          <div
+            class="i-ri:font-family text-black w-5 h-5 inline-block ml--5 mt-1.7"
+          ></div>
 
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						class="h-4 w-4 mt--14 ml-5 inline"
-						viewBox="0 0 20 20"
-						fill="currentColor"
-					>
-						<path
-							fill-rule="evenodd"
-							d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-							clip-rule="evenodd"
-						/>
-					</svg>
-				</template>
-				<template #down>
-					<div
-						class="absolute w-11 overflow-y-scroll overflow-x-hidden h-111 bg-light-100 shadow-lg divide-y divide-gray-100"
-					>
-						<span
-							v-for="sizeoption of sizeoptions"
-							:key="sizeoption"
-							:class="
-								fontsize === sizeoption
-									? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
-									: ''
-							"
-							class="text-center block cursor-pointer text-lg border-b-2 text-gray-500 hover:text-gray-90 hover:bg-gray-100"
-							dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
-							@click="changeFontsize(sizeoption)"
-						>
-							{{ sizeoption }}
-						</span>
-					</div>
-				</template></Optionchoose
-			>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-4 w-4 mt--14 ml-5 inline"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </template>
+        <template #down>
+          <div
+            class="absolute w-11 overflow-y-scroll overflow-x-hidden h-111 bg-light-100 shadow-lg divide-y divide-gray-100"
+          >
+            <span
+              v-for="sizeoption of sizeoptions"
+              :key="sizeoption"
+              :class="
+                fontsize === sizeoption
+                  ? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
+                  : ''
+              "
+              class="text-center block cursor-pointer text-lg border-b-2 text-gray-500 hover:text-gray-90 hover:bg-gray-100"
+              dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
+              @click="changeFontsize(sizeoption)"
+            >
+              {{ sizeoption }}
+            </span>
+          </div>
+        </template></Optionchoose
+      >
 
-			<!-- <button
+      <!-- <button
 				ref="target"
 				class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
 				dark="bg-transparent hover:bg-gray-500"
@@ -180,68 +180,67 @@ watchDebounced(
 				>
 				</span>
 			</button> -->
-			<button
-				ref="target"
-				:class="
-					stdincontrol
-						? 'bg-gray-400 text-gray-600'
-						: 'bg-gray-100 text-gray-600'
-				"
-				class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-				dark="bg-transparent hover:bg-gray-500"
-				title="std input"
-				@click="stdintoggle"
-			>
-				<span
-					class="i-iconamoon:enter-bold h-6 w-6 text-black inline-block mt-1 bg-black"
-				>
-				</span>
-			</button>
-			<button
-				ref="target"
-				class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-400 p-2 text-gray-600"
-				dark="bg-gray-700 text-gray-100"
-				title="std output"
-			>
-				<span
-					class="i-iconamoon:exit-bold h-6 w-6 text-black inline-block mt-1"
-				>
-				</span>
-			</button>
-				<!-- 加载符号 -->
-				<div
-				v-loading="real_loading"
-				:element-loading-svg="loadingsvg"
-				element-loading-svg-view-box="-10, -10, 50, 50"
-				class="rounded-lg ml-3 mb-0 !p-2 bg-light-100 h-full w-10 border-1 cursor-pointer"
-			>
-				<div
-					:class="real_loading ? '' : 'correct'"
-					class="bg-contain bg-no-repeat h-6 w-6"
-				></div>
-			</div>
-		</div>
+      <button
+        ref="target"
+        :class="
+          stdincontrol
+            ? 'bg-gray-400 text-gray-600'
+            : 'bg-gray-100 text-gray-600'
+        "
+        class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+        dark="bg-transparent hover:bg-gray-500"
+        title="std input"
+        @click="stdintoggle"
+      >
+        <span
+          class="i-iconamoon:enter-bold h-6 w-6 text-black inline-block mt-1 bg-black"
+        >
+        </span>
+      </button>
+      <button
+        ref="target"
+        class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-400 p-2 text-gray-600"
+        dark="bg-gray-700 text-gray-100"
+        title="std output"
+      >
+        <span
+          class="i-iconamoon:exit-bold h-6 w-6 text-black inline-block mt-1"
+        >
+        </span>
+      </button>
+      <!-- 加载符号 -->
+      <div
+        v-loading="real_loading"
+        :element-loading-svg="loadingsvg"
+        element-loading-svg-view-box="-10, -10, 50, 50"
+        class="rounded-lg ml-3 mb-0 !p-2 bg-light-100 h-full w-10 border-1 cursor-pointer"
+      >
+        <div
+          :class="real_loading ? '' : 'correct'"
+          class="bg-contain bg-no-repeat h-6 w-6"
+        ></div>
+      </div>
+    </div>
 
-
-		<el-input
-			ref="stdin"
-			v-if="stdincontrol"
-			v-model="textarea"
-			class="w-full mt-1"
-			:rows="2"
-			type="textarea"
-			placeholder="Execution stdin..."
-		/>
-		<p :class="textsize" class="ml-4 mt-2">Program returned: 0</p>
-		<p :class="textsize" class="ml-4">Program stdout:</p>
-		<el-card class="w-full bg-green-50" shadow="hover" :class="textsize"
-			><p :class="textsize">{{ stdoutvalue }}</p>
-		</el-card>
-	</div>
+    <el-input
+      ref="stdin"
+      v-if="stdincontrol"
+      v-model="textarea"
+      class="w-full mt-1"
+      :rows="2"
+      type="textarea"
+      placeholder="Execution stdin..."
+    />
+    <p :class="textsize" class="ml-4 mt-2">Program returned: 0</p>
+    <p :class="textsize" class="ml-4">Program stdout:</p>
+    <el-card class="w-full bg-green-50" shadow="hover" :class="textsize"
+      ><p :class="textsize">{{ stdoutvalue }}</p>
+    </el-card>
+  </div>
 </template>
 
 <style lang="scss" scoped>
 .correct {
-	background-image: url(../assets/img/correct.svg);
+  background-image: url(../assets/img/correct.svg);
 }
 </style>

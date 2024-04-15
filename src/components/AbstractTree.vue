@@ -2,22 +2,22 @@
 const complier = ref(null)
 let fontsize = ref(16)
 const sizeoptions = [
-	8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
-	28, 29, 30,
+  8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
+  28, 29, 30,
 ]
 const changeFontsize = (sizeoption: any) => {
-	fontsize.value = sizeoption
+  fontsize.value = sizeoption
 }
 //loading效果
 let real_loading = ref(false)
 const loadingchoose = useLoading()
 const { loadingcontrol } = storeToRefs(loadingchoose)
 watch(
-	() => loadingcontrol.value,
-	() => {
-		real_loading.value = loadingcontrol.value
-		// console.log(loadingcontrol.value)
-	},
+  () => loadingcontrol.value,
+  () => {
+    real_loading.value = loadingcontrol.value
+    // console.log(loadingcontrol.value)
+  },
 )
 
 const coderight = `int test(int a[], int b[], int c)
@@ -39,84 +39,94 @@ const coderight = `int test(int a[], int b[], int c)
 //网络请求
 import { useDataStore } from '@/stores/alldata'
 const DataStore = useDataStore()
+const astcode = ref('')
+watch(
+  () => DataStore.AST,
+  () => {
+    astcode.value = DataStore.AST
+  },
+)
+onMounted(() => {
+  astcode.value = DataStore.AST
+})
 </script>
 <template>
-	<div
-		style="background-color: #fffffe"
-		ref="complier"
-		class="h-full bg-sky-500 overflow-hidden w-full"
-	>
-		<!-- 第一层 -->
+  <div
+    style="background-color: #fffffe"
+    ref="complier"
+    class="h-full bg-sky-500 overflow-hidden w-full"
+  >
+    <!-- 第一层 -->
 
-		<div class="bg-gray-100 optionchoose h-11 w-full flex justify-between">
-			<!-- 各种按钮区域 -->
-			<div class="flex">
-				<Optionchoose>
-					<template #up>
-						<div
-							class="i-ri:font-family text-black w-5 h-5 inline-block ml--5 mt-1.7"
-						></div>
+    <div class="bg-gray-100 optionchoose h-11 w-full flex justify-between">
+      <!-- 各种按钮区域 -->
+      <div class="flex">
+        <Optionchoose>
+          <template #up>
+            <div
+              class="i-ri:font-family text-black w-5 h-5 inline-block ml--5 mt-1.7"
+            ></div>
 
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="h-4 w-4 mt--14 ml-5 inline"
-							viewBox="0 0 20 20"
-							fill="currentColor"
-						>
-							<path
-								fill-rule="evenodd"
-								d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-								clip-rule="evenodd"
-							/>
-						</svg>
-					</template>
-					<template #down>
-						<div
-							class="absolute w-11 overflow-y-scroll overflow-x-hidden h-111 bg-light-100 shadow-lg divide-y divide-gray-100"
-						>
-							<span
-								v-for="sizeoption of sizeoptions"
-								:key="sizeoption"
-								:class="
-									fontsize === sizeoption
-										? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
-										: ''
-								"
-								class="text-center block cursor-pointer text-lg border-b-2 text-gray-500 hover:text-gray-90 hover:bg-gray-100"
-								dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
-								@click="changeFontsize(sizeoption)"
-							>
-								{{ sizeoption }}
-							</span>
-						</div>
-					</template></Optionchoose
-				>
-				<button
-					ref="target"
-					class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-					dark="bg-transparent hover:bg-gray-500"
-					title="Control Flow Graph"
-					@click="addCFG"
-				>
-					<span
-						class="i-tabler:arrows-exchange-2 h-6 w-6 text-black inline-block mt-1"
-					>
-					</span>
-				</button>
-			</div>
-		</div>
-		<monacoEditor
-			:initvalue="coderight"
-			:fontsize="fontsize"
-			:permit="true"
-			:compliercode="DataStore.AST"
-			v-if="!real_loading"
-		></monacoEditor>
-		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
-			Compiling...
-		</h1>
-		<el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />
-	</div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="h-4 w-4 mt--14 ml-5 inline"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </template>
+          <template #down>
+            <div
+              class="absolute w-11 overflow-y-scroll overflow-x-hidden h-111 bg-light-100 shadow-lg divide-y divide-gray-100"
+            >
+              <span
+                v-for="sizeoption of sizeoptions"
+                :key="sizeoption"
+                :class="
+                  fontsize === sizeoption
+                    ? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
+                    : ''
+                "
+                class="text-center block cursor-pointer text-lg border-b-2 text-gray-500 hover:text-gray-90 hover:bg-gray-100"
+                dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
+                @click="changeFontsize(sizeoption)"
+              >
+                {{ sizeoption }}
+              </span>
+            </div>
+          </template></Optionchoose
+        >
+        <button
+          ref="target"
+          class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+          dark="bg-transparent hover:bg-gray-500"
+          title="Control Flow Graph"
+          @click="addCFG"
+        >
+          <span
+            class="i-tabler:arrows-exchange-2 h-6 w-6 text-black inline-block mt-1"
+          >
+          </span>
+        </button>
+      </div>
+    </div>
+    <monacoEditor
+      v-if="!real_loading"
+      :initvalue="coderight"
+      :fontsize="fontsize"
+      :permit="true"
+      :compliercode="astcode"
+    ></monacoEditor>
+    <h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
+      Compiling...
+    </h1>
+    <el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />
+  </div>
 </template>
 
 <style lang="scss" scoped></style>

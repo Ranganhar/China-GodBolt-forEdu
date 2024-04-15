@@ -26,78 +26,85 @@ import { prefinedLayouts } from '../composables/predefined-layouts'
 const GLayoutRoot = ref<null | HTMLElement>(null)
 
 const onClickInitLayoutMinRow = () => {
-	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.loadGLLayout(prefinedLayouts.miniRow)
+  if (!GLayoutRoot.value) return
+  GLayoutRoot.value.loadGLLayout(prefinedLayouts.miniRow)
 }
 
 const onClickAddComplier = () => {
-	return GLayoutRoot.value.addGLComponent('Complier', 'Compiler')
+  return GLayoutRoot.value.addGLComponent('Complier', 'Compiler')
 }
 const onClickAddExecution = () => {
-	return GLayoutRoot.value.addGLComponent('Execution', 'Executor')
+  return GLayoutRoot.value.addGLComponent('Execution', 'Executor')
 }
 
 const onClickAddSourceEditor = () => {
-	return GLayoutRoot.value.addGLComponent('SourceEditor', 'SourceEditor')
+  return GLayoutRoot.value.addGLComponent('SourceEditor', 'SourceEditor')
 }
-const onClickAddOptimization = () => {
-	return GLayoutRoot.value.addGLComponent('Optimization', 'Optimization Viewer')
-}
+
 const onClickAddAbstractTree = () => {
-	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.addGLComponent('AbstractTree', 'AST Viewer')
+  if (!GLayoutRoot.value) return
+  GLayoutRoot.value.addGLComponent('AbstractTree', 'AST Viewer')
 }
-const onClickAddLLVMIR = () => {
-	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.addGLComponent('LLVMIR', 'LLVM IR Viewer')
-}
+
 const onClickAddPipeline = () => {
-	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.addGLComponent('Pipeline', 'Opt Pipeline Viewer')
+  if (!GLayoutRoot.value) return
+  GLayoutRoot.value.addGLComponent('Pipeline', 'Opt Pipeline Viewer')
 }
 const onClickAddCFG = () => {
-	if (!GLayoutRoot.value) return
-	GLayoutRoot.value.addGLComponent('CFGraph', 'CFG Viewer')
+  if (!GLayoutRoot.value) return
+  GLayoutRoot.value.addGLComponent('CFGraph', 'CFG Viewer')
 }
 
 const onClickSaveLayout = () => {
-	if (!GLayoutRoot.value) return
-	const config = GLayoutRoot.value.getLayoutConfig()
-	localStorage.setItem('gl_config', JSON.stringify(config))
+  if (!GLayoutRoot.value) return
+  const config = GLayoutRoot.value.getLayoutConfig()
+  localStorage.setItem('gl_config', JSON.stringify(config))
 }
 
 const onClickLoadLayout = () => {
-	const str = localStorage.getItem('gl_config')
-	if (!str) return
-	if (!GLayoutRoot.value) return
-	const config = JSON.parse(str as string)
-	GLayoutRoot.value.loadGLLayout(config)
+  const str = localStorage.getItem('gl_config')
+  if (!str) return
+  if (!GLayoutRoot.value) return
+  const config = JSON.parse(str as string)
+  GLayoutRoot.value.loadGLLayout(config)
 }
 onMounted(onClickInitLayoutMinRow)
 onMounted(onClickLoadLayout)
 onMounted(() => {
-	window.addEventListener('beforeunload', onClickSaveLayout)
+  window.addEventListener('beforeunload', onClickSaveLayout)
 })
 
 provide('AddComplier', onClickAddComplier)
 provide('AddExecution', onClickAddExecution)
-provide('AddSourceEditor', onClickAddSourceEditor)
-provide('AddOptimization', onClickAddOptimization)
+// provide('AddSourceEditor', onClickAddSourceEditor)
+
 provide('AddAbstractTree', onClickAddAbstractTree)
-provide('AddLLVMIR', onClickAddLLVMIR)
+
 provide('AddPipeline', onClickAddPipeline)
 provide('AddCFG', onClickAddCFG)
+
+const EventBus = useEventBus()
+
+watch(
+  () => EventBus.trigger,
+  () => {
+    if (EventBus.trigger === true) {
+      onClickAddSourceEditor()
+      EventBus.trigger = false
+    }
+  },
+)
 </script>
 
 <template>
-	<div class="h-screen display_row w-screen overflow-hidden relative">
-		<button
-			@click="onClickInitLayoutMinRow"
-			class="translate-x-253 z-999 absolute top--4"
-		>
-			aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-		</button>
-		<!-- <div style="width: 20px; display: inline-block"></div>
+  <div class="h-screen display_row w-screen overflow-hidden relative">
+    <button
+      @click="onClickInitLayoutMinRow"
+      class="translate-x-253 z-999 absolute top--4"
+    >
+      aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
+    </button>
+    <!-- <div style="width: 20px; display: inline-block"></div>
 			<button @click="onClickAddGLComponent1">Add Simple Component</button>
 			<button @click="onClickAddGLComponent2">Add Widest Component</button>
 			<button @click="onClickAddGLComponent3">Add Highest Component</button>
@@ -106,27 +113,27 @@ provide('AddCFG', onClickAddCFG)
 			<div style="width: 20px; display: inline-block"></div>
 			<button @click="onClickLoadLayout">Load Layout</button> -->
 
-		<glayout
-			ref="GLayoutRoot"
-			glc-path="./"
-			style="width: 100%; height: 100%"
-		></glayout>
-	</div>
+    <glayout
+      ref="GLayoutRoot"
+      glc-path="./"
+      style="width: 100%; height: 100%"
+    ></glayout>
+  </div>
 </template>
 
 <style scoped>
 .logo {
-	width: 10em;
-	height: 10em;
-	padding: 1.5rem;
-	will-change: filter;
-	transition: filter 300ms;
+  width: 10em;
+  height: 10em;
+  padding: 1.5rem;
+  will-change: filter;
+  transition: filter 300ms;
 }
 .logo:hover {
-	filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #646cffaa);
 }
 .logo.vue:hover {
-	filter: drop-shadow(0 0 2em #42b883aa);
+  filter: drop-shadow(0 0 2em #42b883aa);
 }
 </style>
 <style src="golden-layout/dist/css/goldenlayout-base.css"></style>
