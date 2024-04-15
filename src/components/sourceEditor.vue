@@ -91,9 +91,7 @@ watch(
 	{ immediate: true },
 )
 let final_initvalue = ref('')
-onMounted(() => {
-	// console.log(codeleft)
-})
+
 onBeforeMount(() => {
 	final_initvalue.value = localStorage.getItem('code') || codeleft
 

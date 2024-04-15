@@ -1,6 +1,9 @@
 <script setup lang="ts">
 const complier = ref(null)
 let fontsize = ref(16)
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
 const sizeoptions = [
 	8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
 	28, 29, 30,
@@ -107,32 +110,37 @@ watchDebounced(
 	compileroption,
 	() => {
 		loading.refresh()
-		DataStore.option = compileroption.value
+		xin()
+
 		localStorage.setItem('option', compileroption.value)
 	},
 	{ debounce: 500, maxWait: 5000 },
 )
+const xin = () => {
+	DataStore.option = compileroption.value
+}
 const version = ref('')
 watchDebounced(
 	version,
 	() => {
 		loading.refresh()
-		DataStore.version = version.value
+		genxin()
+
 		localStorage.setItem('version', version.value)
 	},
 	{ debounce: 500, maxWait: 5000 },
 )
-
+const genxin = () => {
+	// console.log(version.value)
+	DataStore.version = version.value
+	// console.log(DataStore.version)
+}
 const addExecution = inject('AddExecution')
 const addOptimization = inject('AddOptimization')
 const addAST = inject('AddAbstractTree')
 const addLLVMIR = inject('AddLLVMIR')
 const addOptPipeline = inject('AddPipeline')
 const addCFG = inject('AddCFG')
-
-//网络请求
-import { useDataStore } from '@/stores/alldata'
-const DataStore = useDataStore()
 </script>
 <template>
 	<div
@@ -305,7 +313,6 @@ const DataStore = useDataStore()
 			:initvalue="coderight"
 			:fontsize="fontsize"
 			:permit="true"
-			
 			v-if="!real_loading"
 		></monacoEditor>
 		<h1 v-if="real_loading" class="ml-15% font-mono text-size-5">

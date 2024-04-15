@@ -15,6 +15,7 @@ export const useDataStore = defineStore('alldata', () => {
 	const pipe = ref([])
 	const pipeline = ref([])
 	const CFG = ref([])
+	const isFinished = ref(false)
 
 	const fetchOptions = reactive({
 		method: 'POST',
@@ -26,35 +27,36 @@ export const useDataStore = defineStore('alldata', () => {
 		}),
 	})
 
-	const fetchInstance = useFetch(
-		'https://api.example.com/compile',
-		fetchOptions,
-		{
-			immediate: false, // 不立即执行请求
-		},
-	)
-
 	watch([code, version, option], async () => {
-		// console.log('code:', code.value)
-		// console.log('version:', version.value)
-		// console.log('option:', option.value)
-		if (fetchInstance.isFinished) {
-			fetchOptions.body = JSON.stringify({
-				code: code.value,
-				version: version.value,
-				option: option.value,
-			})
-			const response = await fetchInstance.execute()
-			if (response.ok) {
-				const data = await response.json()
-				compiler.value = data.compiler
-				// optimization.value = data.optimization
-				// LLVMIR.value = data.LLVMIR
-				AST.value = data.AST
-				pipe.value = data.pipe
-				pipeline.value = data.pipeline
-				CFG.value = data.CFG
-			}
+		console.log('code:', code.value)
+		console.log('version:', version.value)
+		console.log('option:', option.value)
+	
+		fetchOptions.body = JSON.stringify({
+			code: code.value,
+			version: version.value,
+			option: option.value,
+		})
+
+		const fetchInstance = useFetch(
+			'http://127.0.0.1:5000/receive_string',
+			fetchOptions,
+			{
+				immediate: false, // 不立即执行请求
+			},
+		)
+
+		const response = await fetchInstance.execute()
+		isFinished.value = fetchInstance.isFinished
+		if (response.ok) {
+			const data = await response.json()
+			compiler.value = data.compiler
+			// optimization.value = data.optimization
+			// LLVMIR.value = data.LLVMIR
+			AST.value = data.AST
+			pipe.value = data.pipe
+			pipeline.value = data.pipeline
+			CFG.value = data.CFG
 		}
 	})
 
@@ -69,6 +71,6 @@ export const useDataStore = defineStore('alldata', () => {
 		pipe,
 		pipeline,
 		CFG,
-		isFinished: fetchInstance.isFinished,
+		isFinished,
 	}
 })
