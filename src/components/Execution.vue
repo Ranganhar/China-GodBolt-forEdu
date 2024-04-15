@@ -29,35 +29,7 @@ let real_loading = ref(false)
 
 const loadingsvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="#888888" d="M2 12a9 9 0 0 0 9 9c2.39 0 4.68-.94 6.4-2.6l-1.5-1.5A6.706 6.706 0 0 1 11 19c-6.24 0-9.36-7.54-4.95-11.95C10.46 2.64 18 5.77 18 12h-3l4 4h.1l3.9-4h-3a9 9 0 0 0-18 0"/></svg>`
 
-const loadingicon = ref(null)
-
-const value = ref('')
-const options = [
-  {
-    value: 'x86-64 clang 12.0.0',
-    label: 'x86-64 clang 12.0.0',
-  },
-  {
-    value: 'x86-64 clang 12.0.0',
-    label: 'x86-64 clang 12.0.0',
-  },
-  {
-    value: 'x86-64 clang 12.0.0',
-    label: 'x86-64 clang 12.0.0',
-  },
-
-  {
-    value: 'x86-64 clang 12.1.0',
-    label: 'x86-64 clang 12.1.0',
-  },
-  {
-    value: 'x86-64 clang 12.0.9',
-    label: 'x86-64 clang 12.0.9',
-  },
-]
-
 //默认编译参数
-const compileroption = ref('')
 const stdincontrol = ref(false)
 const stdin = ref('')
 const textarea = ref('')
@@ -82,43 +54,33 @@ watch(
 )
 const stdoutvalue = ref('')
 
-watchDebounced(
-  textarea,
-  () => {
-    // loading.refresh()
-    real_loading.value = true
-    setTimeout(() => {
-      real_loading.value = false
-      //fake stdout
-      stdoutvalue.value = textarea.value
-    }, 1000)
-  },
-  { debounce: 500, maxWait: 5000 },
-)
-watchDebounced(
-  compileroption,
-  () => {
-    // loading.refresh()
-    real_loading.value = true
-    setTimeout(() => {
-      real_loading.value = false
-    }, 1000)
-  },
-  { debounce: 500, maxWait: 5000 },
-)
-const version = ref('')
-watchDebounced(
-  version,
-  () => {
-    real_loading.value = true
-    setTimeout(() => {
-      real_loading.value = false
-    }, 1000)
-  },
-  { debounce: 500, maxWait: 5000 },
-)
+// watchDebounced(
+//   textarea,
+//   () => {
+//     // loading.refresh()
+//     real_loading.value = true
+//     setTimeout(() => {
+//       real_loading.value = false
+//       //fake stdout
+//       stdoutvalue.value = textarea.value
+//     }, 1000)
+//   },
+//   { debounce: 500, maxWait: 5000 },
+// )
 
-
+//网络请求
+import { useDataStore } from '@/stores/alldata'
+const DataStore = useDataStore()
+const execode = ref('')
+watch(
+  () => DataStore.execution,
+  () => {
+    execode.value = DataStore.execution
+  },
+)
+onMounted(() => {
+  execode.value = DataStore.execution
+})
 </script>
 <template>
   <div
@@ -231,10 +193,9 @@ watchDebounced(
       type="textarea"
       placeholder="Execution stdin..."
     />
-    <p :class="textsize" class="ml-4 mt-2">Program returned: 0</p>
-    <p :class="textsize" class="ml-4">Program stdout:</p>
-    <el-card class="w-full bg-green-50" shadow="hover" :class="textsize"
-      ><p :class="textsize">{{ stdoutvalue }}</p>
+
+    <el-card class="w-full mt-2 bg-green-50" shadow="hover" :class="textsize"
+      ><p :class="textsize">{{ execode }}</p>
     </el-card>
   </div>
 </template>

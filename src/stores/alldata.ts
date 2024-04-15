@@ -7,6 +7,7 @@ export const useDataStore = defineStore('alldata', () => {
   const version = ref('')
   const option = ref('')
   const compiler = ref('')
+  const execution = ref('')
   //后续支持
   // const execution = ref('')
   // const optimization = ref('')
@@ -57,6 +58,7 @@ export const useDataStore = defineStore('alldata', () => {
       pipe.value = data.pipe
       pipeline.value = data.pipeline
       CFG.value = data.testcase
+      execution.value = data.exe
     }
   })
 
@@ -67,6 +69,7 @@ export const useDataStore = defineStore('alldata', () => {
     compiler,
     // optimization,
     // LLVMIR,
+    execution,
     AST,
     pipe,
     pipeline,
