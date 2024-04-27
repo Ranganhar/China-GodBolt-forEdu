@@ -76,7 +76,7 @@ onMounted(() => {
 
 provide('AddComplier', onClickAddComplier)
 provide('AddExecution', onClickAddExecution)
-// provide('AddSourceEditor', onClickAddSourceEditor)
+provide('AddSourceEditor', onClickAddSourceEditor)
 
 provide('AddAbstractTree', onClickAddAbstractTree)
 

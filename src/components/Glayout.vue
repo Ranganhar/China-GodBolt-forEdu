@@ -29,17 +29,22 @@ import {
   ResolvedLayoutConfig,
 } from 'golden-layout'
 import GlComponent from '@/components/GlComponent.vue'
+import SourceEditor from './SourceEditor.vue'
+import Complier from './Complier.vue'
+import AbstractTree from './AbstractTree.vue'
+import CFGraph from './CFGraph.vue'
+import Execution from './Execution.vue'
+import Pipeline from './Pipeline.vue'
 
-/*******************
- * Prop
- *******************/
-const props = defineProps({
-  glcPath: String,
-})
+const componentsMap = {
+  SourceEditor: SourceEditor,
+  Complier: Complier,
+  AbstractTree: AbstractTree,
+  CFGraph: CFGraph,
+  Execution: Execution,
+  Pipeline: Pipeline,
+}
 
-/*******************
- * Data
- *******************/
 const GLRoot = ref<null | HTMLElement>(null)
 let GLayout: VirtualLayout
 const GlcKeyPrefix = readonly(ref('glc_'))
@@ -60,16 +65,19 @@ const instance = getCurrentInstance()
  * Method
  *******************/
 /** @internal */
+/** @internal */
 const addComponent = (componentType: string, title: string) => {
-  const glc = markRaw(
-    defineAsyncComponent(() => import(props.glcPath + componentType + '.vue')),
-  )
+  const glcName = componentsMap[componentType]
+
+  if (!glcName) {
+    throw new Error(`Unknown component type: ${componentType}`)
+  }
 
   let index = CurIndex
   if (UnusedIndexes.length > 0) index = UnusedIndexes.pop() as number
   else CurIndex++
 
-  AllComponents.value.set(index, glc)
+  AllComponents.value.set(index, glcName)
 
   return index
 }

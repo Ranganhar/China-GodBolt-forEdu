@@ -1,32 +1,32 @@
 import {
-	ComponentItemConfig,
-	ItemType,
-	LayoutConfig,
-	StackItemConfig,
+  ComponentItemConfig,
+  ItemType,
+  LayoutConfig,
+  StackItemConfig,
 } from 'golden-layout'
 
 const miniRowConfig: LayoutConfig = {
-	root: {
-		type: 'row',
-		content: [
-			{
-				type: 'component',
-				title: '',
-				header: { show: 'top', popout: false },
-				componentType: 'SourceEditor',
-				isClosable: true,
-				// componentState: { abc: 123 },
-			} as ComponentItemConfig,
-			{
-				type: 'component',
-				title: '',
-				header: { show: 'top', popout: false },
-				isClosable: true,
-				componentType: 'Complier',
-				// componentState: undefined,
-			} as ComponentItemConfig,
-		],
-	},
+  root: {
+    type: 'row',
+    content: [
+      {
+        type: 'component',
+        title: '',
+        header: { show: 'top', popout: false },
+        componentType: 'SourceEditor',
+        isClosable: true,
+        // componentState: { abc: 123 },
+      } as ComponentItemConfig,
+      {
+        type: 'component',
+        title: '',
+        header: { show: 'top', popout: false },
+        isClosable: true,
+        componentType: 'Complier',
+        // componentState: undefined,
+      } as ComponentItemConfig,
+    ],
+  },
 }
 // const aminiRowConfig: LayoutConfig = {
 // 	root: {
@@ -69,6 +69,6 @@ const miniRowConfig: LayoutConfig = {
 // }
 
 export const prefinedLayouts = {
-	miniRow: miniRowConfig,
-	// aminiRow: aminiRowConfig,
+  miniRow: miniRowConfig,
+  // aminiRow: aminiRowConfig,
 }
