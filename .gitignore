@@ -2,3 +2,8 @@ build/*
 build
 build/
 .cache/clangd/index
+/node_modules
+/dist
+.vite/deps
+presets/types
+presets/eslint
