@@ -1,52 +1,80 @@
-define void @printSolution(i32* %.6){
-.4:
-  ret void
-}
-define void @printMessage(){
-.10:
-  ret void
-}
-define i32 @isSafe([4 x i32]* %.15, i32* %.18){
-.13:
-  ret i32 undef 
-}
-define i32 @graphColoring([4 x i32]* %.25, i32 %.28, i32 %.31, i32* %.34){
-.23:
-  %.39 = icmp eq i32 %.31, 4
-  br i1 %.39, label %.36, label %.37
-.36:
-  %.45at16 = call i32 @isSafe([4 x i32]* %.25, i32* %.34)
-  %.47 = icmp ne i32 %.45at16, 0
-  br i1 %.47, label %.41, label %.42
-.37:
-  br label %.56wc23 
-.41:
-  call void @printSolution(i32* %.34)
-  ret i32 1 
-.42:
+@.g.n = global i32 zeroinitializer
+define i32 @insertsort(i32* %.4){
+.2:
+  br label %.9wc7 
+.9wc7:
+  %.125 = phi i32 [1, %.2], [%.64, %.29wn17]
+  %.14 = load i32, i32* @.g.n
+  %.15 = icmp slt i32 %.125, %.14
+  br i1 %.15, label %.10wloop.7.20, label %.11wn20
+.10wloop.7.20:
+  %.20 = getelementptr inbounds i32, i32* %.4, i32 %.125
+  %.21 = load i32, i32* %.20
+  %.25 = sub i32 %.125, 1
+  br label %.27wc13 
+.11wn20:
   ret i32 0 
-.56wc23:
-  %.92 = phi i32 [1, %.37], [%.85, %.70]
-  %.62 = icmp sle i32 %.92, %.28
-  br i1 %.62, label %.57wloop.23.29, label %.58wn29
-.57wloop.23.29:
-  %.67 = getelementptr inbounds i32, i32* %.34, i32 %.31
-  store i32 %.92, i32* %.67
-  %.74 = add i32 %.31, 1
-  %.76at25 = call i32 @graphColoring([4 x i32]* %.25, i32 %.28, i32 %.74, i32* %.34)
-  %.77 = icmp ne i32 %.76at25, 0
-  br i1 %.77, label %.69, label %.70
-.58wn29:
-  ret i32 0 
-.69:
-  ret i32 1 
-.70:
-  %.82 = getelementptr inbounds i32, i32* %.34, i32 %.31
-  store i32 0, i32* %.82
-  %.85 = add i32 %.92, 1
-  br label %.56wc23 
+.27wc13:
+  %.124 = phi i32 [%.25, %.10wloop.7.20], [%.54, %.28wloop.13.17]
+  %.34 = icmp sgt i32 %.124, -1
+  br i1 %.34, label %.35, label %.29wn17
+.28wloop.13.17:
+  %.46 = getelementptr inbounds i32, i32* %.4, i32 %.124
+  %.47 = load i32, i32* %.46
+  %.49 = add i32 %.124, 1
+  %.51 = getelementptr inbounds i32, i32* %.4, i32 %.49
+  store i32 %.47, i32* %.51
+  %.54 = sub i32 %.124, 1
+  br label %.27wc13 
+.29wn17:
+  %.59 = add i32 %.124, 1
+  %.61 = getelementptr inbounds i32, i32* %.4, i32 %.59
+  store i32 %.21, i32* %.61
+  %.64 = add i32 %.125, 1
+  br label %.9wc7 
+.35:
+  %.40 = getelementptr inbounds i32, i32* %.4, i32 %.124
+  %.41 = load i32, i32* %.40
+  %.42 = icmp slt i32 %.21, %.41
+  br i1 %.42, label %.28wloop.13.17, label %.29wn17
 }
 define i32 @main(){
-.90:
+.69:
+  %.72 = alloca [10 x i32]
+  store i32 10, i32* @.g.n
+  %.74 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 0
+  store i32 4, i32* %.74
+  %.77 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 1
+  store i32 3, i32* %.77
+  %.81 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 2
+  store i32 9, i32* %.81
+  %.83 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 3
+  store i32 2, i32* %.83
+  %.85 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 4
+  store i32 0, i32* %.85
+  %.88 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 5
+  store i32 1, i32* %.88
+  %.91 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 6
+  store i32 6, i32* %.91
+  %.94 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 7
+  store i32 5, i32* %.94
+  %.97 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 8
+  store i32 7, i32* %.97
+  %.99 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 9
+  store i32 8, i32* %.99
+  %.102 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 0
+  %.103at29 = call i32 @insertsort(i32* %.102)
+  br label %.105wc30 
+.105wc30:
+  %.127 = phi i32 [%.103at29, %.69], [%.120, %.106wloop.30.35]
+  %.110 = load i32, i32* @.g.n
+  %.111 = icmp slt i32 %.127, %.110
+  br i1 %.111, label %.106wloop.30.35, label %.107wn35
+.106wloop.30.35:
+  %.115 = getelementptr inbounds [10 x i32], [10 x i32]* %.72, i32 0, i32 %.127
+  %.116 = load i32, i32* %.115
+  %.120 = add i32 %.127, 1
+  br label %.105wc30 
+.107wn35:
   ret i32 0 
 }

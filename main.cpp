@@ -20,7 +20,7 @@ static struct option long_options[] = {
     {"constprop", no_argument, 0, 2}, {"dce", no_argument, 0, 3},
     {"adce", no_argument, 0, 4},     {"loopinfo",no_argument,0,5},
     {"help", no_argument, 0, 6},      {"simplifycfg",no_argument,0,7},
-    {"ece", no_argument, 0, 8}, 
+    {"ece", no_argument, 0, 8},       {"--riscV",no_argument,0,9},
     {0, 0, 0, 0}};
 
 int main(int argc, char **argv) {
@@ -66,6 +66,10 @@ int main(int argc, char **argv) {
     case 8:
       pass_manager->IncludePass(8);
       break;
+    case 9:
+      AsmPrinter asmPrinter = AsmPrinter(argv[1], &Singleton<Module>());
+      asmPrinter.printAsm();
+      break;
     }
   }
   pass_manager->InitPass();
@@ -74,7 +78,6 @@ int main(int argc, char **argv) {
   #else
   Singleton<Module>().Test();
   #endif
-  AsmPrinter asmPrinter = AsmPrinter(argv[1], &Singleton<Module>());
-  asmPrinter.printAsm();
+  
   return 0;
 }

@@ -1,0 +1,17 @@
+Could not execute the program
+Compiler returned: 1
+Compiler stderr
+<source>: In function 'void printans()':
+<source>:9:9: error: 'putint' was not declared in this scope
+    9 |         putint(ans[i]);
+      |         ^~~~~~
+<source>:11:13: error: 'putch' was not declared in this scope
+   11 |             putch(10);
+      |             ^~~~~
+<source>:14:13: error: 'putch' was not declared in this scope
+   14 |             putch(32);
+      |             ^~~~~
+<source>: In function 'int main()':
+<source>:41:13: error: 'getint' was not declared in this scope
+   41 |     int N = getint();
+      |             ^~~~~~
