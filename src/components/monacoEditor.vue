@@ -1,6 +1,6 @@
 <template>
   <div ref="main" class="h-full w-full">
-    <div ref="vim" class="bg-gray-200 w-full none" v-if="!status">
+    <div v-if="!status" ref="vim" class="none w-full bg-gray-200">
       --NORMAL--
     </div>
   </div>

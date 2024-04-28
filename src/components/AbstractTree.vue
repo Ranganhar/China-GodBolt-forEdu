@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const complier = ref(null)
+const tree = ref(null)
 let fontsize = ref(16)
 const sizeoptions = [
   8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
@@ -49,27 +49,33 @@ watch(
 onMounted(() => {
   astcode.value = DataStore.AST
 })
+
+// import { useMyTour } from '~/stores/tour'
+// const tour = useMyTour()
+// onMounted(() => {
+//   tour.tree = tree.value
+// })
 </script>
 <template>
   <div
+    ref="tree"
     style="background-color: #fffffe"
-    ref="complier"
-    class="h-full bg-sky-500 overflow-hidden w-full"
+    class="h-full w-full overflow-hidden bg-sky-500"
   >
     <!-- 第一层 -->
 
-    <div class="bg-gray-100 optionchoose h-11 w-full flex justify-between">
+    <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
       <!-- 各种按钮区域 -->
       <div class="flex">
         <Optionchoose>
           <template #up>
             <div
-              class="i-ri:font-family text-black w-5 h-5 inline-block ml--5 mt-1.7"
+              class="i-ri:font-family ml--5 mt-1.7 inline-block h-5 w-5 text-black"
             ></div>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 mt--14 ml-5 inline"
+              class="ml-5 mt--14 inline h-4 w-4"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -82,7 +88,7 @@ onMounted(() => {
           </template>
           <template #down>
             <div
-              class="absolute w-11 overflow-y-scroll overflow-x-hidden h-111 bg-light-100 shadow-lg divide-y divide-gray-100"
+              class="absolute h-111 w-11 overflow-x-hidden overflow-y-scroll bg-light-100 shadow-lg divide-y divide-gray-100"
             >
               <span
                 v-for="sizeoption of sizeoptions"
@@ -92,7 +98,7 @@ onMounted(() => {
                     ? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
                     : ''
                 "
-                class="text-center block cursor-pointer text-lg border-b-2 text-gray-500 hover:text-gray-90 hover:bg-gray-100"
+                class="hover:text-gray-90 block cursor-pointer border-b-2 text-center text-lg text-gray-500 hover:bg-gray-100"
                 dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
                 @click="changeFontsize(sizeoption)"
               >
@@ -103,13 +109,13 @@ onMounted(() => {
         >
         <button
           ref="target"
-          class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+          class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
           dark="bg-transparent hover:bg-gray-500"
           title="Control Flow Graph"
           @click="addCFG"
         >
           <span
-            class="i-tabler:arrows-exchange-2 h-6 w-6 text-black inline-block mt-1"
+            class="i-tabler:arrows-exchange-2 mt-1 inline-block h-6 w-6 text-black"
           >
           </span>
         </button>
@@ -122,7 +128,7 @@ onMounted(() => {
       :permit="true"
       :compliercode="astcode"
     ></monacoEditor>
-    <h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
+    <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
       Compiling...
     </h1>
     <el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />

@@ -1,8 +1,5 @@
 <script setup lang="ts">
 import { getRoutes } from '@/plugins/router'
-import { E } from 'unplugin-vue-router/dist/options-8dbadba3'
-import { SwitchIcon } from 'vue-dark-switch'
-// import '@/stores/eventbus'
 const EventBus = useEventBus()
 
 const { te, t } = useI18n()
@@ -34,19 +31,37 @@ const options = ref({
   },
 })
 const options_2 = ['History', 'Open New Tab']
+
+//漫游式引导
+import { useMyTour } from '~/stores/tour'
+const tour = useMyTour()
+
+const open = ref(false)
+
+onMounted(() => {
+  const isFirstTime = localStorage.getItem('isFirstTime')
+
+  if (!isFirstTime) {
+    // 这是用户第一次访问，触发你的函数
+    open.value = true
+
+    // 设置 localStorage 标记用户已经访问过
+    localStorage.setItem('isFirstTime', 'no')
+  }
+})
 </script>
 
 <template>
   <nav
     aria-label="Site Nav"
-    class="mx-auto h-14 max-w-8xl flex items-center justify-between p-4 nav"
+    class="max-w-8xl nav mx-auto h-14 flex items-center justify-between p-4"
   >
     <div class="flex items-center justify-center space-x-2">
-      <a href="#" class="w-30 h-14 block flex">
+      <a href="#" class="block h-14 w-30 flex">
         <div
-          class="image-render-auto bg-cover bg-center bg-no-repeat logo h-14 w-19 ml--5"
+          class="logo ml--5 h-14 w-19 bg-cover bg-center bg-no-repeat image-render-auto"
         ></div>
-        <span class="text-size-7 text-blue-400 mt-1.5">慧编</span>
+        <span class="mt-1.5 text-size-7 text-blue-400">慧编</span>
       </a>
       <Dropdown ref="target"
         ><template #up><div>Add</div></template>
@@ -54,7 +69,7 @@ const options_2 = ['History', 'Open New Tab']
           <span
             v-for="(method, option) of options"
             :key="option"
-            class="block cursor-pointer rounded-lg px-4 py-2 text-sm text-gray-500 hover:text-gray-90 hover:bg-gray-100"
+            class="hover:text-gray-90 block cursor-pointer rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-100"
             dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
             @click="method"
           >
@@ -64,7 +79,7 @@ const options_2 = ['History', 'Open New Tab']
                   ? 'i-ic:baseline-edit-calendar'
                   : 'i-octicon:git-compare-16'
               "
-              class="h-5 w-5 justify-center align-middle mr-2"
+              class="mr-2 h-5 w-5 justify-center align-middle"
               style="display: inline-block"
             ></span>
             {{ option }}
@@ -77,26 +92,26 @@ const options_2 = ['History', 'Open New Tab']
           ><span
             v-for="option of options_2"
             :key="option"
-            class="block cursor-pointer rounded-lg text-sm text-gray-500 hover:text-gray-90 hover:bg-gray-100"
+            class="hover:text-gray-90 block cursor-pointer rounded-lg text-sm text-gray-500 hover:bg-gray-100"
             dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
           >
-            <div v-if="option === 'Open New Tab'" class="w-full h-full">
+            <div v-if="option === 'Open New Tab'" class="h-full w-full">
               <router-link
-                class="w-full h-full px-4 py-2"
+                class="h-full w-full px-4 py-2"
                 style="display: block"
                 to="/"
                 target="_blank"
               >
                 <span
-                  class="i-icon-park-twotone:add-one h-5 w-5 justify-center align-middle mr-2"
+                  class="i-icon-park-twotone:add-one mr-2 h-5 w-5 justify-center align-middle"
                   style="display: inline-block"
                 ></span
                 >{{ option }}</router-link
               >
             </div>
-            <div v-else class="w-full h-full px-4 py-2">
+            <div v-else class="h-full w-full px-4 py-2">
               <span
-                class="i-fluent-emoji-high-contrast:calendar h-5 w-5 justify-center align-middle mr-2"
+                class="i-fluent-emoji-high-contrast:calendar mr-2 h-5 w-5 justify-center align-middle"
                 style="display: inline-block"
               ></span
               >{{ option }}
@@ -104,10 +119,73 @@ const options_2 = ['History', 'Open New Tab']
           </span></template
         ></Dropdown
       >
+      <button
+        ref="target"
+        class="h-11 w-15 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+        dark="bg-transparent hover:bg-gray-500"
+        title="Execution"
+        @click="open = true"
+      >
+        Help
+      </button>
     </div>
 
+    <el-tour v-model="open">
+      <el-tour-step
+        title="欢迎使用慧编"
+        description="接下来将带您熟悉一下基础操作~"
+      ></el-tour-step>
+      <el-tour-step
+        :target="tour.edit"
+        title="第一步: 代码编辑器"
+        description="您可以在这里输入您的代码"
+        placement="right"
+      />
+      <el-tour-step
+        :target="tour.select"
+        title="第二步:编译器"
+        description="您可以选择一个合适的编译器"
+        placement="left"
+      />
+      <el-tour-step
+        :target="tour.option"
+        title="第三步:编译参数"
+        description="在这里输入您的编译参数"
+      />
+      <el-tour-step
+        :target="tour.complie"
+        title="第四步:编译结果"
+        description="这里是得到的编译结果"
+        placement="left"
+      ></el-tour-step>
+      <el-tour-step
+        :target="tour.execution"
+        title="第四步:运行结果"
+        description="点击此处查看代码运行结果"
+      />
+      <el-tour-step
+        :target="tour.tree"
+        title="第五步:抽象语法树"
+        description="点击此处查看代码的抽象语法树"
+      />
+      <el-tour-step
+        :target="tour.pipeline"
+        title="第六步:优化选项"
+        description="点击此处查看代码的所有优化选项"
+      />
+      <el-tour-step
+        :target="tour.graph"
+        title="第七步:控制流图"
+        description="点击此处查看代码的控制流图"
+      />
+
+      <template #indicators="{ current, total }">
+        <span>{{ current + 1 }} / {{ total }}</span>
+      </template>
+    </el-tour>
+
     <ul class="flex items-center gap-2 text-sm font-medium">
-      <SwitchIcon unmount-persets />
+      <!-- <SwitchIcon unmount-persets /> -->
       <li v-for="r of routes" :key="r.path" class="hidden !block">
         <RouterLink
           class="rounded-lg px-3 py-2 hover:text-blue-700"
@@ -188,7 +266,7 @@ const options_2 = ['History', 'Open New Tab']
               />
             </rect>
           </svg>
-          <p class="font-normal ml--4">Contact us</p>
+          <p class="ml--4 font-normal">Contact us</p>
         </a>
       </li>
 

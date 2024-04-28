@@ -45,7 +45,8 @@ const onClickAddAbstractTree = () => {
   if (!GLayoutRoot.value) return
   GLayoutRoot.value.addGLComponent('AbstractTree', 'AST Viewer')
 }
-
+import { useMyTour } from '~/stores/tour'
+const tour = useMyTour()
 const onClickAddPipeline = () => {
   if (!GLayoutRoot.value) return
   GLayoutRoot.value.addGLComponent('Pipeline', 'Opt Pipeline Viewer')
@@ -97,13 +98,13 @@ watch(
 </script>
 
 <template>
-  <div class="h-screen display_row w-screen overflow-hidden relative">
-    <button
+  <div class="h-full display_row w-screen overflow-hidden relative">
+    <!-- <button
       @click="onClickInitLayoutMinRow"
       class="translate-x-253 z-999 absolute top--4"
     >
       aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    </button>
+    </button> -->
     <!-- <div style="width: 20px; display: inline-block"></div>
 			<button @click="onClickAddGLComponent1">Add Simple Component</button>
 			<button @click="onClickAddGLComponent2">Add Widest Component</button>
@@ -113,11 +114,7 @@ watch(
 			<div style="width: 20px; display: inline-block"></div>
 			<button @click="onClickLoadLayout">Load Layout</button> -->
 
-    <glayout
-      ref="GLayoutRoot"
-      glc-path="./"
-      style="width: 100%; height: 100%"
-    ></glayout>
+    <glayout ref="GLayoutRoot" glc-path="./" class="h-100% w-100%"></glayout>
   </div>
 </template>
 

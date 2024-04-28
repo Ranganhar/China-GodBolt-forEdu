@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const complier = ref(null)
+const pipeline = ref(null)
 let fontsize = ref(16)
 const sizeoptions = [
   8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27,
@@ -55,27 +55,55 @@ onMounted(() => {
   menuItems.value = DataStore.pipe
   handleSelect(0)
 })
+
+import { useMyTour } from '~/stores/tour'
+const tour = useMyTour()
+
+const left = ref(null)
+const right = ref(null)
+onMounted(() => {
+  tour.left = left.value
+  tour.right = right.value
+})
 </script>
 <template>
   <div
+    ref="pipeline"
     style="background-color: #fffffe"
-    ref="complier"
-    class="h-full bg-sky-500 overflow-hidden w-full"
+    class="h-full w-full overflow-hidden bg-sky-500"
   >
+    <el-tour v-model="tour.open">
+      <el-tour-step
+        :target="tour.left"
+        title="优化选项"
+        description="您可以选择不同的优化选项"
+        placement="right"
+      />
+      <el-tour-step
+        :target="tour.right"
+        title="优化结果"
+        description="优化结果将会在这里显示"
+        placement="right"
+      />
+
+      <template #indicators="{ current, total }">
+        <span>{{ current + 1 }} / {{ total }}</span>
+      </template>
+    </el-tour>
     <!-- 第一层 -->
 
-    <div class="bg-gray-100 optionchoose h-11 w-full flex justify-between">
+    <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
       <!-- 各种按钮区域 -->
       <div class="flex">
         <Optionchoose>
           <template #up>
             <div
-              class="i-ri:font-family text-black w-5 h-5 inline-block ml--5 mt-1.7"
+              class="i-ri:font-family ml--5 mt-1.7 inline-block h-5 w-5 text-black"
             ></div>
 
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              class="h-4 w-4 mt--14 ml-5 inline"
+              class="ml-5 mt--14 inline h-4 w-4"
               viewBox="0 0 20 20"
               fill="currentColor"
             >
@@ -88,7 +116,7 @@ onMounted(() => {
           </template>
           <template #down>
             <div
-              class="absolute w-11 overflow-y-scroll overflow-x-hidden h-111 bg-light-100 shadow-lg divide-y divide-gray-100"
+              class="absolute h-111 w-11 overflow-x-hidden overflow-y-scroll bg-light-100 shadow-lg divide-y divide-gray-100"
             >
               <span
                 v-for="sizeoption of sizeoptions"
@@ -98,7 +126,7 @@ onMounted(() => {
                     ? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
                     : ''
                 "
-                class="text-center block cursor-pointer text-lg border-b-2 text-gray-500 hover:text-gray-90 hover:bg-gray-100"
+                class="hover:text-gray-90 block cursor-pointer border-b-2 text-center text-lg text-gray-500 hover:bg-gray-100"
                 dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
                 @click="changeFontsize(sizeoption)"
               >
@@ -112,30 +140,43 @@ onMounted(() => {
 
     <splitpanes class="default-theme h-full w-full" :dbl-click-splitter="false">
       <pane size="20" min-size="10" max-size="35">
-        <div class="ml-2">Passes:</div>
-        <el-menu class="h-full" default-active="0" @select="handleSelect">
-          <el-menu-item
-            v-for="(item, index) in menuItems"
-            :key="index"
-            :index="index.toString()"
-            class="!ml--5 !h-10"
+        <div ref="left" class="h-full w-40%">
+          <div class="ml-2 w-250%">Passes:</div>
+          <el-menu
+            class="h-full w-250%"
+            default-active="0"
+            @select="handleSelect"
           >
-            <p>{{ item }}</p>
-          </el-menu-item>
-        </el-menu>
+            <el-menu-item
+              v-for="(item, index) in menuItems"
+              :key="index"
+              :index="index.toString()"
+              class="!ml--5 !h-10"
+            >
+              <p>{{ item }}</p>
+            </el-menu-item>
+          </el-menu>
+        </div>
       </pane>
       <pane size="80">
-        <monacoEditor
-          :initvalue="coderight"
-          :fontsize="fontsize"
-          :permit="true"
-          :compliercode="choosepipeline"
-          v-if="!real_loading"
-        ></monacoEditor>
-        <h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
-          Compiling...
-        </h1>
-        <el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />
+        <div ref="right" class="h-full w-full">
+          <monacoEditor
+            v-if="!real_loading"
+            :initvalue="coderight"
+            :fontsize="fontsize"
+            :permit="true"
+            :compliercode="choosepipeline"
+          ></monacoEditor>
+          <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
+            Compiling...
+          </h1>
+          <el-skeleton
+            v-if="real_loading"
+            :rows="22"
+            animated
+            :throttle="500"
+          />
+        </div>
       </pane>
     </splitpanes>
   </div>

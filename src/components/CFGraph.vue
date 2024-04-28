@@ -33,7 +33,12 @@ const handleSelectChange = (value: any) => {
   imgsrc.value = `img/${value}.svg`
   console.log(value)
 }
-const complier = ref(null)
+const graph = ref(null)
+import { useMyTour } from '~/stores/tour'
+const tour = useMyTour()
+onMounted(() => {
+  tour.graph = graph.value
+})
 
 //loading效果
 let real_loading = ref(false)
@@ -129,23 +134,23 @@ const downloadPng = async () => {
 </script>
 <template>
   <div
+    ref="graph"
     style="background-color: #fffffe"
-    ref="complier"
-    class="h-full bg-sky-500 overflow-hidden w-full"
+    class="h-full w-full overflow-hidden bg-sky-500"
   >
     <!-- 第一层 -->
 
     <div
-      class="bg-gray-100 optionchoose h-11 w-full flex border-b-gray-300 border-b-1"
+      class="optionchoose h-11 w-full flex border-b-1 border-b-gray-300 bg-gray-100"
     >
       <!-- 各种按钮区域 -->
       <el-select
-        @change="handleSelectChange"
         v-model="namedefault"
         filterable
         placeholder="function"
         size="large"
-        class="!w-33 !mt-0.5"
+        class="!mt-0.5 !w-33"
+        @change="handleSelectChange"
       >
         <el-option
           v-for="item in name"
@@ -156,50 +161,50 @@ const downloadPng = async () => {
       </el-select>
       <button
         ref="target"
-        class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+        class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
         dark="bg-transparent hover:bg-gray-500"
         title="Reset View"
         @click="initPanzoom"
       >
-        <span class="i-carbon:zoom-pan h-5 w-5 text-black inline-block mt-1.7">
+        <span class="i-carbon:zoom-pan mt-1.7 inline-block h-5 w-5 text-black">
         </span>
       </button>
       <button
         ref="target"
-        class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+        class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
         dark="bg-transparent hover:bg-gray-500"
         title="Download as SVG"
         @click="downloadSvg"
       >
         <span
-          class="i-teenyicons:svg-solid h-6 w-6 text-black inline-block mt-1 bg-black"
+          class="i-teenyicons:svg-solid mt-1 inline-block h-6 w-6 bg-black text-black"
         >
         </span>
       </button>
       <button
         ref="target"
-        class="rounded-md w-11 h-11 cursor-pointer border-0 bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+        class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
         dark="bg-transparent hover:bg-gray-500"
         title="Download as PNG"
         @click="downloadPng"
       >
         <span
-          class="i-teenyicons:png-solid h-6 w-6 text-black inline-block mt-1 bg-black"
+          class="i-teenyicons:png-solid mt-1 inline-block h-6 w-6 bg-black text-black"
         >
         </span>
       </button>
     </div>
 
-    <div class="w-full h-full overflow-hidden">
+    <div class="h-full w-full overflow-hidden">
       <div v-if="!real_loading" id="image">
         <img
           :src="imgsrc"
           alt="CFG.svg"
-          class="h-80% w-80% m-auto mt-4"
+          class="m-auto mt-4 h-80% w-80%"
           @load="initPanzoom"
         />
       </div>
-      <h1 v-if="real_loading" class="ml-15% font-mono text-size-5">
+      <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
         Compiling...
       </h1>
       <el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />
