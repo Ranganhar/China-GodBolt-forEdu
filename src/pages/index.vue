@@ -1,24 +1,4 @@
 <script setup lang="ts">
-import { kMaxLength } from 'buffer'
-
-//初始代码
-
-const codeleft = `int test(int a[], int b[], int c)
-{
-    float d = 2.3;
-    int e = 2.4;
-    if(c > 10)
-    {
-        e =  c + b[0];
-    }
-    else
-    {
-        e = -e;
-        d = e + a[1];
-    }
-    return e;
-}`
-
 import Glayout from '@/components/Glayout.vue'
 
 import { prefinedLayouts } from '../composables/predefined-layouts'
@@ -45,8 +25,6 @@ const onClickAddAbstractTree = () => {
   if (!GLayoutRoot.value) return
   GLayoutRoot.value.addGLComponent('AbstractTree', 'AST Viewer')
 }
-import { useMyTour } from '~/stores/tour'
-const tour = useMyTour()
 const onClickAddPipeline = () => {
   if (!GLayoutRoot.value) return
   GLayoutRoot.value.addGLComponent('Pipeline', 'Opt Pipeline Viewer')
@@ -95,10 +73,120 @@ watch(
     }
   },
 )
+const participants = ref([
+  {
+    id: 'user1',
+    name: 'Matteo',
+    imageUrl: 'https://avatars3.githubusercontent.com/u/1915989?s=230&v=4',
+  },
+  {
+    id: 'user2',
+    name: 'Support',
+    imageUrl: 'https://avatars3.githubusercontent.com/u/37018832?s=200&v=4',
+  },
+])
+const titleImageUrl = ref(
+  'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
+)
+const messageList = ref([
+  { type: 'text', author: `me`, data: { text: `Say yes!` } },
+  { type: 'text', author: `user1`, data: { text: `No.` } },
+])
+const newMessagesCount = ref(0)
+const isChatOpen = ref(false)
+const showTypingIndicator = ref('')
+const colors = reactive({
+  header: {
+    bg: '#4e8cff',
+    text: '#ffffff',
+  },
+  launcher: {
+    bg: '#4e8cff',
+  },
+  messageList: {
+    bg: '#ffffff',
+  },
+  sentMessage: {
+    bg: '#4e8cff',
+    text: '#ffffff',
+  },
+  receivedMessage: {
+    bg: '#eaeaea',
+    text: '#222222',
+  },
+  userInput: {
+    bg: '#f4f7f9',
+    text: '#565867',
+  },
+})
+const alwaysScrollToBottom = ref(false)
+const messageStyling = ref(true)
+
+const sendMessage = (text) => {
+  if (text.length > 0) {
+    newMessagesCount.value = isChatOpen.value
+      ? newMessagesCount.value
+      : newMessagesCount.value + 1
+    onMessageWasSent({ author: 'support', type: 'text', data: { text } })
+  }
+}
+
+const onMessageWasSent = (message) => {
+  messageList.value = [...messageList.value, message]
+}
+
+const openChat = () => {
+  isChatOpen.value = true
+  newMessagesCount.value = 0
+}
+
+const closeChat = () => {
+  isChatOpen.value = false
+}
+
+const handleScrollToTop = () => {
+  // handle pagination here
+}
+
+const handleOnType = () => {
+  console.log('Emit typing event')
+}
+
+const editMessage = (message) => {
+  const m = messageList.value.find((m) => m.id === message.id)
+  m.isEdited = true
+  m.data.text = message.data.text
+}
 </script>
 
 <template>
-  <div class="h-full display_row w-screen overflow-hidden relative">
+  <beautiful-chat
+    class="absolute z-444 h-full w-full"
+    :participants="participants"
+    :title-image-url="titleImageUrl"
+    :on-message-was-sent="onMessageWasSent"
+    :message-list="messageList"
+    :new-messages-count="newMessagesCount"
+    :is-open="isChatOpen"
+    :close="closeChat"
+    :icons="icons"
+    :open="openChat"
+    :show-emoji="true"
+    :show-file="true"
+    :show-edition="true"
+    :show-deletion="true"
+    :deletion-confirmation="true"
+    :show-typing-indicator="showTypingIndicator"
+    :show-launcher="true"
+    :show-close-button="true"
+    :colors="colors"
+    :always-scroll-to-bottom="alwaysScrollToBottom"
+    :disable-user-list-toggle="false"
+    :message-styling="messageStyling"
+    @on-type="handleOnType"
+    @edit="editMessage"
+  />
+  <div class="display_row relative h-full w-screen overflow-hidden">
     <!-- <button
       @click="onClickInitLayoutMinRow"
       class="translate-x-253 z-999 absolute top--4"
