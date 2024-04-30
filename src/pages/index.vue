@@ -2,6 +2,7 @@
 import Glayout from '@/components/Glayout.vue'
 
 import { prefinedLayouts } from '../composables/predefined-layouts'
+import { send } from 'vite'
 
 const GLayoutRoot = ref<null | HTMLElement>(null)
 
@@ -73,32 +74,44 @@ watch(
     }
   },
 )
+//选中文本功能
+const codeText = ref('')
+const selectText = useTextSelection()
+watchDebounced(
+  selectText.text,
+  (newText) => {
+    if (newText !== '') {
+      codeText.value = newText
+    }
+  },
+  { debounce: 500 },
+)
+
+//chat
 const participants = ref([
   {
     id: 'user1',
-    name: 'Matteo',
-    imageUrl: 'https://avatars3.githubusercontent.com/u/1915989?s=230&v=4',
-  },
-  {
-    id: 'user2',
-    name: 'Support',
-    imageUrl: 'https://avatars3.githubusercontent.com/u/37018832?s=200&v=4',
+    name: '慧编小助手',
+    imageUrl: 'img/robot.svg',
   },
 ])
-const titleImageUrl = ref(
-  'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png',
-)
+const titleImageUrl = ref('/img/output1.png')
 const messageList = ref([
   { type: 'text', author: `me`, data: { text: `Say yes!` } },
-  { type: 'text', author: `user1`, data: { text: `No.` } },
+  {
+    type: 'text',
+    author: `user1`,
+    data: { text: `No.` },
+    suggestions: ['some quick reply', 'another one'],
+  },
 ])
 const newMessagesCount = ref(0)
 const isChatOpen = ref(false)
 const showTypingIndicator = ref('')
 const colors = reactive({
   header: {
-    bg: '#4e8cff',
-    text: '#ffffff',
+    bg: '#fff',
+    text: '#659ad2',
   },
   launcher: {
     bg: '#4e8cff',
@@ -122,17 +135,42 @@ const colors = reactive({
 const alwaysScrollToBottom = ref(false)
 const messageStyling = ref(true)
 
-const sendMessage = (text) => {
-  if (text.length > 0) {
-    newMessagesCount.value = isChatOpen.value
-      ? newMessagesCount.value
-      : newMessagesCount.value + 1
-    onMessageWasSent({ author: 'support', type: 'text', data: { text } })
+const totalmessage = ref('')
+const onMessageWasSent = async (message: any) => {
+  messageList.value = [...messageList.value, message]
+  if (need.value) {
+    totalmessage.value = codeText.value + '\n' + message.data.text
+    console.log(totalmessage.value)
+    sendMessage()
+  } else {
+    totalmessage.value = message.data.text
+    console.log(totalmessage.value)
+    sendMessage()
   }
 }
+const sendMessage = async () => {
+  const fetchOptions = reactive({
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      text: totalmessage.value,
+    }),
+  })
 
-const onMessageWasSent = (message) => {
-  messageList.value = [...messageList.value, message]
+  const fetchInstance = useFetch(
+    'http://http://47.109.200.112/receive_string',
+    fetchOptions,
+    {
+      immediate: false, // 不立即执行请求
+    },
+  )
+
+  const response = await fetchInstance.execute()
+  console.log('发送')
+  if (response.ok) {
+    const data = await response.json()
+    console.log(data) // 打印服务器返回的字符串
+  }
 }
 
 const openChat = () => {
@@ -144,49 +182,47 @@ const closeChat = () => {
   isChatOpen.value = false
 }
 
-const handleScrollToTop = () => {
-  // handle pagination here
-}
-
-const handleOnType = () => {
-  console.log('Emit typing event')
-}
-
-const editMessage = (message) => {
-  const m = messageList.value.find((m) => m.id === message.id)
-  m.isEdited = true
-  m.data.text = message.data.text
-}
+// const handleScrollToTop = () => {
+//   // handle pagination here
+// }
+const need = ref(false)
 </script>
 
 <template>
-  <beautiful-chat
-    class="absolute z-444 h-full w-full"
-    :participants="participants"
-    :title-image-url="titleImageUrl"
-    :on-message-was-sent="onMessageWasSent"
-    :message-list="messageList"
-    :new-messages-count="newMessagesCount"
-    :is-open="isChatOpen"
-    :close="closeChat"
-    :icons="icons"
-    :open="openChat"
-    :show-emoji="true"
-    :show-file="true"
-    :show-edition="true"
-    :show-deletion="true"
-    :deletion-confirmation="true"
-    :show-typing-indicator="showTypingIndicator"
-    :show-launcher="true"
-    :show-close-button="true"
-    :colors="colors"
-    :always-scroll-to-bottom="alwaysScrollToBottom"
-    :disable-user-list-toggle="false"
-    :message-styling="messageStyling"
-    @on-type="handleOnType"
-    @edit="editMessage"
-  />
   <div class="display_row relative h-full w-screen overflow-hidden">
+    <label
+      v-if="isChatOpen"
+      class="checkbox-container z-445 float-right right-19 top-120"
+    >
+      <input v-model="need" type="checkbox" />
+      <span class="i-icon-park-outline:correct checkmark">
+        <i class=""></i>
+      </span>
+    </label>
+    <beautiful-chat
+      class="absolute z-444"
+      :participants="participants"
+      :title-image-url="titleImageUrl"
+      :on-message-was-sent="onMessageWasSent"
+      :message-list="messageList"
+      :new-messages-count="newMessagesCount"
+      :is-open="isChatOpen"
+      :close="closeChat"
+      :open="openChat"
+      :show-header="true"
+      :show-emoji="true"
+      :show-file="false"
+      :show-edition="true"
+      :show-deletion="true"
+      :deletion-confirmation="true"
+      :show-typing-indicator="showTypingIndicator"
+      :show-launcher="true"
+      :show-close-button="false"
+      :colors="colors"
+      :always-scroll-to-bottom="alwaysScrollToBottom"
+      :disable-user-list-toggle="true"
+      :message-styling="messageStyling"
+    />
     <!-- <button
       @click="onClickInitLayoutMinRow"
       class="translate-x-253 z-999 absolute top--4"
@@ -219,6 +255,59 @@ const editMessage = (message) => {
 }
 .logo.vue:hover {
   filter: drop-shadow(0 0 2em #42b883aa);
+}
+.checkbox-container {
+  display: block;
+  position: relative;
+  padding-left: 35px;
+  cursor: pointer;
+  user-select: none;
+  height: 25px;
+  line-height: 25px;
+  background: #fff;
+}
+
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+}
+
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #2196f3;
+}
+
+.checkmark:after {
+  content: '';
+  position: absolute;
+  display: none;
+}
+
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkbox-container .checkmark:after {
+  top: 9px;
+  left: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
 }
 </style>
 <style src="golden-layout/dist/css/goldenlayout-base.css"></style>
