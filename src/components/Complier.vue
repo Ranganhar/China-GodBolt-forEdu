@@ -125,161 +125,162 @@ onMounted(() => {
   <div
     ref="complier"
     style="background-color: #fffffe"
-    class="h-full w-full overflow-hidden bg-sky-500"
+    class="h-full w-full overflow-hidden"
   >
-    <div ref="complie" class="h-full w-full">
-      <!-- 第一层 -->
-      <div class="optionchoose h-10 w-full flex bg-gray-100">
-        <!-- 语言选择 -->
-        <div
-          ref="select"
-          name="languageoption"
-          class="bord h-full w-65 cursor-pointer border-1 rounded-lg bg-light-100 text-size-4 text-color-#343a40"
+    <!-- 第一层 -->
+    <div class="optionchoose h-10 w-full flex bg-gray-100">
+      <!-- 语言选择 -->
+      <div
+        ref="select"
+        name="languageoption"
+        class="bord h-full w-65 cursor-pointer border-1 rounded-lg bg-light-100 text-size-4 text-color-#343a40"
+      >
+        <el-select
+          v-model="version"
+          filterable
+          placeholder="select a complier"
+          size="large"
+          class="!w-65"
         >
-          <el-select
-            v-model="version"
-            filterable
-            placeholder="select a complier"
-            size="large"
-            class="!w-65"
-          >
-            <el-option
-              v-for="item in options"
-              :key="item.value"
-              :label="item.label"
-              :value="item.value"
-            />
-          </el-select>
-        </div>
-
-        <!-- 加载符号 -->
-        <div
-          v-loading="real_loading"
-          :element-loading-svg="loadingsvg"
-          element-loading-svg-view-box="-10, -10, 50, 50"
-          class="h-full w-10 cursor-pointer border-1 rounded-lg bg-light-100 !p-2"
-        >
-          <div
-            :class="real_loading ? '' : 'correct'"
-            class="h-6 w-6 bg-contain bg-no-repeat"
-          ></div>
-        </div>
-
-        <!-- 编译参数 -->
-        <div ref="option" class="h-full w-full">
-          <el-input
-            v-model="compileroption"
-            class="!w-full"
-            size="large"
-            placeholder="Compiler options"
+          <el-option
+            v-for="item in options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
           />
-        </div>
-      </div>
-      <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
-        <!-- 各种按钮区域 -->
-        <div class="flex">
-          <Optionchoose>
-            <template #up>
-              <div
-                class="i-ri:font-family ml--5 mt-1.7 inline-block h-5 w-5 text-black"
-              ></div>
-
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                class="ml-5 mt--14 inline h-4 w-4"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-              >
-                <path
-                  fill-rule="evenodd"
-                  d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
-                />
-              </svg>
-            </template>
-            <template #down>
-              <div
-                class="absolute h-111 w-11 overflow-x-hidden overflow-y-scroll bg-light-100 shadow-lg divide-y divide-gray-100"
-              >
-                <span
-                  v-for="sizeoption of sizeoptions"
-                  :key="sizeoption"
-                  :class="
-                    fontsize === sizeoption
-                      ? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
-                      : ''
-                  "
-                  class="hover:text-gray-90 block cursor-pointer border-b-2 text-center text-lg text-gray-500 hover:bg-gray-100"
-                  dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
-                  @click="changeFontsize(sizeoption)"
-                >
-                  {{ sizeoption }}
-                </span>
-              </div>
-            </template></Optionchoose
-          >
-
-          <button
-            ref="execution"
-            class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-            dark="bg-transparent hover:bg-gray-500"
-            title="Execution"
-            @click="addExecution"
-          >
-            <span
-              class="i-heroicons:cpu-chip-20-solid mt-1 inline-block h-6 w-6 bg-black text-black"
-            >
-            </span>
-          </button>
-
-          <button
-            ref="tree"
-            class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-            dark="bg-transparent hover:bg-gray-500"
-            title="AST"
-            @click="addAST"
-          >
-            <span class="i-bx:bxs-leaf mt-1 inline-block h-6 w-6 text-black">
-            </span>
-          </button>
-
-          <button
-            ref="pipeline"
-            class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-            dark="bg-transparent hover:bg-gray-500"
-            title="Opt Pipeline"
-            @click="addpipeafter"
-          >
-            <span
-              class="i-gravity-ui:pipeline mt-1 inline-block h-6 w-6 text-black"
-            >
-            </span>
-          </button>
-          <button
-            ref="graph"
-            class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-            dark="bg-transparent hover:bg-gray-500"
-            title="Control Flow Graph"
-            @click="addCFG"
-          >
-            <span
-              class="i-tabler:arrows-exchange-2 mt-1 inline-block h-6 w-6 text-black"
-            >
-            </span>
-          </button>
-        </div>
+        </el-select>
       </div>
 
-      <monacoEditor
-        v-if="!real_loading"
-        :fontsize="fontsize"
-        :permit="true"
-        :compliercode="sourcecode"
-      ></monacoEditor>
-      <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
-        Compiling...
-      </h1>
-      <el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" />
+      <!-- 加载符号 -->
+      <div
+        v-loading="real_loading"
+        :element-loading-svg="loadingsvg"
+        element-loading-svg-view-box="-10, -10, 50, 50"
+        class="h-full w-10 cursor-pointer border-1 rounded-lg bg-light-100 !p-2"
+      >
+        <div
+          :class="real_loading ? '' : 'correct'"
+          class="h-6 w-6 bg-contain bg-no-repeat"
+        ></div>
+      </div>
+
+      <!-- 编译参数 -->
+      <div ref="option" class="h-full w-full">
+        <el-input
+          v-model="compileroption"
+          class="!w-full"
+          size="large"
+          placeholder="Compiler options"
+        />
+      </div>
+    </div>
+    <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
+      <!-- 各种按钮区域 -->
+      <div class="flex">
+        <Optionchoose>
+          <template #up>
+            <div
+              class="i-ri:font-family ml--5 mt-1.7 inline-block h-5 w-5 text-black"
+            ></div>
+
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              class="ml-5 mt--14 inline h-4 w-4"
+              viewBox="0 0 20 20"
+              fill="currentColor"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </template>
+          <template #down>
+            <div
+              class="absolute h-111 w-11 overflow-x-hidden overflow-y-scroll bg-light-100 shadow-lg divide-y divide-gray-100"
+            >
+              <span
+                v-for="sizeoption of sizeoptions"
+                :key="sizeoption"
+                :class="
+                  fontsize === sizeoption
+                    ? 'bg-gray-100 text-gray-800 dark:bg-gray-400'
+                    : ''
+                "
+                class="hover:text-gray-90 block cursor-pointer border-b-2 text-center text-lg text-gray-500 hover:bg-gray-100"
+                dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
+                @click="changeFontsize(sizeoption)"
+              >
+                {{ sizeoption }}
+              </span>
+            </div>
+          </template></Optionchoose
+        >
+
+        <button
+          ref="execution"
+          class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+          dark="bg-transparent hover:bg-gray-500"
+          title="Execution"
+          @click="addExecution"
+        >
+          <span
+            class="i-heroicons:cpu-chip-20-solid mt-1 inline-block h-6 w-6 bg-black text-black"
+          >
+          </span>
+        </button>
+
+        <button
+          ref="tree"
+          class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+          dark="bg-transparent hover:bg-gray-500"
+          title="AST"
+          @click="addAST"
+        >
+          <span class="i-bx:bxs-leaf mt-1 inline-block h-6 w-6 text-black">
+          </span>
+        </button>
+
+        <button
+          ref="pipeline"
+          class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+          dark="bg-transparent hover:bg-gray-500"
+          title="Opt Pipeline"
+          @click="addpipeafter"
+        >
+          <span
+            class="i-gravity-ui:pipeline mt-1 inline-block h-6 w-6 text-black"
+          >
+          </span>
+        </button>
+        <button
+          ref="graph"
+          class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
+          dark="bg-transparent hover:bg-gray-500"
+          title="Control Flow Graph"
+          @click="addCFG"
+        >
+          <span
+            class="i-tabler:arrows-exchange-2 mt-1 inline-block h-6 w-6 text-black"
+          >
+          </span>
+        </button>
+      </div>
+    </div>
+    <div ref="complie" class="h-50%">
+      <div class="h-200% w-full">
+        <monacoEditor
+          v-if="!real_loading"
+          :fontsize="fontsize"
+          :permit="true"
+          :compliercode="sourcecode"
+        ></monacoEditor>
+        <!-- <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
+          Compiling...
+        </h1>
+        <el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" /> -->
+      </div>
     </div>
   </div>
 </template>

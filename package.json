@@ -157,6 +157,7 @@
     "element-plus": "^2.6.1",
     "git": "link:github.com:Charles-Google/vue-beautiful-chat.git",
     "golden-layout": "^2.6.0",
+    "marked": "^12.0.2",
     "monaco-editor": "^0.47.0",
     "monaco-vim": "^0.4.1",
     "node": "^18.20.2",

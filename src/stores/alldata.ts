@@ -40,7 +40,7 @@ export const useDataStore = defineStore('alldata', () => {
     })
 
     const fetchInstance = useFetch(
-      'http://http://47.109.200.112/receive_string',
+      'http://47.109.200.112/receive_string',
       fetchOptions,
       {
         immediate: false, // 不立即执行请求

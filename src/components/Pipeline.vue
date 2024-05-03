@@ -140,28 +140,31 @@ onMounted(() => {
 
     <splitpanes class="default-theme h-full w-full" :dbl-click-splitter="false">
       <pane size="20" min-size="10" max-size="35">
-        <div ref="left" class="h-full w-40%">
-          <div class="ml-2 w-250%">Passes:</div>
-          <el-menu
-            class="h-full w-250%"
-            default-active="0"
-            @select="handleSelect"
-          >
-            <el-menu-item
-              v-for="(item, index) in menuItems"
-              :key="index"
-              :index="index.toString()"
-              class="!ml--5 !h-10"
+        <div ref="left" class="h-75% w-40%">
+          <div class="h-133% w-100%">
+            <div class="ml-2 w-250%">Passes:</div>
+            <el-menu
+              class="h-full w-250%"
+              default-active="0"
+              @select="handleSelect"
             >
-              <p>{{ item }}</p>
-            </el-menu-item>
-          </el-menu>
+              <el-menu-item
+                v-for="(item, index) in menuItems"
+                :key="index"
+                :index="index.toString()"
+                class="!ml--5 !h-10"
+              >
+                <p>{{ item }}</p>
+              </el-menu-item>
+            </el-menu>
+          </div>
         </div>
       </pane>
       <pane size="80">
-        <div ref="right" class="h-full w-full">
+        <div ref="right" class="h-75% w-full">
           <monacoEditor
             v-if="!real_loading"
+            class="133%"
             :initvalue="coderight"
             :fontsize="fontsize"
             :permit="true"

@@ -2,6 +2,7 @@
 import Glayout from '@/components/Glayout.vue'
 
 import { prefinedLayouts } from '../composables/predefined-layouts'
+import { marked } from 'marked'
 
 const GLayoutRoot = ref<null | HTMLElement>(null)
 
@@ -97,12 +98,15 @@ const participants = ref([
 ])
 const titleImageUrl = ref('/img/output1.png')
 const messageList = ref([
-  { type: 'text', author: `me`, data: { text: `Say yes!` } },
+  {
+    type: 'text',
+    author: `me`,
+    data: { text: `我可以问你一些编译器相关的问题吗？` },
+  },
   {
     type: 'text',
     author: `user1`,
-    data: { text: `No.` },
-    suggestions: ['some quick reply', 'another one'],
+    data: { text: `当然，您还可以选中页面中的代码向我提问。` },
   },
 ])
 const newMessagesCount = ref(0)
@@ -136,16 +140,22 @@ const alwaysScrollToBottom = ref(false)
 const messageStyling = ref(true)
 
 const totalmessage = ref('')
-const onMessageWasSent = async (message: any) => {
+const onMessageWasSent = (message: any) => {
   messageList.value = [...messageList.value, message]
-  if (need.value) {
-    totalmessage.value = codeText.value + '\n' + message.data.text
-    console.log(totalmessage.value)
-    sendMessage()
-  } else {
-    totalmessage.value = message.data.text
-    console.log(totalmessage.value)
-    sendMessage()
+  if (message.author == 'me') {
+    if (!need.value) {
+      totalmessage.value =
+        '你是计算机领域研究编译器的专家,我要向你请教一些专业性的问题,请你使用中文来清晰的回答我的问题,这是我的问题:\n' +
+        codeText.value +
+        '\n' +
+        message.data.text
+      sendMessage()
+    } else {
+      totalmessage.value =
+        '你是计算机领域研究编译器的专家,我要向你请教一些专业性的问题,请你使用中文来清晰的回答我的问题,这是我的问题:\n' +
+        message.data.text
+      sendMessage()
+    }
   }
 }
 const sendMessage = async () => {
@@ -158,7 +168,7 @@ const sendMessage = async () => {
   })
 
   const fetchInstance = useFetch(
-    'http://http://47.109.200.112/receive_string',
+    'http://127.0.0.1:5000/receive_text',
     fetchOptions,
     {
       immediate: false, // 不立即执行请求
@@ -169,7 +179,13 @@ const sendMessage = async () => {
   console.log('发送')
   if (response.ok) {
     const data = await response.json()
-    console.log(data) // 打印服务器返回的字符串
+    const htmlContent = marked(data.result)
+    onMessageWasSent({
+      author: 'user1',
+      type: 'text',
+
+      data: { text: data.result },
+    })
   }
 }
 
@@ -214,12 +230,12 @@ onMounted(() => {
 
       input.onchange = function () {
         need.value = this.checked
+        console.log(need.value)
       }
 
       // 创建 span 元素
       span = document.createElement('span')
-      span.className =
-        'i-icon-park-outline:correct h-6 w-6 absolute bg-gray-500'
+      span.className = 'i-icon-park-outline:correct h-6 w-6 absolute bg-sky-600'
       label.appendChild(span)
 
       // 将 label 添加到 'sc-user-input--button' 元素
@@ -229,7 +245,7 @@ onMounted(() => {
 })
 watch(need, (newValue) => {
   if (span) {
-    if (newValue) {
+    if (!newValue) {
       span.classList.remove('bg-gray-500') // 移除假值类名
       span.classList.add('bg-sky-600') // 添加真值类名
     } else {
@@ -243,6 +259,7 @@ watch(need, (newValue) => {
 <template>
   <div class="display_row relative h-screen w-screen overflow-hidden">
     <beautiful-chat
+      style="user-select: text"
       class="relative z-444"
       :participants="participants"
       :title-image-url="titleImageUrl"
@@ -269,10 +286,6 @@ watch(need, (newValue) => {
       <template #header> 慧编小助手 </template>
     </beautiful-chat>
 
-    <label v-if="isChatOpen" class="checkbox-container move absolute">
-      <input v-model="need" type="checkbox  " />
-      <span class="i-icon-park-outline:correct checkmark move absolute"> </span>
-    </label>
     <!-- <button
       @click="onClickInitLayoutMinRow"
       class="translate-x-253 z-999 absolute top--4"
@@ -288,7 +301,11 @@ watch(need, (newValue) => {
 			<div style="width: 20px; display: inline-block"></div>
 			<button @click="onClickLoadLayout">Load Layout</button> -->
 
-    <glayout ref="GLayoutRoot" glc-path="./" class="h-100% w-100%"></glayout>
+    <glayout
+      ref="GLayoutRoot"
+      glc-path="./"
+      class="fixed bottom-0 h-100% w-100%"
+    ></glayout>
   </div>
 </template>
 

@@ -70,7 +70,6 @@ onMounted(() => {
             v-for="(method, option) of options"
             :key="option"
             class="hover:text-gray-90 block cursor-pointer rounded-lg px-4 py-2 text-sm text-gray-500 hover:bg-gray-100"
-            dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
             @click="method"
           >
             <span
@@ -92,8 +91,7 @@ onMounted(() => {
           ><span
             v-for="option of options_2"
             :key="option"
-            class="hover:text-gray-90 block cursor-pointer rounded-lg text-sm text-gray-500 hover:bg-gray-100"
-            dark="text-light-500 hover:text-light-900 hover:bg-gray-400"
+            class="hover:text-gray-90 block cursor-pointer rounded-lg text-sm text-gray-500 hover:bg-white"
           >
             <div v-if="option === 'Open New Tab'" class="h-full w-full">
               <router-link
@@ -121,8 +119,7 @@ onMounted(() => {
       >
       <button
         ref="target"
-        class="h-11 w-15 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-        dark="bg-transparent hover:bg-gray-500"
+        class="h-11 w-15 cursor-pointer border-0 rounded-md bg-white p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
         title="Execution"
         @click="open = true"
       >
