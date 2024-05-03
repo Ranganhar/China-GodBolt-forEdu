@@ -2,7 +2,6 @@
 import Glayout from '@/components/Glayout.vue'
 
 import { prefinedLayouts } from '../composables/predefined-layouts'
-import { send } from 'vite'
 
 const GLayoutRoot = ref<null | HTMLElement>(null)
 
@@ -46,6 +45,7 @@ const onClickLoadLayout = () => {
   if (!str) return
   if (!GLayoutRoot.value) return
   const config = JSON.parse(str as string)
+
   GLayoutRoot.value.loadGLLayout(config)
 }
 onMounted(onClickInitLayoutMinRow)
@@ -186,21 +186,64 @@ const closeChat = () => {
 //   // handle pagination here
 // }
 const need = ref(false)
+let span
+let label
+onMounted(() => {
+  // 获取 'sc-user-input--buttons' 元素
+  const buttonsDiv = document.getElementsByClassName(
+    'sc-user-input--buttons',
+  )[0]
+
+  // 检查是否找到了 'sc-user-input--buttons' 元素
+  if (buttonsDiv) {
+    // 在 'sc-user-input--buttons' 元素中获取 'sc-user-input--button' 元素
+    const buttonDiv = buttonsDiv.getElementsByClassName(
+      'sc-user-input--button',
+    )[0]
+
+    // 检查是否找到了 'sc-user-input--button' 元素
+    if (buttonDiv) {
+      // 创建 label 元素
+      label = document.createElement('label')
+      label.className = 'checkbox-container move absolute h-11 w-11'
+
+      // 创建 input 元素
+      const input = document.createElement('input')
+      input.type = 'checkbox'
+      label.appendChild(input)
+
+      input.onchange = function () {
+        need.value = this.checked
+      }
+
+      // 创建 span 元素
+      span = document.createElement('span')
+      span.className =
+        'i-icon-park-outline:correct h-6 w-6 absolute bg-gray-500'
+      label.appendChild(span)
+
+      // 将 label 添加到 'sc-user-input--button' 元素
+      buttonDiv.appendChild(label)
+    }
+  }
+})
+watch(need, (newValue) => {
+  if (span) {
+    if (newValue) {
+      span.classList.remove('bg-gray-500') // 移除假值类名
+      span.classList.add('bg-sky-600') // 添加真值类名
+    } else {
+      span.classList.remove('bg-sky-600') // 移除真值类名
+      span.classList.add('bg-gray-500') // 添加假值类名
+    }
+  }
+})
 </script>
 
 <template>
-  <div class="display_row relative h-full w-screen overflow-hidden">
-    <label
-      v-if="isChatOpen"
-      class="checkbox-container z-445 float-right right-19 top-120"
-    >
-      <input v-model="need" type="checkbox" />
-      <span class="i-icon-park-outline:correct checkmark">
-        <i class=""></i>
-      </span>
-    </label>
+  <div class="display_row relative h-screen w-screen overflow-hidden">
     <beautiful-chat
-      class="absolute z-444"
+      class="relative z-444"
       :participants="participants"
       :title-image-url="titleImageUrl"
       :on-message-was-sent="onMessageWasSent"
@@ -222,7 +265,14 @@ const need = ref(false)
       :always-scroll-to-bottom="alwaysScrollToBottom"
       :disable-user-list-toggle="true"
       :message-styling="messageStyling"
-    />
+    >
+      <template #header> 慧编小助手 </template>
+    </beautiful-chat>
+
+    <label v-if="isChatOpen" class="checkbox-container move absolute">
+      <input v-model="need" type="checkbox  " />
+      <span class="i-icon-park-outline:correct checkmark move absolute"> </span>
+    </label>
     <!-- <button
       @click="onClickInitLayoutMinRow"
       class="translate-x-253 z-999 absolute top--4"
@@ -243,6 +293,11 @@ const need = ref(false)
 </template>
 
 <style scoped>
+.move {
+  right: 1rem;
+  bottom: -450%;
+  z-index: 445;
+}
 .logo {
   width: 10em;
   height: 10em;
@@ -258,29 +313,29 @@ const need = ref(false)
 }
 .checkbox-container {
   display: block;
-  position: relative;
-  padding-left: 35px;
+  padding-left: 2.5rem;
   cursor: pointer;
   user-select: none;
-  height: 25px;
-  line-height: 25px;
-  background: #fff;
+  height: 2.2rem;
+  line-height: 2.5rem;
+  background: #f4f7f9;
 }
 
 .checkbox-container input {
-  position: absolute;
   opacity: 0;
   cursor: pointer;
+  bottom: 4rem;
+  right: 7rem;
   height: 0;
   width: 0;
 }
 
 .checkmark {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 25px;
-  width: 25px;
+  display: block;
+  bottom: 5rem;
+  right: 5.5rem;
+  height: 1.5rem;
+  width: 1.5rem;
   border-radius: 50%;
 }
 
@@ -293,7 +348,6 @@ const need = ref(false)
 }
 
 .checkmark:after {
-  content: '';
   position: absolute;
   display: none;
 }

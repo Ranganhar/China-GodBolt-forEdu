@@ -9,10 +9,12 @@ import 'splitpanes/dist/splitpanes.css'
 // 你自定义的 css
 import './styles/main.css'
 
-import Chat from 'vue3-beautiful-chat'
+import Chat from './libs/vue-beautiful-chat/esm.js'
+
 import App from './App.vue'
 const app = createApp(App)
 app.use(Chat)
+
 app.component('Splitpanes', Splitpanes)
 app.component('Pane', Pane)
 app.mount('#app')

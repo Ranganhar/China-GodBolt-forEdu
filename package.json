@@ -7,7 +7,6 @@
     "dev": "vite",
     "test": "vitest",
     "build": "vite build",
-    "prepare": "husky install",
     "dev:host": "vite --host",
     "dev:open": "vite --open",
     "preview": "vite preview",
@@ -156,14 +155,13 @@
   "dependencies": {
     "@viz-js/viz": "^3.4.0",
     "element-plus": "^2.6.1",
+    "git": "link:github.com:Charles-Google/vue-beautiful-chat.git",
     "golden-layout": "^2.6.0",
     "monaco-editor": "^0.47.0",
     "monaco-vim": "^0.4.1",
     "node": "^18.20.2",
-    "nodejs": "0.0.0",
     "panzoom": "^9.4.3",
     "postcss": "^8.4.38",
-    "splitpanes": "^3.1.5",
-    "vue3-beautiful-chat": "^3.3.1"
+    "splitpanes": "^3.1.5"
   }
 }
