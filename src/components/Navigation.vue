@@ -49,6 +49,13 @@ onMounted(() => {
     localStorage.setItem('isFirstTime', 'no')
   }
 })
+const openCenter = () => {
+  ElMessage({
+    message: '正在抓紧开发中',
+    center: true,
+    type: 'error',
+  })
+}
 </script>
 
 <template>
@@ -107,7 +114,7 @@ onMounted(() => {
                 >{{ option }}</router-link
               >
             </div>
-            <div v-else class="h-full w-full px-4 py-2">
+            <div v-else class="h-full w-full px-4 py-2" @click="openCenter">
               <span
                 class="i-fluent-emoji-high-contrast:calendar mr-2 h-5 w-5 justify-center align-middle"
                 style="display: inline-block"

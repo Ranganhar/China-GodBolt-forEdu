@@ -2,7 +2,6 @@
 import Glayout from '@/components/Glayout.vue'
 
 import { prefinedLayouts } from '../composables/predefined-layouts'
-import { marked } from 'marked'
 
 const GLayoutRoot = ref<null | HTMLElement>(null)
 
@@ -158,34 +157,39 @@ const onMessageWasSent = (message: any) => {
     }
   }
 }
+
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
 const sendMessage = async () => {
-  const fetchOptions = reactive({
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      text: totalmessage.value,
-    }),
+  const message = {
+    text: totalmessage.value,
+  }
+
+  const socket = new WebSocket('ws://127.0.0.1:8848/ws/123456')
+
+  socket.onopen = function (event) {
+    socket.send(JSON.stringify(message))
+    console.log('消息已发送')
+  }
+  await sleep(250)
+  onMessageWasSent({
+    author: 'user1',
+    type: 'text',
+    data: { text: '思考中...' },
   })
+  // let lastMessageTime = null
+  // let now = null
+  let data = null
 
-  const fetchInstance = useFetch(
-    'http://127.0.0.1:5000/receive_text',
-    fetchOptions,
-    {
-      immediate: false, // 不立即执行请求
-    },
-  )
+  socket.onmessage = function (event) {
+    data = event.data
+    messageList.value[messageList.value.length - 1].data.text = data
+  }
 
-  const response = await fetchInstance.execute()
-  console.log('发送')
-  if (response.ok) {
-    const data = await response.json()
-    const htmlContent = marked(data.result)
-    onMessageWasSent({
-      author: 'user1',
-      type: 'text',
-
-      data: { text: data.result },
-    })
+  socket.onerror = function (error) {
+    console.log('WebSocket error: ', error)
   }
 }
 
