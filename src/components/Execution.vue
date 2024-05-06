@@ -31,11 +31,8 @@ const loadingsvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="3
 
 //默认编译参数
 const stdincontrol = ref(false)
-const stdin = ref('')
+
 const textarea = ref('')
-const stdintoggle = async () => {
-  stdincontrol.value = !stdincontrol.value
-}
 
 //单向绑定
 const loading = useLoading()
@@ -146,40 +143,13 @@ onMounted(() => {
 				>
 				</span>
 			</button> -->
-      <button
-        ref="target"
-        :class="
-          stdincontrol
-            ? 'bg-gray-400 text-gray-600'
-            : 'bg-gray-100 text-gray-600'
-        "
-        class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
-        dark="bg-transparent hover:bg-gray-500"
-        title="std input"
-        @click="stdintoggle"
-      >
-        <span
-          class="i-iconamoon:enter-bold mt-1 inline-block h-6 w-6 bg-black text-black"
-        >
-        </span>
-      </button>
-      <button
-        ref="target"
-        class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-400 p-2 text-gray-600"
-        dark="bg-gray-700 text-gray-100"
-        title="std output"
-      >
-        <span
-          class="i-iconamoon:exit-bold mt-1 inline-block h-6 w-6 text-black"
-        >
-        </span>
-      </button>
+
       <!-- 加载符号 -->
       <div
         v-loading="real_loading"
         :element-loading-svg="loadingsvg"
         element-loading-svg-view-box="-10, -10, 50, 50"
-        class="mb-0 ml-3 h-full w-10 cursor-pointer border-1 rounded-lg bg-light-100 !p-2"
+        class="mb-0 ml-3 h-full w-10 cursor-pointer border-1 rounded-lg bg-light-100 !p-2 mt-2"
       >
         <div
           :class="real_loading ? '' : 'correct'"
@@ -192,13 +162,16 @@ onMounted(() => {
       v-if="stdincontrol"
       ref="stdin"
       v-model="textarea"
-      class="mt-1 w-full"
+      class="mt-1 w-full h-full"
       :rows="2"
       type="textarea"
       placeholder="Execution stdin..."
     />
 
-    <el-card class="mt-2 w-full bg-green-50" shadow="hover" :class="textsize"
+    <el-card
+      class="mt-2 w-full bg-green-50 h-full"
+      shadow="hover"
+      :class="textsize"
       ><p :class="textsize">{{ execode }}</p>
     </el-card>
   </div>

@@ -38,22 +38,21 @@ const loadingsvg = `<svg xmlns="http://www.w3.org/2000/svg" width="32" height="3
 
 const options = [
   {
-    value: 'x86-64 慧编 1.0.1',
-    label: 'x86-64 慧编 1.0.1',
+    value: '慧编Ir 1.0.1',
+    label: '慧编Ir 1.0.1',
   },
   {
-    value: 'RISC-V(32bit) 慧编 1.0.1',
-    label: 'RISC-V(32bit) 慧编 1.0.1',
+    value: 'RISCV-rv64gc 慧编 1.0.1',
+    label: 'RISCV-rv64gc 慧编 1.0.1',
   },
 ]
 
 onBeforeMount(() => {
-  version.value = localStorage.getItem('version') || 'x86-64 慧编 1.0.1'
+  version.value = localStorage.getItem('version') || '慧编Ir 1.0.1'
   compileroption.value = localStorage.getItem('option') || '-emit-llvm -g0 -O1'
   localStorage.setItem('version', version.value)
   localStorage.setItem('option', compileroption.value)
 })
-
 //默认编译参数
 const compileroption = ref('')
 const loading = useLoading()
@@ -71,12 +70,17 @@ const xin = () => {
   DataStore.option = compileroption.value
 }
 const version = ref('')
+const disable = ref(false)
 watchDebounced(
   version,
   () => {
     loading.refresh()
     genxin()
-
+    if (version.value === '慧编Ir 1.0.1') {
+      disable.value = false
+    } else {
+      disable.value = true
+    }
     localStorage.setItem('version', version.value)
   },
   { debounce: 500, maxWait: 5000 },
@@ -219,6 +223,7 @@ onMounted(() => {
         >
 
         <button
+          v-if="!disable"
           ref="execution"
           class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
           dark="bg-transparent hover:bg-gray-500"
@@ -243,6 +248,7 @@ onMounted(() => {
         </button>
 
         <button
+          v-if="!disable"
           ref="pipeline"
           class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
           dark="bg-transparent hover:bg-gray-500"

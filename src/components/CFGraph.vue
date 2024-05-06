@@ -4,41 +4,31 @@ import panzoom from 'panzoom'
 //网络请求
 import { useDataStore } from '@/stores/alldata'
 const DataStore = useDataStore()
-
+let cfg
+const svgdefault = ref('')
 watch(
   () => DataStore.CFG,
   () => {
-    let cfgname = DataStore.CFG
-    name.value = cfgname.map((item) => ({
-      value: item,
-      label: item,
+    cfg = DataStore.CFG
+    name.value = cfg.map((item) => ({
+      value: item.name,
+      label: item.name,
     }))
-    namedefault.value = DataStore.CFG[0]
-    imgsrc.value = `img/${DataStore.CFG[0]}.svg`
+    namedefault.value = name.value[0].value
   },
 )
-
 onMounted(() => {
-  let cfgname = DataStore.CFG
-  name.value = cfgname.map((item) => ({
-    value: item,
-    label: item,
+  cfg = DataStore.CFG
+  name.value = cfg.map((item) => ({
+    value: item.name,
+    label: item.name,
   }))
-  namedefault.value = DataStore.CFG[0]
-
-  imgsrc.value = `img/${DataStore.CFG[0]}.svg`
+  namedefault.value = name.value[0].value
+  document.getElementById('image').innerHTML = DataStore.CFG[0].svg
+  initPanzoom()
 })
 
-const handleSelectChange = (value: any) => {
-  imgsrc.value = `img/${value}.svg`
-  console.log(value)
-}
 const graph = ref(null)
-import { useMyTour } from '~/stores/tour'
-const tour = useMyTour()
-onMounted(() => {
-  tour.graph = graph.value
-})
 
 //loading效果
 let real_loading = ref(false)
@@ -51,8 +41,6 @@ watch(
     // console.log(loadingcontrol.value)
   },
 )
-
-const loading = useLoading()
 
 let name = ref([
   {
@@ -79,19 +67,21 @@ const namedefault = ref('')
 let elem: any
 const imgsrc = ref('')
 const initPanzoom = () => {
-  elem = document.getElementById('image')
+  elem = document.getElementById('container')
   panzoom(elem, {
     bounds: true,
     boundsPadding: 0.1, // 设置边界填充为20%// boundsPadding: 0.1,
   })
 }
+let selectSvg
 
-watch(
-  () => namedefault,
-  () => {
-    imgsrc.value = `img/${namedefault.value}.svg`
-  },
-)
+const handleSelectChange = (value: any) => {
+  const item = DataStore.CFG.find((item) => item.name === value)
+  selectSvg = item ? item.svg : null
+  document.getElementById('image').innerHTML = selectSvg
+  initPanzoom()
+
+}
 
 const downloadSvg = async () => {
   const response = await fetch(imgsrc.value)
@@ -196,14 +186,10 @@ const downloadPng = async () => {
     </div>
 
     <div class="h-full w-full overflow-hidden">
-      <div v-if="!real_loading" id="image">
-        <img
-          :src="imgsrc"
-          alt="CFG.svg"
-          class="m-auto mt-4 h-80% w-80%"
-          @load="initPanzoom"
-        />
+      <div v-if="!real_loading" id="container">
+        <div id="image" class="m-auto mt-4 h-80% w-80%"></div>
       </div>
+
       <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
         Compiling...
       </h1>
