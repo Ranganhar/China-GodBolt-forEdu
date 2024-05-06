@@ -167,7 +167,7 @@ const sendMessage = async () => {
     text: totalmessage.value,
   }
 
-  const socket = new WebSocket('ws://127.0.0.1:8848/ws/123456')
+  const socket = new WebSocket('ws://47.109.200.112:8848/ws/123456')
 
   socket.onopen = function (event) {
     socket.send(JSON.stringify(message))
