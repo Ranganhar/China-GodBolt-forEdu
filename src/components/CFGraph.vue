@@ -5,7 +5,6 @@ import panzoom from 'panzoom'
 import { useDataStore } from '@/stores/alldata'
 const DataStore = useDataStore()
 let cfg
-const svgdefault = ref('')
 watch(
   () => DataStore.CFG,
   () => {
@@ -17,15 +16,15 @@ watch(
     namedefault.value = name.value[0].value
   },
 )
-onMounted(() => {
+onMounted(async () => {
   cfg = DataStore.CFG
   name.value = cfg.map((item) => ({
     value: item.name,
     label: item.name,
   }))
   namedefault.value = name.value[0].value
-  document.getElementById('image').innerHTML = DataStore.CFG[0].svg
-  initPanzoom()
+  await sleep(1250)
+  handleSelectChange(DataStore.CFG[0].name)
 })
 
 const graph = ref(null)
@@ -63,62 +62,64 @@ let name = ref([
 ])
 
 const namedefault = ref('')
+const svgContent = ref('')
 
 let elem: any
-const imgsrc = ref('')
+const container = ref(null)
 const initPanzoom = () => {
-  elem = document.getElementById('container')
+  elem = container.value
   panzoom(elem, {
     bounds: true,
     boundsPadding: 0.1, // 设置边界填充为20%// boundsPadding: 0.1,
   })
 }
 let selectSvg
-
-const handleSelectChange = (value: any) => {
+const sleep = (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms))
+}
+const handleSelectChange = async (value: any) => {
+  await sleep(50)
   const item = DataStore.CFG.find((item) => item.name === value)
   selectSvg = item ? item.svg : null
-  document.getElementById('image').innerHTML = selectSvg
+  svgContent.value = selectSvg
   initPanzoom()
-
 }
 
-const downloadSvg = async () => {
-  const response = await fetch(imgsrc.value)
-  const svgData = await response.text()
+//download
+const download = async (format) => {
+  let dataUrl
+  const svgData = container.value?.innerHTML
 
-  const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
-  const svgUrl = URL.createObjectURL(svgBlob)
+  if (!svgData) {
+    return
+  }
 
-  const a = document.createElement('a')
-  a.href = svgUrl
-  a.download = `${namedefault.value}.svg`
-  a.click()
-}
-const downloadPng = async () => {
-  const response = await fetch(imgsrc.value)
-  const svgData = await response.text()
+  if (format === 'svg') {
+    const svgBlob = new Blob([svgData], { type: 'image/svg+xml;charset=utf-8' })
+    dataUrl = URL.createObjectURL(svgBlob)
+  } else if (format === 'png') {
+    const canvas = document.createElement('canvas')
+    const ctx = canvas.getContext('2d')
+    const img = new Image()
+    img.src = 'data:image/svg+xml,' + encodeURIComponent(svgData)
 
-  const canvas = document.createElement('canvas')
-  const ctx = canvas.getContext('2d')
-  const img = new Image()
-  img.src = 'data:image/svg+xml,' + encodeURIComponent(svgData)
-
-  await new Promise((resolve) => {
-    img.onload = () => {
-      canvas.width = img.width
-      canvas.height = img.height
-      if (ctx) {
-        ctx.drawImage(img, 0, 0)
+    await new Promise((resolve) => {
+      img.onload = () => {
+        canvas.width = img.width
+        canvas.height = img.height
+        if (ctx) {
+          ctx.drawImage(img, 0, 0)
+        }
+        resolve(undefined)
       }
-      resolve(undefined)
-    }
-  })
-  const pngData = canvas.toDataURL('image/png')
+    })
+
+    dataUrl = canvas.toDataURL('image/png')
+  }
 
   const a = document.createElement('a')
-  a.href = pngData
-  a.download = `${namedefault.value}.png`
+  a.href = dataUrl
+  a.download = `${namedefault.value}.${format}`
   a.click()
 }
 </script>
@@ -164,7 +165,7 @@ const downloadPng = async () => {
         class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
         dark="bg-transparent hover:bg-gray-500"
         title="Download as SVG"
-        @click="downloadSvg"
+        @click="download('svg')"
       >
         <span
           class="i-teenyicons:svg-solid mt-1 inline-block h-6 w-6 bg-black text-black"
@@ -176,7 +177,7 @@ const downloadPng = async () => {
         class="h-11 w-11 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
         dark="bg-transparent hover:bg-gray-500"
         title="Download as PNG"
-        @click="downloadPng"
+        @click="download('png')"
       >
         <span
           class="i-teenyicons:png-solid mt-1 inline-block h-6 w-6 bg-black text-black"
@@ -186,8 +187,8 @@ const downloadPng = async () => {
     </div>
 
     <div class="h-full w-full overflow-hidden">
-      <div v-if="!real_loading" id="container">
-        <div id="image" class="m-auto mt-4 h-80% w-80%"></div>
+      <div v-if="!real_loading" ref="container">
+        <div v-html="svgContent" class="m-auto mt-4 h-80% w-80%"></div>
       </div>
 
       <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
