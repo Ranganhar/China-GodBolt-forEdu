@@ -7,13 +7,15 @@ const DataStore = useDataStore()
 let cfg
 watch(
   () => DataStore.CFG,
-  () => {
+  async () => {
     cfg = DataStore.CFG
     name.value = cfg.map((item) => ({
       value: item.name,
       label: item.name,
     }))
     namedefault.value = name.value[0].value
+    await sleep(1250)
+    handleSelectChange(DataStore.CFG[0].name)
   },
 )
 onMounted(async () => {
@@ -81,7 +83,15 @@ const handleSelectChange = async (value: any) => {
   await sleep(50)
   const item = DataStore.CFG.find((item) => item.name === value)
   selectSvg = item ? item.svg : null
-  svgContent.value = selectSvg
+  let parser = new DOMParser()
+  let svgDoc = parser.parseFromString(selectSvg, 'image/svg+xml')
+  let svgElement = svgDoc.documentElement
+
+  svgElement.setAttribute('width', '60%')
+  svgElement.setAttribute('height', '60%')
+
+  let serializer = new XMLSerializer()
+  svgContent.value = serializer.serializeToString(svgElement)
   initPanzoom()
 }
 
@@ -186,9 +196,9 @@ const download = async (format) => {
       </button>
     </div>
 
-    <div class="h-full w-full overflow-hidden">
-      <div v-if="!real_loading" ref="container">
-        <div v-html="svgContent" class="m-auto mt-4 h-80% w-80%"></div>
+    <div class="h-200 w-full overflow-hidden">
+      <div v-if="!real_loading" ref="container" class="m-auto h-full w-full">
+        <div class="m-auto mt-4" v-html="svgContent"></div>
       </div>
 
       <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">

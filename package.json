@@ -47,6 +47,7 @@
     "@iconify-json/material-symbols": "^1.1.75",
     "@iconify-json/mdi": "^1.1.64",
     "@iconify-json/octicon": "^1.1.52",
+    "@iconify-json/ooui": "^1.1.34",
     "@iconify-json/ri": "^1.1.20",
     "@iconify-json/tabler": "^1.1.109",
     "@iconify-json/teenyicons": "^1.1.9",

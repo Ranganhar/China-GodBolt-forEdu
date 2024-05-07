@@ -166,14 +166,14 @@ onMounted(() => {
           </template></Optionchoose
         >
 
-        <button
+        <!-- <button
           ref="target"
           class="h-11 w-9 cursor-pointer border-0 rounded-md bg-gray-100 p-2 text-gray-600 hover:bg-gray-400 hover:text-gray-700"
           dark="bg-transparent hover:bg-gray-500"
         >
           <span class="i-bxs:save mt-1.7 inline-block h-5 w-5 text-black">
           </span>
-        </button>
+        </button> -->
         <Optionchoose>
           <template #up>
             <div
@@ -583,9 +583,10 @@ onMounted(() => {
           />
         </svg>
         <span class="inline-block h-3 translate-y-0.7 pl-1">C++</span>
-        <span
+        <!-- 下拉选择符 -->
+        <!-- <span
           class="i-fluent:triangle-down-32-filled float-right mr-2 mt-4 h-3 w-3 justify-center align-middle text-black"
-        ></span>
+        ></span> -->
       </div>
     </div>
     <div ref="edit" class="h-75%">

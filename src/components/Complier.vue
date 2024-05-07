@@ -49,7 +49,7 @@ const options = [
 
 onBeforeMount(() => {
   version.value = localStorage.getItem('version') || '慧编Ir 1.0.1'
-  compileroption.value = localStorage.getItem('option') || '-emit-llvm -g0 -O1'
+  compileroption.value = localStorage.getItem('option') || ' O1'
   localStorage.setItem('version', version.value)
   localStorage.setItem('option', compileroption.value)
 })
@@ -175,7 +175,38 @@ onMounted(() => {
           class="!w-full"
           size="large"
           placeholder="Compiler options"
-        />
+        ><template #suffix>
+          <el-popover
+      :width="300"
+      popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+    >
+      <template #reference>
+        <span
+            class="i-ooui:notice mt-1 inline-block h-6 w-6 bg-grey-500 cursor-pointer"
+          >
+          </span>
+      </template>
+      <template #default>
+        <div
+          class="demo-rich-conent"
+          style="display: flex; flex-direction: column"
+        >
+        <p >
+          O0, O1, O2分别代表不同的优化等级
+        </p>
+          <p class="demo-rich-content__desc" style="margin: 0.5rem">
+            O0 :
+          </p>
+          <p class="demo-rich-content__desc" style="margin: 0.5rem">
+            O1 :
+          </p><p class="demo-rich-content__desc" style="margin: 0.5rem">
+           O2 :
+          </p>
+        </div>
+      </template>
+    </el-popover>
+         
+      </template></el-input>
       </div>
     </div>
     <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
@@ -184,7 +215,7 @@ onMounted(() => {
         <Optionchoose>
           <template #up>
             <div
-              class="i-ri:font-family ml--5 mt-1.7 inline-block h-5 w-5 text-black"
+              class="i-ri:font-family ml--5 pt-2 inline-block h-5 w-5 text-black"
             ></div>
 
             <svg
