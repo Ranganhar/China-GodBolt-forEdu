@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { getRoutes } from '@/plugins/router'
-const EventBus = useEventBus()
 
 const { te, t } = useI18n()
 
@@ -20,14 +19,13 @@ const routes = getRoutes()
   })
 
 const $route = useRoute()
-const { availableLocales, locale } = useI18n()
 // const addSourceEditor = inject('AddSourceEditor')
 const options = ref({
   'Source Editor': () => {
-    EventBus.trigger = true
+    store.trigger = true
   },
   'Diff View': () => {
-    console.log('Diff View')
+    openCenter()
   },
 })
 const options_2 = ['History', 'Open New Tab']
@@ -56,6 +54,22 @@ const openCenter = () => {
     type: 'error',
   })
 }
+const init = inject('InitLayout')
+import { useEventBus } from '../stores/eventbus'
+
+const store = useEventBus()
+
+const openTour = () => {
+  init()
+  open.value = true
+}
+// watch(
+//   () => open,
+//   () => {
+//     onClickInitLayoutMinRow.value
+//     console.log('onClickInitLayoutMinRow.value')
+//   },
+// )
 </script>
 
 <template>
@@ -128,7 +142,7 @@ const openCenter = () => {
         ref="target"
         class="h-11 w-15 cursor-pointer border-0 rounded-md bg-white p-2 text-gray-600 hover:bg-gray-200 hover:text-gray-700"
         title="Execution"
-        @click="open = true"
+        @click="openTour"
       >
         Help
       </button>

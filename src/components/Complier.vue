@@ -96,6 +96,7 @@ const addAST = inject('AddAbstractTree')
 
 const addOptPipeline = inject('AddPipeline')
 const addpipeafter = async () => {
+  console.log('333')
   addOptPipeline()
   await nextTick()
   const isFirstGuide = localStorage.getItem('isFirstGuide')
@@ -132,7 +133,7 @@ onMounted(() => {
     class="h-full w-full overflow-hidden"
   >
     <!-- 第一层 -->
-    <div class="optionchoose h-10 w-full flex bg-gray-100">
+    <div class="optionchoose relative z-1 h-10 w-full flex bg-gray-100">
       <!-- 语言选择 -->
       <div
         ref="select"
@@ -175,47 +176,48 @@ onMounted(() => {
           class="!w-full"
           size="large"
           placeholder="Compiler options"
-        ><template #suffix>
-          <el-popover
-      :width="300"
-      popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
-    >
-      <template #reference>
-        <span
-            class="i-ooui:notice mt-1 inline-block h-6 w-6 bg-grey-500 cursor-pointer"
-          >
-          </span>
-      </template>
-      <template #default>
-        <div
-          class="demo-rich-conent"
-          style="display: flex; flex-direction: column"
+          ><template #suffix>
+            <el-popover
+              :width="300"
+              popper-style="box-shadow: rgb(14 18 22 / 35%) 0px 10px 38px -10px, rgb(14 18 22 / 20%) 0px 10px 20px -15px; padding: 20px;"
+            >
+              <template #reference>
+                <span
+                  class="i-ooui:notice bg-grey-500 mt-1 inline-block h-6 w-6 cursor-pointer"
+                >
+                </span>
+              </template>
+              <template #default>
+                <div
+                  class="demo-rich-conent"
+                  style="display: flex; flex-direction: column"
+                >
+                  <p>O0, O1, O2分别代表不同的优化等级,数字越大优化等级越高</p>
+                  <p class="demo-rich-content__desc" style="margin: 0.5rem">
+                    O0 : 一级优化
+                  </p>
+                  <p class="demo-rich-content__desc" style="margin: 0.5rem">
+                    O1 : 二级优化
+                  </p>
+                  <p class="demo-rich-content__desc" style="margin: 0.5rem">
+                    O2 : 三级优化
+                  </p>
+                </div>
+              </template>
+            </el-popover>
+          </template></el-input
         >
-        <p >
-          O0, O1, O2分别代表不同的优化等级
-        </p>
-          <p class="demo-rich-content__desc" style="margin: 0.5rem">
-            O0 :
-          </p>
-          <p class="demo-rich-content__desc" style="margin: 0.5rem">
-            O1 :
-          </p><p class="demo-rich-content__desc" style="margin: 0.5rem">
-           O2 :
-          </p>
-        </div>
-      </template>
-    </el-popover>
-         
-      </template></el-input>
       </div>
     </div>
-    <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
+    <div
+      class="optionchoose relative z-1 h-11 w-full flex justify-between bg-gray-100"
+    >
       <!-- 各种按钮区域 -->
       <div class="flex">
         <Optionchoose>
           <template #up>
             <div
-              class="i-ri:font-family ml--5 pt-2 inline-block h-5 w-5 text-black"
+              class="i-ri:font-family ml--5 mt-2 inline-block h-5 w-5 text-black"
             ></div>
 
             <svg
@@ -305,19 +307,21 @@ onMounted(() => {
         </button>
       </div>
     </div>
-    <div ref="complie" class="h-50%">
-      <div class="h-200% w-full">
+    <div ref="complie" class="h-75% w-full overflow-scroll">
+      <div class="h-150% w-full overflow-scroll">
         <monacoEditor
           v-if="!real_loading"
+          class="absolute bottom-21 z-0 h-100% w-full pt-21"
           :fontsize="fontsize"
           :permit="true"
           :compliercode="sourcecode"
         ></monacoEditor>
-        <!-- <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
+      </div>
+
+      <!-- <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
           Compiling...
         </h1>
         <el-skeleton v-if="real_loading" :rows="22" animated :throttle="500" /> -->
-      </div>
     </div>
   </div>
 </template>

@@ -64,7 +64,9 @@ onMounted(() => {
   >
     <!-- 第一层 -->
 
-    <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
+    <div
+      class="optionchoose h-11 w-full flex justify-between bg-gray-100 relative z-1"
+    >
       <!-- 各种按钮区域 -->
       <div class="flex">
         <Optionchoose>
@@ -123,6 +125,7 @@ onMounted(() => {
     </div>
     <monacoEditor
       v-if="!real_loading"
+      class="absolute bottom-11 z-0 h-99% w-full pt-11 overflow-scroll"
       :initvalue="coderight"
       :fontsize="fontsize"
       :permit="true"

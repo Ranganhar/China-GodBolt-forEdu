@@ -24,7 +24,7 @@ const changeFontsize = (sizeoption: any) => {
 let codeleft = `int test(int a[], int b[], int c)
 {
     float d = 2.3;
-    int e = 2.4;
+    int e = 2;
     if(c > 10)
     {
         e =  c + b[0];
@@ -121,7 +121,6 @@ onMounted(() => {
     class="h-full w-full overflow-hidden"
   >
     <!-- 最顶一层 -->
-    <!-- 第二层 -->
     <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
       <!-- 各种按钮区域 -->
       <div class="flex">
@@ -589,15 +588,17 @@ onMounted(() => {
         ></span> -->
       </div>
     </div>
-    <div ref="edit" class="h-75%">
-      <monacoEditor
-        ref="monaco"
-        class="h-133%"
-        :compliercode="final_initvalue"
-        :fontsize="fontsize"
-        @change="changevalue"
-      >
-      </monacoEditor>
+    <div ref="edit" class="h-75% overflow-hidden w-full">
+      <div class="h-133% w-full overflow-hidden">
+        <monacoEditor
+          ref="monaco"
+          class="h-100% w-full fixed"
+          :compliercode="final_initvalue"
+          :fontsize="fontsize"
+          @change="changevalue"
+        >
+        </monacoEditor>
+      </div>
     </div>
   </div>
 </template>

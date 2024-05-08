@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import Glayout from '@/components/Glayout.vue'
-
+import { useEventBus } from '../stores/eventbus'
 import { prefinedLayouts } from '../composables/predefined-layouts'
 
 const GLayoutRoot = ref<null | HTMLElement>(null)
-
 const onClickInitLayoutMinRow = () => {
   if (!GLayoutRoot.value) return
   GLayoutRoot.value.loadGLLayout(prefinedLayouts.miniRow)
@@ -53,7 +52,7 @@ onMounted(onClickLoadLayout)
 onMounted(() => {
   window.addEventListener('beforeunload', onClickSaveLayout)
 })
-
+provide('InitLayout', onClickInitLayoutMinRow)
 provide('AddComplier', onClickAddComplier)
 provide('AddExecution', onClickAddExecution)
 provide('AddSourceEditor', onClickAddSourceEditor)
@@ -261,6 +260,7 @@ watch(need, (newValue) => {
 </script>
 
 <template>
+  <Navigation />
   <div class="display_row relative h-screen w-screen overflow-hidden">
     <beautiful-chat
       style="user-select: text"

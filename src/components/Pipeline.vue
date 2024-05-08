@@ -92,7 +92,9 @@ onMounted(() => {
     </el-tour>
     <!-- 第一层 -->
 
-    <div class="optionchoose h-11 w-full flex justify-between bg-gray-100">
+    <div
+      class="optionchoose relative z-1 h-11 w-full flex justify-between bg-gray-100"
+    >
       <!-- 各种按钮区域 -->
       <div class="flex">
         <Optionchoose>
@@ -161,24 +163,26 @@ onMounted(() => {
         </div>
       </pane>
       <pane size="80">
-        <div ref="right" class="h-75% w-full">
-          <monacoEditor
-            v-if="!real_loading"
-            class="133%"
-            :initvalue="coderight"
-            :fontsize="fontsize"
-            :permit="true"
-            :compliercode="choosepipeline"
-          ></monacoEditor>
-          <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
-            Compiling...
-          </h1>
-          <el-skeleton
-            v-if="real_loading"
-            :rows="22"
-            animated
-            :throttle="500"
-          />
+        <div ref="right" class="h-75% w-full overflow-hidden">
+          <div class="h-134% overflow-hidden">
+            <monacoEditor
+              v-if="!real_loading"
+              class="absolute bottom-11 z-0 h-100% w-full pt-11"
+              :initvalue="coderight"
+              :fontsize="fontsize"
+              :permit="true"
+              :compliercode="choosepipeline"
+            ></monacoEditor>
+            <h1 v-if="real_loading" class="ml-15% text-size-5 font-mono">
+              Compiling...
+            </h1>
+            <el-skeleton
+              v-if="real_loading"
+              :rows="22"
+              animated
+              :throttle="500"
+            />
+          </div>
         </div>
       </pane>
     </splitpanes>
