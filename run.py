@@ -120,5 +120,11 @@ def receive_string():
 
     return return_src
 
+@app.route('/receive_text', methods=['POST'])
+def receive_text():
+    data = request.get_json()
+    if not data:
+        return "No data received.", 400
+    print(data)
 if __name__ == '__main__':
     app.run()

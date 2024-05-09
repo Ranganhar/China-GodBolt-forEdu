@@ -11,18 +11,18 @@ define dso_local signext i32 @test(i32* %0, i32* %1, i32 signext %2) #0 {
 5:                                                ; preds = %3
   %6 = getelementptr inbounds i32, i32* %1, i64 0
   %7 = load i32, i32* %6, align 4, !tbaa !3
-  %8 = add nsw i32 %2, %7
+  %8 = add nsw i32 %7, %2
   br label %14
 
 9:                                                ; preds = %3
-  %10 = getelementptr inbounds i32, i32* %0, i64 1
-  %11 = load i32, i32* %10, align 4, !tbaa !3
-  %12 = add nsw i32 -2, %11
-  %13 = sitofp i32 %12 to float
+  %10 = sub nsw i32 0, 2
+  %11 = getelementptr inbounds i32, i32* %0, i64 1
+  %12 = load i32, i32* %11, align 4, !tbaa !3
+  %13 = add nsw i32 %12, %10
   br label %14
 
 14:                                               ; preds = %9, %5
-  %.0 = phi i32 [ %8, %5 ], [ -2, %9 ]
+  %.0 = phi i32 [ %8, %5 ], [ %10, %9 ]
   ret i32 %.0
 }
 

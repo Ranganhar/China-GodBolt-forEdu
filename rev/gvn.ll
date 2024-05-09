@@ -6,23 +6,22 @@ target triple = "riscv64-unknown-unknown-elf"
 ; Function Attrs: nounwind
 define dso_local signext i32 @test(i32* %0, i32* %1, i32 signext %2) #0 {
   %4 = icmp sgt i32 %2, 10
-  br i1 %4, label %5, label %9
+  br i1 %4, label %5, label %8
 
 5:                                                ; preds = %3
-  %6 = getelementptr inbounds i32, i32* %1, i64 0
-  %7 = load i32, i32* %6, align 4, !tbaa !3
-  %8 = add nsw i32 %2, %7
-  br label %14
+  %6 = load i32, i32* %1, align 4, !tbaa !3
+  %7 = add nsw i32 %2, %6
+  br label %13
 
-9:                                                ; preds = %3
-  %10 = getelementptr inbounds i32, i32* %0, i64 1
-  %11 = load i32, i32* %10, align 4, !tbaa !3
-  %12 = add nsw i32 -2, %11
-  %13 = sitofp i32 %12 to float
-  br label %14
+8:                                                ; preds = %3
+  %9 = getelementptr inbounds i32, i32* %0, i64 1
+  %10 = load i32, i32* %9, align 4, !tbaa !3
+  %11 = add nsw i32 -2, %10
+  %12 = sitofp i32 %11 to float
+  br label %13
 
-14:                                               ; preds = %9, %5
-  %.0 = phi i32 [ %8, %5 ], [ -2, %9 ]
+13:                                               ; preds = %8, %5
+  %.0 = phi i32 [ %7, %5 ], [ -2, %8 ]
   ret i32 %.0
 }
 

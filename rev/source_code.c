@@ -1,38 +1,177 @@
-int n;
-int insertsort(int a[])
+int test(int a[], int b[], int c)
 {
-    int i;
-    i = 1;
-    while(i<n)     
+    float d = 2.3;
+    int e = 2;
+    if(c > 10)
     {
-        int temp;
-        temp=a[i]; 
-        int j;
-        j=i-1;
-        while(j>-1&&temp<a[j])
-        {
-            a[j+1]=a[j];  
-            j = j - 1;
-        }
-        a[j+1]=temp; 
-        i = i + 1;
+        e =  c + b[0];
     }
-    return 0;
+    else
+    {
+        e = -e;
+        d = e + a[1];
+    }
+    return e;
 }
 
-int main(){
-    n = 10;
-    int a[10];
-    a[0]=4;a[1]=3;a[2]=9;a[3]=2;a[4]=0;
-    a[5]=1;a[6]=6;a[7]=5;a[8]=7;a[9]=8;
-    int i;
-    i = insertsort(a);
-    while (i < n) {
-        int tmp;
-        tmp = a[i];
-        tmp = 10;
-        i = i + 1;
-    }
-    return 0;
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
